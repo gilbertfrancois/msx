@@ -41,11 +41,11 @@ Start Champ with `bload"cas:",r`. Champ has 4 modes: Insert, edit, assemble and 
 
 |                                                              |                                                              |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![](/Users/gilbert/Development/git/msx/assets/images/champ001.png) | ![](/Users/gilbert/Development/git/msx/assets/images/champ002.png) |
+| ![](./assets/images/champ001.png)                            | ![](./assets/images/champ002.png)                            |
 | 1) Sample code with condition and 2 math ops.                | 2) Compiling successful. Save the listing as text with `s` -> `filename`. |
-| ![](/Users/gilbert/Development/git/msx/assets/images/champ004.png) | ![](/Users/gilbert/Development/git/msx/assets/images/champ005.png) |
+| ![](./assets/images/champ004.png)                            | ![](./assets/images/champ005.png)                            |
 | 3) Go to `<debug>` mode with `m`, view memory and disassembled code with `Q [saddr]` and write your binary to cassette with: `w saddr faddr filename`. | 4) In `<assemble>` mode, go to basic with `q` `y` and type in the listing above. |
-| ![](/Users/gilbert/Development/git/msx/assets/images/champ006.png) | ![](/Users/gilbert/Development/git/msx/assets/images/champ007.png) |
+| ![](./assets/images/champ006.png)                            | ![](./assets/images/champ007.png)                            |
 | 5) If all is well, your basic-asm program works :)           | 6) Go back to Champ                                          |
 
 Some notes:
