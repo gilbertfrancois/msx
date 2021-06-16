@@ -1,4 +1,4 @@
-# Writing assembly for MSX with Champ
+# ![]()Writing assembly for MSX with Champ
 
 *Gilbert François Duivesteijn*
 
@@ -8,7 +8,11 @@ On this page, I try to explain how to use Champ for MSX(1) to write, store and d
 
 The aim of this page is not to be another ASM tutorial, but to show how you can develop and debug on a real MSX with only a cassette player/recorder as storage device, like it was done in the 80's with an MSX1 computer.
 
-Champ is only available on cassette. You can start it with `bload"cas:",r` 
+|                                   |                                     |
+| :-------------------------------: | :---------------------------------: |
+| ![](./assets/images/champ000.jpg) | ![](./assets/images/champtitle.png) |
+|         Box and cassette          |            Title screen             |
+
 
 ## Example 1
 
