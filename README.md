@@ -43,3 +43,18 @@ is tested for every point within the domain. When after a finite amount of itera
 | ![openmsx0004](./assets/images/openmsx0004.png) |
 | Maze                                            |
 
+## Palette
+
+**palette.bas** This program shows the 15 MSX(1) colors on screen 2. I always found the default sorting of the colours quite odd. I tried to order them in a more logical way. The tones of the colors in the palette are different on an MSX and MSX2. Note that yellow has only 2 tones. To simulate the medium tone of yellow, the color patch is an interlaced representation of color 10 and 11.
+
+|                                                              |                                                              |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![palette_canon_v20](/Users/gilbert/Development/git/msx/assets/images/palette_canon_v20.png) | ![palette_sony_hb700p](/Users/gilbert/Development/git/msx/assets/images/palette_sony_hb700p.png) |
+| Canon V-20 MSX                                               | Sony HB-700P MSX2                                            |
+
+|  B/W |  Red |  Yellow | Green | Blue | Magenta |
+| ---: | ---: | ------: | ----: | ---: | ------: |
+|    1 |    6 |      10 |    12 |    4 |      13 |
+|   14 |    8 | (10/11) |     2 |    5 |         |
+|   15 |    9 |      11 |     3 |    7 |         |
+
