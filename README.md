@@ -6,18 +6,24 @@
 
 ## Abstract
 
-Around 1986, when I was in 2nd grade of Gymnasium, I bought a Canon V-20 MSX computer and I loved it. I remember that for that time, buying it from own saved pocket money, it was an expensive computer. Most of the time I was programming all kinds of little experiments. The MSX computer was capable of creating nice color graphics, but I had it connected to a B&W TV, and because of that, I didn't care about the colours so much.
+Around 1986, when I was in 2nd grade of Gymnasium, I bought a Canon V-20 MSX computer and I loved it. I remember that for that time, buying it from own saved pocket money, it was an expensive computer. Most of the time I was programming all kinds of little experiments in MSX Basic and later in assembly, using Champ ASM which I bought on cassette. The MSX computer was capable of creating nice color graphics, but I had it connected to a B&W TV, and because of that, I didn't care about the colours so much.
 
 Since there was no such thing as Github back then, I wrote the code down in a notebook (pen and paper!). Only later, I got a cassette recorder and saved the programs on tape. Now, > 35 years later,  the tapes are lost and I didn't have this computer anymore. However, in july 2021, luck was on my side and I found on eBay a Canon V-20 in mint condition. Amazing! I bought it and I started to type in some of the programs from the old notebook and put them in Git for conservation and most of all, for fun. 
+
+## Writing Assembly on a real MSX computer
+
+Nowadays we are spoiled with cross compilers and fast computers. However, it is still fun to write assembly code on a real msx computer. In this page, I explain briefly how one can start programming and debugging with Champ ASM.
+
+[Writing Assembly for MSX with Champ](WritingASM.md)
 
 ## 3D Plot
 
 **3dplot.bas**: A plotting program to visualize 3D plots $f(x, y) = z$. To change the input function and domain, edit the first lines of the code.
 
-|                                                 |                                                 |
-| :---------------------------------------------- | :---------------------------------------------- |
-| ![openmsx0009](./assets/images/openmsx0009.png) | ![openmsx0008](./assets/images/openmsx0008.png) |
-| Plot view of function $f(x,y)=x^3y-y^3x$        | Values view                                     |
+|                                              |                                              |
+| :------------------------------------------- | :------------------------------------------- |
+| ![openmsx0009](./assets/images/plot3d_2.png) | ![openmsx0008](./assets/images/plot3d_1.png) |
+| Plot view of function $f(x,y)=x^3y-y^3x$     | Values view                                  |
 
 ## Mandelbrot
 
@@ -29,28 +35,26 @@ is tested for every point within the domain. When after a finite amount of itera
 
 |                                                              |
 | :----------------------------------------------------------: |
-| <img src="./assets/images/openmsx0001.png" alt="openmsx0001" /> |
+| <img src="./assets/images/mandelbrot_1.png" alt="mandelbrot" /> |
 | Mandelbrot set with $(x_c,y_c)=(-0.5, 0)$ and $size=2$. Visualized with zebra pattern. |
 
+## VPoke
 
+**vpoke1.bas** A MSX Basic experiment where the video memory is directly written with the vpoke command. It draws a random maze in screen 1, using only the characters `\` and `/`.
 
-## Maze
-
-**vpoke1.bas** An experiment where the video memory is directly accessed and written with the vpoke command.
-
-|                                                 |
-| ----------------------------------------------- |
-| ![openmsx0004](./assets/images/openmsx0004.png) |
-| Maze                                            |
+|                                             |
+| ------------------------------------------- |
+| ![openmsx0004](./assets/images/vpoke_1.png) |
+| Maze                                        |
 
 ## Palette
 
 **palette.bas** This program shows the 15 MSX(1) colors on screen 2. I always found the default sorting of the colours quite odd. I tried to order them in a more logical way. The tones of the colors in the palette are different on an MSX and MSX2. Note that yellow has only 2 tones. To simulate the medium tone of yellow, the color patch is an interlaced representation of color 10 and 11. *(Screenshots made with openMSX)*
 
-|                                                              |                                                              |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![palette_canon_v20](/Users/gilbert/Development/git/msx/assets/images/palette_canon_v20.png) | ![palette_sony_hb700p](/Users/gilbert/Development/git/msx/assets/images/palette_sony_hb700p.png) |
-| Canon V-20 MSX                                               | Sony HB-700P MSX2                                            |
+|                                                             |                                                              |
+| ----------------------------------------------------------- | ------------------------------------------------------------ |
+| ![palette_canon_v20](./assets/images/palette_canon_v20.png) | ![palette_sony_hb700p](./assets/images/palette_sony_hb700p.png) |
+| Canon V-20 MSX                                              | Sony HB-700P MSX2                                            |
 
 |  B/W |  Red |  Yellow | Green | Blue | Magenta |
 | ---: | ---: | ------: | ----: | ---: | ------: |
