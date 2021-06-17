@@ -82,3 +82,5 @@ Some notes:
 
 [MSX Made Simple, Margaret Norman](https://www.elsevier.com/books/msx-made-simple/norman/978-0-434-98406-0)
 
+[Practical MSX machine code programming, Steve Webb](https://archive.org/details/practical_msx_machine_code_programming_steve_webb)
+
