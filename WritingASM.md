@@ -74,7 +74,11 @@ Some notes:
 
 ## References
 
+[Champ Users Manual](./assets/doc/champ.pdf)
+
 [YouTube: Learn Multi platform Z80 Assembly Programming... ](https://www.youtube.com/watch?v=LpQCEwk2U9w&list=PLp_QNRIYljFq-9nFiAUiAkRzAXfcZTBR_)
 
-[Champ Users Manual](./assets/doc/champ.pdf)
+[MSX Assembly Page, Grauw](http://map.grauw.nl)
+
+[MSX Made Simple, Margaret Norman](https://www.elsevier.com/books/msx-made-simple/norman/978-0-434-98406-0)
 
