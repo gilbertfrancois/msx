@@ -33,10 +33,10 @@ z_{n+1} = z_n^2 + c
 $$
 is tested for every point within the domain. When after a finite amount of iterations the value $z_n$ goes to infinity, the value is outside the Mandelbrot set. If the value stays $||z|| < 2$ then the value is inside the Mandelbrot set. Nowadays, these fractals can be rendered super fast with millions of colours. In 1987, on the MSX, I made a monochrome implementation, using 2 options: either make a zebra pattern by taking the mod of the "n-iterations to escape", or slice the n-iterations value and plot it as in- or outside the set. The zebra pattern works best for zoomed out views, the in-out pattern works best on zoomed in areas.
 
-|                                                              |
-| :----------------------------------------------------------: |
-| <img src="./assets/images/mandelbrot_1.png" alt="mandelbrot" /> |
-| Mandelbrot set with $(x_c,y_c)=(-0.5, 0)$ and $size=2$. Visualized with zebra pattern. |
+|                                                              |                                                              |
+| :----------------------------------------------------------: | ------------------------------------------------------------ |
+|            ![](./assets/images/mandelbrot_1.png)             | ![](./assets/images/mandelbrot_3.png)                        |
+| Mandelbrot set with $(x_c,y_c)=(-0.5, 0)$ and $size=2$. Visualized with zebra pattern. | Mandelbrot with $(x_c,y_c)=(-0.7792, 0.1345)$ and $size=7.984e-4$. Visualized with in-out pattern. |
 
 ## VPoke
 
@@ -44,7 +44,7 @@ is tested for every point within the domain. When after a finite amount of itera
 
 |                                             |
 | ------------------------------------------- |
-| ![openmsx0004](./assets/images/vpoke_1.png) |
+| ![vpoke](./assets/images/vpoke_1.png) |
 | Maze                                        |
 
 ## Palette
