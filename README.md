@@ -27,7 +27,7 @@ Nowadays we are spoiled with cross compilers and fast computers. However, it is 
 
 ## Mandelbrot
 
-**fractal1.bas** The complex function 
+**fractal.bas** The complex function 
 $$
 z_{n+1} = z_n^2 + c
 $$
