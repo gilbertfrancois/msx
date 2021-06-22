@@ -70,3 +70,13 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 | ![](./assets/images/attractor04.png) | ![](./assets/images/attractor03.png) |
 |                                      |                                      |
 
+## Memory Visualizer
+
+**memory.bas** I made this program in 1988 to get a better understanding of the used memory of my Canon V-20. The program is expected to work well on any MSX with 64kB RAM. If you have another configuration, some parameters have to be adapted. The program is not efficient in terms of speed.
+
+|                                                              |
+| ------------------------------------------------------------ |
+| ![](/Users/gilbert/Development/git/msx/assets/images/memview.png) |
+| Memory viewer for MSX(1), showing the memory usage of a Canon V-20. |
+
+ 
