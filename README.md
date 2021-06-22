@@ -76,7 +76,7 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 
 |                                                              |
 | ------------------------------------------------------------ |
-| ![](/Users/gilbert/Development/git/msx/assets/images/memview.png) |
+| ![](./assets/images/memview.png)                             |
 | Memory viewer for MSX(1), showing the memory usage of a Canon V-20. |
 
  
