@@ -82,4 +82,15 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 | ![](./assets/images/memview.png)                             |
 | Memory viewer for MSX(1), showing the memory usage of a Canon V-20. |
 
- 
+ ## Screen 2 dump to data recorder
+
+**s2dumpv1.bas** This method works only on MSX2 computers with floppy drives.
+
+**s2dumpv2.bas** This method works on MSX computers with cassette data recorders. The program is written in pure basic and easy to understand. However, copying the VRAM to RAM and vice versa is very slow, around 120 seconds.
+
+**s2dumpv3.bas** This method works on MSX computers with cassette data recorders. The program is written in MSX-Basic and assembly. Copying from VRAM to RAM or RAM to VRAM takes about 0.2 (!) seconds, over 600x faster than the pure MSX-Basic version.
+
+
+
+
+
