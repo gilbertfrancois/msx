@@ -84,11 +84,13 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 
  ## Screen 2 dump to data recorder
 
+On an MSX2 with floppy drive, it is easy to dump the screen with the `bsave "filename",s` command. But on an MSX1 with a cassette data recorder, it is not so easy. The `,s` option on `bload/bsave` is not yet supported on MSX1. The only way to store the state of the screen is to copy the VRAM into RAM first and then use `bsave` to store it on cassette. 
+
 **s2dumpv1.bas** This method works only on MSX2 computers with floppy drives.
 
-**s2dumpv2.bas** This method works on MSX computers with cassette data recorders. The program is written in pure basic and easy to understand. However, copying the VRAM to RAM and vice versa is very slow, around 120 seconds.
+**s2dumpv2.bas** This method works on MSX1 computers with cassette data recorders. The program is written in pure basic and easy to understand. However, copying the VRAM to RAM and vice versa is very slow, around 120 seconds.
 
-**s2dumpv3.bas** This method works on MSX computers with cassette data recorders. The program is written in MSX-Basic and assembly. Copying from VRAM to RAM or RAM to VRAM takes about 0.2 (!) seconds, over 600x faster than the pure MSX-Basic version.
+**s2dumpv3.bas** This method works on MSX1 computers with cassette data recorders. The program is written in MSX-Basic and assembly. Copying from VRAM to RAM or RAM to VRAM takes about 0.2 (!) seconds, over 600x faster than the pure MSX-Basic version.
 
 
 
