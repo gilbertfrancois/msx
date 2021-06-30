@@ -18,7 +18,7 @@ Nowadays we are spoiled with cross compilers and fast computers. However, it is 
 
 ## 3D Plot
 
-**3dplot.bas**: A plotting program to visualize 3D plots `f(x, y) = z`. To change the input function and domain, edit the first lines of the code.
+[plot3d.bas](./src/basic/plot3d.bas) plotting program to visualize 3D plots `f(x, y) = z`. To change the input function and domain, edit the first lines of the code.
 
 |                                              |                                              |
 | :------------------------------------------- | :------------------------------------------- |
