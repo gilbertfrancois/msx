@@ -7,9 +7,11 @@ This is an exploration on how to develop asm for MSX, using an assembler on anot
 Compiling e.g. `helloworld.asm` can be done with:
 
 ```sh
-$ export PROJECT_ROOT=<PATH TO MY MSX PROJECT FOLDER>
-$ cd ${PROJECT_ROOT}/src/asm
-$ vasmz80_oldstyle helloworld.asm \
+export PROJECT_ROOT=<PATH TO MY MSX PROJECT FOLDER>
+
+cd ${PROJECT_ROOT}/src/asm
+
+vasmz80_oldstyle helloworld.asm \
 	  	-chklabels -nocase \
       -Dvasm=1 -DbuildMSX=1 -DBuildMSX_MSX1=1 -Fbin \
       -L ${PROJECT_ROOT}/build/listing.txt \
