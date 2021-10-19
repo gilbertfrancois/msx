@@ -1,8 +1,13 @@
 # MSX assembly programs
 
-These programs are written for the **vasm** assembler. For example, compiling `helloworld.asm` can be done with:
+This is an exploration on how to develop asm for MSX, using an assembler on another platform, like Linux or macOS. These programs are written for the **vasm** assembler. The `bin` folder contains an installation script for the vasm assembler, in case you need it.
+
+
+
+Compiling e.g. `helloworld.asm` can be done with:
 
 ```sh
+$ export PROJECT_ROOT=<PATH TO MY MSX PROJECT FOLDER>
 $ cd ${PROJECT_ROOT}/src/asm
 $ vasmz80_oldstyle helloworld.asm \
 	  	-chklabels -nocase \
