@@ -21,3 +21,12 @@ To run the rom file with openMSX, run the command:
 openmsx -machine Canon_V-20 -cart ${PROJECT_ROOT}/build/cart.rom
 ```
 
+
+
+### Hello World
+
+[helloworld.asm](helloworld.asm) This program is meant as template for building MSX rom cartridge images with vasm assembler. It makes use fof macros, made available by chibiakumas. 
+
+### Screen 2 test
+
+[sc2.asm](sc2.asm) Test for drawing pixels in screen 2 (WIP).
