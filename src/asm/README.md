@@ -12,7 +12,7 @@ export PROJECT_ROOT=<PATH TO MY MSX PROJECT FOLDER>
 cd ${PROJECT_ROOT}/src/asm
 
 vasmz80_oldstyle helloworld.asm \
-	  	-chklabels -nocase \
+      -chklabels -nocase \
       -Dvasm=1 -DbuildMSX=1 -DBuildMSX_MSX1=1 -Fbin \
       -L ${PROJECT_ROOT}/build/listing.txt \
       -I ${PROJECT_ROOT}/lib/chibiakumas/SrcALL \
