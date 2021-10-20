@@ -20,20 +20,20 @@ Execute:
     call INIT32        ; set screen 1
     ld a, 32
     call LINLEN        ; set width 32
-    ld hl,helloWorld   ; load string
-    call PrintString   ; print string
-    call NewLine       ; goto new line
+    ld hl, helloWorld  ; load string
+    call PrintStr      ; print string
+    call NewLn         ; goto new line
     call Finished      ; end
 
-PrintString:
+PrintStr:
     ld a, (hl)
     cp 0
     ret z
     inc hl
     call CHPUT
-    jr PrintString
+    jr PrintStr
 
-NewLine:
+NewLn:
     push af
     ld a, 13
     call CHPUT
