@@ -64,10 +64,6 @@ Some notes:
 - Hexadecimal addresses start with a `$`.
 - Best ORG address $C000 (according to Champ).
 
-## Example 2
-
-*Todo...*
-
 
 
 
