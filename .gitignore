@@ -188,3 +188,5 @@ Sessionx.vim
 tags
 # Persistent undo
 [._]*.un~
+
+bin/glass.jar
