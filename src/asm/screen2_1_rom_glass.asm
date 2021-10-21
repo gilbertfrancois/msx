@@ -11,12 +11,15 @@ RomSize equ $4000
 CHGMOD  equ $005f
 
 Execute:
-    ; ld a, 2
-    ; call CHGMOD
-    ld c, VDPOutControl
-    ld b, VDPScreenInitDataEnd - VDPScreenInitData
-    ld hl, VDPScreenInitData
-    otir
+    ld a, 2
+    call CHGMOD
+
+    ld bc, 0e201h  ; write 1110 0010 = 0xe2 to VDP(1) 
+    call WRTVDP
+    ; ld c, VDPOutControl
+    ; ld b, VDPScreenInitDataEnd - VDPScreenInitData
+    ; ld hl, VDPScreenInitData
+    ; otir
 
 	ld hl, $0000 + 128 * 8		;Define Tiles 128+ (8 Bytes per tile)
 	call VDPSetWriteAddress
@@ -105,14 +108,14 @@ GetVDPScreenPos:
 
 VDPScreenInitData:
 	;	Value   ,Register
-	db $00000010,128+0	;mode register #0
-	db $11100000,128+1	;mode register #1
-    db $00001110,128+2
-	db $11111111,128+3	;colour table (LOW)
-	db $00000011,128+4	;pattern generator table
-	db $01110110,128+5	;sprite attribute table (LOW)
-	db $00000011,128+6	;sprite pattern generator table
-	db $00001111,128+7	;border colour/character colour at text mode
+	db %00000010, 128 + 0	;mode register #0
+	db %11100000, 128 + 1	;mode register #1
+    db %00001110, 128 + 2
+	db %11111111, 128 + 3	;colour table (LOW)
+	db %00000011, 128 + 4	;pattern generator table
+	db %01110110, 128 + 5	;sprite attribute table (LOW)
+	db %00000011, 128 + 6	;sprite pattern generator table
+	db %00001111, 128 + 7	;border colour/character colour at text mode
 VDPScreenInitDataEnd:
 
 ProgEnd:
