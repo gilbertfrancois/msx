@@ -30,10 +30,10 @@ Champ has 4 modes, Insert, Edit, Assemble and Debug. You can switch between the 
 
 `< ASSEMBLE >`
 
-   `[m]`    &uarr;
+                &uarr;
 
-​      &darr;    `[a]`
-
+   `[m]`   `[a]`
+ ​     &darr; 
    `< DEBUG >`
 
 ---
