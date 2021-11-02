@@ -1,27 +1,27 @@
-; Hello World .ROM for cartridge environment
-;
 ; Constant definitions
 INIT32  equ $006F
 CHPUT   equ $00A2
 LINLEN  equ $F3B0
 
+RomSize equ $4000
+
 ; Compilation address
     org $4000
 
 ; ROM header
-    db "AB"     ; magic number
-    dw Execute  ; program execution address
+    db "AB"             ; magic number
+    dw Main             ; program execution address
     dw 0, 0, 0, 0, 0, 0
 
 ; Program code entry point
-Execute:
-    call INIT32        ; set screen 1
+Main:
+    call INIT32         ; set screen 1
     ld a, 32
-    call LINLEN        ; set width 32
-    ld hl, helloWorld  ; load string
-    call PrintStr      ; print string
-    call NewLn         ; goto new line
-    call Finished      ; end
+    call LINLEN         ; set width 32
+    ld hl, helloWorld   ; load string
+    call PrintStr       ; print string
+    call NewLn          ; goto new line
+    call Finished       ; end
 
 PrintStr:
     ld a, (hl)
@@ -50,7 +50,6 @@ Finished:
 helloWorld:
     db "Hello world!",0
 
+End:
 ; Padding to make the file size a multiple of 16K
-    ; TODO add padding compatible with glass assembler
-    ; ds -$ $ $3FFF
-    ; org $C000
+    ds $4000 + RomSize - End, 255

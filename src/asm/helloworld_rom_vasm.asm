@@ -1,22 +1,20 @@
-    include "VasmBuildCompat.asm"
-;
-; Hello World .ROM for cartridge environment
-;
 ; Constant definitions
 INIT32  equ &006F
 CHPUT   equ &00A2
 LINLEN  equ &F3B0
+
+RomSize equ &4000
 
 ; Compilation address
     org &4000
 
 ; ROM header
     db "AB"     ; magic number
-    dw Execute  ; program execution address
+    dw Main  ; program execution address
     dw 0, 0, 0, 0, 0, 0
 
 ; Program code entry point
-Execute:
+Main:
     call INIT32        ; set screen 1
     ld a, 32
     call LINLEN        ; set width 32
@@ -52,6 +50,6 @@ Finished:
 helloWorld:
     db "Hello world!",0
 
+End:
 ; Padding to make the file size a multiple of 16K
-; (Alternatively, include macros.asm and use ALIGN 4000H)
-    ds -$ & &3FFF
+    ds &4000 + RomSize - End, 255
