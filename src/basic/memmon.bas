@@ -3,10 +3,10 @@
 30 '
 40 '
 80 WIDTH 40:KEYOFF:CLS
-90 PRINT"---------------------------------------"
-100 PRINT":        Simple Memory Monitor        :"
-110 PRINT"---------------------------------------"
-120 INPUT"Start address";SA
+100 PRINT"[i] Simple Memory Monitor"
+105 PRINT"[i] Gilbert Francois Duivesteijn"
+110 PRINT"[i] -----------------------------------"
+120 INPUT"[?] Start address";SA
 130 CLS
 140 PRINT"---------------------------------------"
 150 N=2
@@ -19,4 +19,3 @@
 220 PRINT
 230 NEXT A
 240 PRINT"---------------------------------------"
-
