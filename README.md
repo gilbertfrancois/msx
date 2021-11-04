@@ -74,7 +74,7 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 |   14 |    8 | (10/11) |     2 |    5 |         |
 |   15 |    9 |      11 |     3 |    7 |         |
 
-## Memory Visualizer
+## Memory Visualizers
 
 [memory.bas](./src/basic/memory.bas) I made this program in 1988 to get a better understanding of the used memory of my Canon V-20. The program is expected to work well on any MSX with 64kB RAM. If you have another configuration, some parameters have to be adapted. The program is not efficient in terms of speed.
 
@@ -82,6 +82,14 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 | ------------------------------------------------------------ |
 | ![](./assets/images/memview.png)                             |
 | Memory viewer for MSX(1), showing the memory usage of a Canon V-20. |
+
+[memmon.bas](./src/basic/memmon.bas) Memmon is a very simple memory monitor, written in basic. It asks for the start address and shows the memory content of the following 128 bytes.
+|                                              |                                              |
+| -------------------------------------------- | -------------------------------------------- |
+| ![memmon_page1](./assets/images/memmon1.png) | ![memmon_page2](./assets/images/memmon2.png) |
+| Simple Memory Monitor, screen 1              | Simple Memory Monitor, screen 2              |
+
+
 
  ## Screen 2 dump to data recorder
 
