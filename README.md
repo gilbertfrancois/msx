@@ -83,7 +83,7 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 | ![](./assets/images/memview.png)                             |
 | Memory viewer for MSX(1), showing the memory usage of a Canon V-20. |
 
-[memmon.bas](./src/basic/memmon.bas) Memmon is a very simple memory monitor, written in basic. It asks for the start address and shows the memory content of the following 128 bytes.
+[memmon.bas](./src/basic/memmon.bas) Memmon is a very simple memory monitor, written in basic. It asks for the start address and shows the memory content of the following 128 bytes. I developed this program to help me with finding the last used address in my compiled assembly programs, needed for saving the binary data to cassette.
 |                                              |                                              |
 | -------------------------------------------- | -------------------------------------------- |
 | ![memmon_page1](./assets/images/memmon1.png) | ![memmon_page2](./assets/images/memmon2.png) |
