@@ -2,6 +2,15 @@
 
 *Gilbert François Duivesteijn*
 
+- [MSX](#msx)
+  * [Abstract](#abstract)
+  * [Writing Assembly on a real MSX computer](#writing-assembly-on-a-real-msx-computer)
+  * [3D Plot](#3d-plot)
+  * [Mandelbrot](#mandelbrot)
+  * [Strange Attractors](#strange-attractors)
+  * [Palette](#palette)
+  * [Memory Visualizers](#memory-visualizers)
+  * [Screen 2 dump to data recorder](#screen-2-dump-to-data-recorder)
 
 
 ## Abstract
