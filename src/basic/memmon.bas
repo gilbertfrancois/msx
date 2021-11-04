@@ -2,6 +2,7 @@
 20 ' Gilbert Francois Duivesteijn
 30 '
 40 '
+50 DEFINT S-T
 80 WIDTH 40:KEYOFF:CLS
 100 PRINT"[i] Simple Memory Monitor"
 105 PRINT"[i] Gilbert Francois Duivesteijn"
@@ -9,13 +10,23 @@
 120 INPUT"[?] Start address";SA
 130 CLS
 140 PRINT"---------------------------------------"
-150 N=2
-160 FOR A=0 TO N*8-1
-170 FOR B=0 TO 7
-180 C = 8*A + B
-190 IF B=0 THEN PRINT HEX$(SA+C); " ";
-200 PRINT USING "\\";HEX$(PEEK(SA+C)); " ";
-210 NEXT B
-220 PRINT
-230 NEXT A
-240 PRINT"---------------------------------------"
+150 GOSUB 900
+160 INPUT "Continue [y/n]";C$
+170 IF C$="y" THEN 150 ELSE 180
+180 END
+900 ' Print memory block
+910 ' in:  SA: Start address
+920 '
+1000 N=2
+1010 FOR A=0 TO N*8-1
+1020 FOR B=0 TO 7
+1030 C = 8*A + B
+1040 IF B=0 THEN PRINT HEX$(SA+C); " ";
+1050 PRINT USING "\\";HEX$(PEEK(SA+C)); " ";
+1060 NEXT B
+1070 PRINT
+1080 NEXT A
+1090 PRINT"---------------------------------------"
+1100 SA = SA+C+1
+1110 RETURN
+
