@@ -9,19 +9,19 @@ RomSize equ &4000
     org &4000
 
 ; ROM header
-    db "AB"     ; magic number
-    dw Main  ; program execution address
+    db "AB"             ; magic number
+    dw Main             ; program execution address
     dw 0, 0, 0, 0, 0, 0
 
 ; Program code entry point
 Main:
-    call INIT32        ; set screen 1
+    call INIT32         ; set screen 1
     ld a, 32
-    call LINLEN        ; set width 32
-    ld hl, helloWorld  ; load string
-    call PrintStr      ; print string
-    call NewLn         ; goto new line
-    call Finished      ; end
+    call LINLEN         ; set width 32
+    ld hl, helloWorld   ; load string
+    call PrintStr       ; print string
+    call NewLn          ; goto new line
+    call Finished       ; end
 
 PrintStr:
     ld a, (hl)
