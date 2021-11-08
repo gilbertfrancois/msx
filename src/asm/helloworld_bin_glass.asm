@@ -1,11 +1,11 @@
-    db &FE
+    db $FE
     dw FileStart
     dw FileEnd - 1
     dw Main
 
-    org &C000
+    org $C000
 
-CHPUT   equ &00A2
+CHPUT   equ $00A2
 
 FileStart:
 Main:
