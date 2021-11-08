@@ -29,4 +29,14 @@
 1090 PRINT"---------------------------------------"
 1100 SA = SA+C+1
 1110 RETURN
+2000 ' Clean memory
+2010 ' in: SA: Start address
+2020 '     EA: End address
+2025 SA=&HC000
+2026 EA=&HC800
+2027 RG=EA-SA
+2030 FOR I=0 TO RG
+2040 POKE(SA+I),&HFF
+2050 NEXT I
+2060 END
 
