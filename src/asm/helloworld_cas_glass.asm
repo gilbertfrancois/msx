@@ -1,11 +1,14 @@
-    db &FE
+    db $1F, $A6, $DE, $BA, $CC, $13, $7D, $74
+    db $D0, $D0, $D0, $D0, $D0, $D0, $D0, $D0, $D0, $D0
+    db "hellow"
+    db $1F, $A6, $DE, $BA, $CC, $13, $7D, $74
     dw FileStart
     dw FileEnd - 1
     dw Main
 
-    org &C000
+    org $C000
 
-CHPUT   equ &00A2
+CHPUT   equ $00A2
 
 FileStart:
 Main:
