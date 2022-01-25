@@ -2,7 +2,8 @@
 110 ' Gilbert Francois Duivesteijn
 120 '
 130 R=RND(-TIME)
-140 SCREEN 2: CLS: COLOR 1,15,15
+135 COLOR 1,15,15
+140 SCREEN 2: CLS
 150 CM=8
 160 DIM CO(CM,2)
 170 CO(0,0)=4    ' blue
@@ -13,14 +14,14 @@
 220 CO(2,1)=3
 230 CO(3,0)=10   ' yellow
 240 CO(3,1)=11
-250 CO(4,0)=5    ' blue
+250 CO(4,0)=5    ' blue,cyan
 260 CO(4,1)=7
-270 CO(5,0)=6    ' red
-280 CO(5,1)=8
+270 CO(5,0)=8    ' red
+280 CO(5,1)=11
 290 CO(6,0)=12   ' green
 300 CO(6,1)=2
-301 CO(7,0)=13
-302 CO(7,1)=5
+301 CO(7,0)=13   ' magenta,blue
+302 CO(7,1)=4
 310 RF=0         ' rnd fill threshold
 320 'BS=8 : GOSUB 380
 330 'BS=16: GOSUB 380
@@ -44,7 +45,7 @@
 510 '
 520 ' Pattern selector
 530 '
-540 P=INT(RND(1)*2)+6
+540 'P=CINT(RND(1)*5)+1
 545 P=(K MOD 2) + 6
 550 C0=K MOD CM
 560 C1=INT(RND(1)*2)
@@ -58,7 +59,8 @@
 640 IF P=5 THEN GOSUB 970
 650 IF P=6 THEN GOSUB 1020
 660 IF P=7 THEN GOSUB 1120
-670 RETURN
+665 RETURN
+670 '
 680 ' Draw pattern 1
 690 '
 700 LINE(A0,B0)-(A1,B1),C1,BF

@@ -4,29 +4,38 @@
 130 R=RND(-TIME)
 135 COLOR 1,15,15
 140 SCREEN 2: CLS
-150 CM=8
+150 CM=12
 160 DIM CO(CM,2)
-170 CO(0,0)=4    ' blue
-180 CO(0,1)=5
-190 CO(1,0)=8    ' red
+170 CO(0,0)=6
+180 CO(0,1)=8
+190 CO(1,0)=8
 200 CO(1,1)=9
-210 CO(2,0)=2    ' green
-220 CO(2,1)=3
+210 CO(2,0)=9  ' green
+220 CO(2,1)=10
 230 CO(3,0)=10   ' yellow
 240 CO(3,1)=11
-250 CO(4,0)=5    ' blue
-260 CO(4,1)=7
-270 CO(5,0)=8    ' red
-280 CO(5,1)=11
-290 CO(6,0)=12   ' green
+250 CO(4,0)=11   ' blue,cyan
+260 CO(4,1)=3
+270 CO(5,0)=3    ' red
+280 CO(5,1)=12
+290 CO(6,0)=12 ' green
 300 CO(6,1)=2
-301 CO(7,0)=13
-302 CO(7,1)=4
-310 RF=0         ' rnd fill threshold
+301 CO(7,0)=2  ' magenta,blue
+302 CO(7,1)=7
+303 CO(8,0)=7  ' magenta,blue
+304 CO(8,1)=5
+305 CO(9,0)=5
+306 CO(9,1)=4
+307 CO(10,0)=4
+308 CO(10,1)=13
+309 CO(11,0)=13
+310 CO(11,1)=6
+315 RF=0         ' rnd fill threshold
+319 ' Set block size here...
 320 'BS=8 : GOSUB 380
-330 'BS=16: GOSUB 380
+330 BS=16: GOSUB 380
 340 'BS=32: GOSUB 380
-350 BS=64: GOSUB 380
+350 'BS=64: GOSUB 380
 360 IF INKEY$="r" GOTO 310 ELSE 360
 370 END
 380 '
@@ -45,8 +54,8 @@
 510 '
 520 ' Pattern selector
 530 '
-540 P=INT(RND(1)*2)+6
-545 P=(K MOD 2) + 6
+540 P=CINT(RND(1)*5)+1
+545 'P=(K MOD 2) + 6
 550 C0=K MOD CM
 560 C1=INT(RND(1)*2)
 570 C2=1-C1
@@ -59,7 +68,8 @@
 640 IF P=5 THEN GOSUB 970
 650 IF P=6 THEN GOSUB 1020
 660 IF P=7 THEN GOSUB 1120
-670 RETURN
+665 RETURN
+670 '
 680 ' Draw pattern 1
 690 '
 700 LINE(A0,B0)-(A1,B1),C1,BF

@@ -8,6 +8,7 @@
     + [Mandelbrot](#mandelbrot)
     + [Strange Attractors](#strange-attractors)
     + [Phyllotaxis](#phyllotaxis)
+    + [Sketches](#sketches)
     + [3D Plot](#3d-plot)
   * [Graphics](#graphics)
     + [Palette](#palette)
@@ -58,7 +59,7 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 |                                      |                                      |
 | ------------------------------------ | ------------------------------------ |
 | ![](./assets/images/attractor06.png) | ![](./assets/images/attractor02.png) |
-| ![](./assets/images/attractor04.png) | ![](./assets/images/attractor03.png) |
+| ![](./assets/images/attractor04.png) | ![](./assets/images/attractor05.png) |
 |                                      |                                      |
 
 ### Phyllotaxis
@@ -77,6 +78,16 @@ The challenge for plotting this on an MSX1 is to make it fast(er) by using preco
 | ![](./assets/images/phyllotaxis.png)                             |
 | Phyllotaxis, rendered on a Canon V-20. |
 
+### Sketches
+
+A collection of small sketches.
+
+|                                              |                                          |
+| :------------------------------------------- | :--------------------------------------- |
+| ![pascal](./assets/images/pascal.png)        | ![openmsx0008](./assets/images/maze.png) |
+| [Triangle of Pascal](./src/basic/pascal.bas) | [Maze](./src/basic/maze.bas)             |
+| ![pascal](./assets/images/groovy.png)        | ![tmp](./assets/images/rainbow.png)      |
+| [Groovy](./src/basic/groovy.bas)             | [Rainbow](./src/basic/rainbow.bas)       |
 
 
 
