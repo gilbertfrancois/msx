@@ -7,10 +7,10 @@
 1060 CLS
 1070 ' *******************************
 1080 ' Constants
-1090 C0=3: ' radius scalar
-1100 NM=2000: ' max nr of elements
-1110 RC=C0-2: ' radius of elements
-1120 RM=12: ' radius for color change
+1090 C0=4:    ' radius scalar
+1100 RC=C0-0: ' radius of elements
+1110 RM=12: ' radius for color change
+1120 NM=2000: ' max nr of elements
 1125 CM=11: ' max nr of colors
 1130 DIM CP(CM+1): ' colour palette
 1140 CP(0)=12
@@ -45,15 +45,12 @@
 1440 A=A+137.5
 1450 IF A>360 THEN A=A-360
 1460 R=C0*SQR(N)
-1462 C1=CINT(R/24)-2
-1463 IF C1>0 THEN C1=0
-1464 RC=C0+C1
 1470 CI=CINT(R/RM)
 1480 IF CI>CM THEN CI=CM
 1490 CO=CP(CI)
 1520 X = CINT(R*(FN FC(A))+96+.5)+32
 1530 Y = CINT(R*(FN FS(A))+96+.5)
-1560 IF X>RC AND X<(255-RC) AND Y>RC AND Y<(191-RC) GOTO 1570 ELSE 1580
+1561 IF R<(96-(RC*.5)) GOTO 1570 ELSE 1580
 1570 GOSUB 2000: ' Draw element
 1580 NEXT N
 1590 GOTO 1590
