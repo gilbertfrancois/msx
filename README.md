@@ -143,9 +143,3 @@ Nowadays we are spoiled with cross compilers and fast computers. However, it is 
 | -------------------------------------------- | -------------------------------------------- |
 | ![memmon_page1](./assets/images/memmon1.png) | ![memmon_page2](./assets/images/memmon2.png) |
 | Simple Memory Monitor, screen 1              | Simple Memory Monitor, screen 2              |
-
-
-
-
-
-[#phyllotaxis]: 
