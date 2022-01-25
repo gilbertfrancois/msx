@@ -60,6 +60,25 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 | ![](./assets/images/attractor04.png) | ![](./assets/images/attractor03.png) |
 |                                      |                                      |
 
+### Phyllotaxis
+[phyllo.bas](./src/basic/phyllo.bas) The beautiful arrangement of leaves in some plants, called phyllotaxis, obeys a number of subtle mathematical relationships. For instance, the florets in the head of a sunflower form two oppositely directed spirals: 55 of them clockwise and 34 counterclockwise. Surprisingly, these numbers are consecutive Fibonacci numbers. The phyllotaxis can be easily drawn by using the following formulas:
+
+```
+phi = n*137.5
+  r = sqr(n)
+  x = r*cos(phi)
+  y = r*sin(phi)
+```
+
+The challenge for plotting this on an MSX1 is to make it fast(er) by using precomputed cos and sin lookup tables and to create a nice color image that does not show the limitations of color rendering from the MSX1.
+|                                                              |
+| ------------------------------------------------------------ |
+| ![](./assets/images/phyllotaxis.png)                             |
+| Phyllotaxis, rendered on a Canon V-20. |
+
+
+
+
 ### 3D Plot
 
 [plot3d.bas](./src/basic/plot3d.bas) plotting program to visualize 3D plots `f(x, y) = z`. To change the input function and domain, edit the first lines of the code.
