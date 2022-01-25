@@ -7,6 +7,7 @@
   * [The art of mathematics](#the-art-of-mathematics)
     + [Mandelbrot](#mandelbrot)
     + [Strange Attractors](#strange-attractors)
+    + [Phyllotaxis](#phyllotaxis)
     + [3D Plot](#3d-plot)
   * [Graphics](#graphics)
     + [Palette](#palette)
@@ -145,3 +146,6 @@ Nowadays we are spoiled with cross compilers and fast computers. However, it is 
 
 
 
+
+
+[#phyllotaxis]: 
