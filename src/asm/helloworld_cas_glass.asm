@@ -1,3 +1,4 @@
+    ; CAS header with the filename
     db $1F, $A6, $DE, $BA, $CC, $13, $7D, $74
     db $D0, $D0, $D0, $D0, $D0, $D0, $D0, $D0, $D0, $D0
     db "hellow"
@@ -6,6 +7,7 @@
     dw FileEnd - 1
     dw Main
 
+    ; org statement after the header
     org $C000
 
 CHPUT   equ $00A2
@@ -38,6 +40,6 @@ Finished:
     ret
 
 helloWorld:
-    db "Hello world!",0
+    db "Hello world!", 0
 
 FileEnd:

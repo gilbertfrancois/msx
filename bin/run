@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+PROJECT_ROOT=${DIR}/..
+
+if [[ ${1} == "rom" ]]; then
+    /Applications/openMSX.app/Contents/MacOS/openmsx -machine Canon_V-20 -cart ${PROJECT_ROOT}/build/out.rom
+elif [[ ${1} == "bin" ]]; then
+    /Applications/openMSX.app/Contents/MacOS/openmsx -machine Sony_HB-F700P -diska ${PROJECT_ROOT}/build
+elif [[ ${1} == "cas" ]]; then
+    /Applications/openMSX.app/Contents/MacOS/openmsx -machine Canon_V-20 -cassetteplayer ${PROJECT_ROOT}/build/out.cas
+fi

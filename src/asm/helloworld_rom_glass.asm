@@ -1,27 +1,20 @@
-; Constant definitions
-INIT32  equ $006F
-CHPUT   equ $00A2
-LINLEN  equ $F3B0
-
-RomSize equ $4000
-
-; Compilation address
+    ; org statement before the header
     org $4000
 
-; ROM header
-    db "AB"             ; magic number
-    dw Main             ; program execution address
+    ; ROM header
+    db "AB"
+    dw Main
     dw 0, 0, 0, 0, 0, 0
 
-; Program code entry point
+RomSize equ $4000
+CHPUT   equ $00A2
+
+FileStart:
 Main:
-    call INIT32         ; set screen 1
-    ld a, 32
-    call LINLEN         ; set width 32
-    ld hl, helloWorld   ; load string
-    call PrintStr       ; print string
-    call NewLn          ; goto new line
-    call Finished       ; end
+    ld hl, helloWorld
+    call PrintStr
+    call NewLn
+    call Finished
 
 PrintStr:
     ld a, (hl)
@@ -40,16 +33,12 @@ NewLn:
     pop af
     ret
 
-; Halt program execution. Change to "ret" to return to MSX-BASIC.
 Finished:
-    ; ret
     di
     halt
 
-; Data
 helloWorld:
-    db "Hello world!",0
+    db "Hello world!", 0
 
-End:
-; Padding to make the file size a multiple of 16K
-    ds $4000 + RomSize - End, 255
+FileEnd:
+    ds $4000 + RomSize - FileEnd, 255
