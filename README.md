@@ -90,6 +90,13 @@ A collection of small sketches.
 | [Groovy](./src/basic/groovy.bas)             | [Rainbow](./src/basic/rainbow.bas)       |
 
 
+|                                  |
+| -------------------------------- |
+| ![dots](./assets/images/rug.png) |
+| [Flag](./src/basic/rug.bas)      |
+
+
+
 
 ### 3D Plot
 
