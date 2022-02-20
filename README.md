@@ -86,15 +86,10 @@ A collection of small sketches.
 | :------------------------------------------- | :--------------------------------------- |
 | ![pascal](./assets/images/pascal.png)        | ![openmsx0008](./assets/images/maze.png) |
 | [Triangle of Pascal](./src/basic/pascal.bas) | [Maze](./src/basic/maze.bas)             |
-| ![pascal](./assets/images/groovy.png)        | ![tmp](./assets/images/rainbow.png)      |
+| ![Groovy](./assets/images/groovy.png)        | ![Rainbow](./assets/images/rainbow.png)  |
 | [Groovy](./src/basic/groovy.bas)             | [Rainbow](./src/basic/rainbow.bas)       |
-
-
-|                                  |
-| -------------------------------- |
-| ![dots](./assets/images/rug.png) |
-| [Flag](./src/basic/rug.bas)      |
-
+| ![dots](./assets/images/rug.png)             | ![Blocks](./assets/images/blocks1.png)   |
+| [Flag](./src/basic/rug.bas)                  | [Blocks](./src/basic/blocks1.bas)        |
 
 
 
