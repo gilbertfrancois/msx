@@ -51,7 +51,7 @@ Champ has 4 modes, Insert, Edit, Assemble and Debug. You can switch between the 
 | ![](./assets/images/champ001.png)                            | ![](./assets/images/champ002.png)                            |
 | 1) Use **insert** and **edit** to type in the example program. | 2) In **assemble** mode, type `a` `2` to compile. Save the listing as text to cassette with `s` -> `filename`. |
 | ![](./assets/images/champ004.png)                            | ![](./assets/images/champ005.png)                            |
-| 3) Go to **debug** mode by pressing `m`, view memory and disassembled code with `Q saddr`. If you want, you can store your finished binary to cassette with: `W saddr faddr filename`. | 4) Go back to assemble mode by pressing `a`. Go back to basic with `q` `y` and type in the listing above. |
+| 3) Go to **debug** mode by pressing `m`, view memory and disassembled code with `Q saddr`. If you want, you can store your finished binary to cassette with: `W saddr faddr filename`. | 4) Go back to assemble mode by pressing `a`. Now go to **MSX Basic** with `q` `y` and type in the listing above. |
 | ![](./assets/images/champ006.png)                            | ![](./assets/images/champ007.png)                            |
 | 5) If all is well, type `run` and see if your program works. | 6) You can go back to the Assembler by the commands above and edit/update your asm program. |
 
@@ -69,29 +69,96 @@ What makes Champ really powerful is that you are able to step through code and m
 
 ### `<DEBUG>` mode commands
 
+<table>
+<tr>
+	<th style="width: 50%;">Command</th>
+	<th style="width: 50%;">Screenshot</th>
+</tr>
+<tr>
+	<td>5) If all is well, type `run` and see if your program works. | 6) You can go back to the Assembler by the commands above and edit/update your asm program.</td>
+	<td><img src="./assets/images/champ007.png"></td>
+</tr>
+</table>
 
 
-
-| Command | Effect |
-| :----- | :----- |
-| @*addr* | Memory from the given *addr* onwards displayed, one byte at the time, in hex and ascii equivalent. Hit (RET) to advance to next byte, hit (ESC) to return to command level, or type a hex constant to replace the existing content of the byte. |
-| A | Return to `<Assemble>` mode. |
-| D *addr* *faddr* | Memory from the given address onwards is displayed in screen pages: hit any key to continue, or (ESC) to return to command level. |
-| F *saddr* *faddr* *hx* | Every byte between *saddr* and *faddr* is filled with *hx*. |
-| K | Print source and symbol table usage. |
-| M *daddr* *saddr* *faddr* | The block of memory between *saddr* and *faddr* is copied to the block starting at *daddr*. |
-| Q *addr* | Memory from *addr* onwards is disassembled. Hit (RET) to continue and (ESC) to return to command level. |
-| G *addr* | The code starting at *addr* is executed (returnable). |
-| C *addr* | Execute from *addr* (non-returnable) |
-| B*n*=*addr* | A breakpoint number n (between 1 and 8) is set at *addr*, to cause a break in execution of any program which accesses the contents of *addr* as an instruction. Press (C)(RET) to continue from breakpoint. |
-| E*n* | Eliminates breakpoint *n*. |
-| T | Display the addresses of all breakpoints. |
-| R *regname* | Displays the contents of a CPU register and accepts a new value (similar to the function of @ above). |
-| J *addr* | Executes the code from *addr* onwards, one instruction at the time, giving a full register display. Hit (J) to continue, (ESC) to return to the command level. |
-| H *expr* | Displays the decimal, hex and binary value of expr. |
-| S *bytestr* | Searches the memory from $0000 onwards for every occurance of bytestr. |
-| N chstr | As `S` above. |
-| W | Load, save and veryfy machine code to tape. |
+<table>
+<tr>
+	<th style="width: 30%;">Command</th>
+	<th style="width: 70%;">Description</th>
+</tr>
+<tr>
+	<td> @addr </td>
+	<td> Memory from the given *addr* onwards displayed, one byte at the time, in hex and ascii equivalent. Hit (RET) to advance to next byte, hit (ESC) to return to command level, or type a hex constant to replace the existing content of the byte. </td>
+</tr>
+<tr>
+	<td> A </td>
+  <td> Return to Assemble mode. </td>
+</tr>
+<tr>
+	<td> D addr faddr </td>
+	<td> Memory from the given address onwards is displayed in screen pages: hit any key to continue, or (ESC) to return to command level. </td>
+</tr>
+<tr>
+	<td> F saddr faddr hx </td>
+	<td> Every byte between saddr and faddr is filled with hx. </td>
+</tr>
+<tr>
+	<td> K </td>
+	<td> Print source and symbol table usage. </td>
+</tr>
+<tr>
+	<td> M daddr saddr faddr </td>
+	<td> The block of memory between saddr and faddr is copied to the block starting at daddr. </td>
+</tr>
+<tr>
+  <td> Q addr </td>
+  <td> Memory from addr onwards is disassembled. Hit (RET) to continue and (ESC) to return to command level. </td>
+</tr>
+<tr>
+	<td> G addr </td>
+	<td> The code starting at addr is executed (returnable). </td>
+</tr>
+<tr>
+	<td>C addr </td>
+	<td> Execute from addr (non-returnable) </td>
+</tr>
+<tr>
+	<td> Bn=addr </td>
+	<td> A breakpoint number n (between 1 and 8) is set at addr, to cause a break in execution of any program which accesses the contents of addr as an instruction. Press (C)(RET) to continue from breakpoint. </td>
+</tr>
+<tr>
+	<td> En </td>
+	<td> Eliminates breakpoint n. </td>
+</tr>
+<tr>
+	<td> T </td>
+	<td> Display the addresses of all breakpoints. </td>
+</tr>
+<tr>
+	<td> R regname </td>
+	<td> Displays the contents of a CPU register and accepts a new value (similar to the function of @ above). </td>
+</tr>
+<tr>
+	<td> J addr </td>
+	<td> Executes the code from addr onwards, one instruction at the time, giving a full register display. Hit (J) to continue, (ESC) to return to the command level. </td>
+</tr>
+<tr>
+	<td> H expr </td>
+	<td> Displays the decimal, hex and binary value of expr. </td>
+</tr>
+<tr>
+	<td> S bytestr </td>
+	<td> Searches the memory from $0000 onwards for every occurance of bytestr. </td>
+</tr>
+<tr>
+	<td> N chstr </td>
+	<td> As `S` above. </td>
+</tr>
+<tr>
+	<td> W </td>
+	<td> Load, save and verify machine code to tape. </td>
+</tr>
+</table>
 
 
 
