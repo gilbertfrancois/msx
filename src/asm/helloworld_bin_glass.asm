@@ -6,13 +6,26 @@
     org $C000
 
 CHPUT   equ $00A2
+POSIT	equ $00C6
+BEEP    equ $00C0
 
 FileStart:
 Main:
+	ld hl, $040B
+	call Locate
     ld hl, helloWorld
     call PrintStr
     call NewLn
+	ld hl, $0114
+	call Locate
+	call BEEP
     call Finished
+
+Locate:
+	; push hl
+	call POSIT
+	; pop hl 
+	ret
 
 PrintStr:
     ld a, (hl)

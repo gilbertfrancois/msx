@@ -50,6 +50,6 @@ Finished:
 helloWorld:
     db "Hello world!",0
 
-End:
+FileEnd:
 ; Padding to make the file size a multiple of 16K
-    ds &4000 + RomSize - End, 255
+    ds &4000 + RomSize - FileEnd, 255
