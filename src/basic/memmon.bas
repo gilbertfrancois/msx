@@ -7,7 +7,11 @@
 100 PRINT"[i] Simple Memory Monitor"
 105 PRINT"[i] Gilbert Francois Duivesteijn"
 110 PRINT"[i] -----------------------------------"
+115 INPUT"[?] [M]emory or [C]haracter";SW$
 120 INPUT"[?] Start address";SA
+122 IF SW$="m" THEN 150 ELSE 124
+124 GOSUB 3100
+125 END
 130 CLS
 140 PRINT"---------------------------------------"
 150 GOSUB 900
@@ -39,4 +43,20 @@
 2040 POKE(SA+I),&HFF
 2050 NEXT I
 2060 END
+3000 ' Print character
+3010 ' in: SA: Start address
+3020 '
+3030 FOR I=0 TO 7
+3040 PRINT(BIN$(PEEK(SA+I)))
+3050 NEXT I
+3060 RETURN
+3100 ' Print character 2
+3110 ' in: SA: Start address
+3120 '
+3130 FOR I=0 TO 7
+3140 B$=BIN$(PEEK(SA+I))
+3150 B$=STRING$(8-LEN(B$),"0")+B$
+3160 PRINT B$
+3170 NEXT I
+3180 RETURN
 
