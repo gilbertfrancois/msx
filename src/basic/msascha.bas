@@ -1,0 +1,39 @@
+10 ' "Sascha liebt nicht grosse Worte"
+20 ' Gilbert Francois Duivesteijn
+30 '
+40 COLOR 15,4,4
+50 KEY OFF: CLS
+60 PRINT"Sascha liebt nicht grosse Worte"
+70 PRINT ""
+80 PRINT "----------------------------------------"
+90 PRINT ""
+100 PRINT "Sascha liebt nicht grosse Worte,"
+110 PRINT "denn er war von eigner Sorte,"
+120 PRINT "konnte hoch im Bogen spucken"
+130 PRINT "und auch mit den Ohren zucken."
+140 PRINT
+150 PRINT "Nja nja nja, nja nja nja,"
+160 PRINT "nja nja nja nja nja nja nja,"
+170 PRINT "Nja nja nja, nja nja nja,"
+180 PRINT "nja nja nja nja nja nja nja."
+190 PRINT ""
+200 LOCATE 0,18
+210 PLAY "s09m40000","s00m40000"
+220 PLAY "o5e4e4e4c4","o2a2o3e2"
+230 PLAY "o5e4e4e4c4","o2a2o3e2"
+240 PLAY "o4b4o5d4c4o4b4","o2b2o3e2"
+250 PLAY "o4a4a4a4a4","o2a2o3e2"
+260 PLAY "o5e4e4e4c4","o2a2o3e2"
+270 PLAY "o5e4e4e4c4","o2a2o3e2"
+280 PLAY "o4b4o5d4c4o4b4","o2b2o3e2"
+290 PLAY "o4a4a4a4a4","o2a2o3e2"
+300 PLAY "s09m40000","s00m40000"
+310 PLAY "o5f4f4f2","o3d2a2"
+320 PLAY "o5e4e4e2","o2a2o3a2"
+330 PLAY "o5d4d4c4o4b4","o3b2e2"
+340 PLAY "o5c4d4e2","o3a4b4o4c2"
+350 PLAY "o5f4f4f2","o3d2a2"
+360 PLAY "o5e4e4e2","o2a2o3a2"
+370 PLAY "o5d4d4c4o4b4","o3b2e2"
+380 PLAY "o4a4a4a2","o2a2a2"
+
