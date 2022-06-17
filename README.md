@@ -99,7 +99,7 @@ A collection of small sketches.
 
 |                                              |                                              |
 | :------------------------------------------- | :------------------------------------------- |
-| ![openmsx0009](./assets/images/plot3d_2.png) | ![openmsx0008](./assets/images/plot3d_1.png) |
+| ![plot1](./assets/images/plot3d_2.png) | ![plot2](./assets/images/plot3d_1.png) |
 | Plot view of function $f(x,y)=x^3y-y^3x$     | Values view                                  |
 
 
