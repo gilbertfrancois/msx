@@ -122,7 +122,7 @@ What makes Champ really powerful is that you are able to step through code and m
 
 ## References
 
-[Champ MSX Users Manual](./assets/doc/champ.pdf)
+[Champ MSX Users Manual](./assets/doc/champ_msx.pdf)
 
 [Champ ZX Spectrum Users Manual](./assets/doc/champ_zxspectrum.pdf)
 
