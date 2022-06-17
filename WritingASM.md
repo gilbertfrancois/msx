@@ -57,25 +57,26 @@ Champ has 4 modes, Insert, Edit, Assemble and Debug. You can switch between the 
 
 ## Example 2: Assembler -> Run, Debug and Monitor
 
-What makes Champ really powerful is that you are able to step through code and monitor the memory, stack, registers and program count. Let's go through a very simple example and step though the code line by line:
+What makes Champ really powerful is that you are able to step through code and monitor the memory, stack, registers and program count. Let's go through a very simple example and step though the code line by line. 
 
 
-
-| Description | Screenshot |
-| ----------- | ---------- |
-|             |            |
-|             |            |
-|             |            |
-|             |            |
-|             |            |
-|             |            |
-|             |            |
-|             |            |
-|             |            |
+*[WORK IN PROGRESS]*
 
 
 
 ## Commands and keybindings
+
+### `<ASSEMBLE>` mode commands
+
+*[WORK IN PROGRESS]*
+
+### `<INSERT>` mode commands
+
+*[WORK IN PROGRESS]*
+
+### `<EDIT>` mode commands
+
+*[WORK IN PROGRESS]*
 
 ### `<DEBUG>` mode commands
 
@@ -106,8 +107,7 @@ What makes Champ really powerful is that you are able to step through code and m
 
 
 
-
-Some notes:
+## Some final notes:
 
 - Champ has 3 columns: label, command, arguments.
 - Press space if the line does not start with a label, to go to the next column.
