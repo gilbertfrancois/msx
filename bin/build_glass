@@ -4,4 +4,4 @@ PROJECT_ROOT=${DIR}/..
 
 rm -f ${PROJECT_ROOT}/build/*
 
-java -jar ${PROJECT_ROOT}/bin/glass.jar $1 ${PROJECT_ROOT}/build/out.${2}
+java -jar ${PROJECT_ROOT}/bin/glass.jar $1 -L ${PROJECT_ROOT}/build/listing.txt ${PROJECT_ROOT}/build/out.${2}
