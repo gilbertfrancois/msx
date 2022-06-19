@@ -1,12 +1,11 @@
-    ; org statement before the header
-    org $4000
-
-    ; ROM header
-    db "AB"
+    db $FE
+    dw FileStart
+    dw FileEnd - 1
     dw Main
-    dw 0, 0, 0, 0, 0, 0
 
-RomSize equ $4000
+    ; org statement after the header
+    org $C000
+
 CHPUT   equ $00A2
 
 FileStart:
@@ -34,11 +33,9 @@ NewLn:
     ret
 
 Finished:
-    di
-    halt
+    ret
 
 helloWorld:
     db "Hello world!", 0
 
 FileEnd:
-    ds $4000 + RomSize - FileEnd, 255

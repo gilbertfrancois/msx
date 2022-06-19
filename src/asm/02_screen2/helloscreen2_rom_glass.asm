@@ -4,11 +4,18 @@
     dw Execute  ; program execution address
     dw 0, 0, 0, 0, 0, 0
 
-VDPOutData    equ $98
-VDPOutControl equ $99
+VDPOutData			equ $98
+VDPOutControl		equ $99
+CHGMOD				equ $005f
 
-RomSize equ $4000
-CHGMOD  equ $005f
+PatternGeneratorTable			equ $0000
+; PatternNameTable				equ $1800
+ColorTable						equ $2000
+; SpriteAttributes				equ $1b00
+; SpritePatternGeneratorTable		equ $1800
+; Unused							equ $3c00
+
+RomSize					equ $4000
 
 Execute:
     ld a, 2
@@ -17,25 +24,25 @@ Execute:
     ; ld bc, 0e201h  ; write 1110 0010 = 0xe2 to VDP(1) 
     ; call WRTVDP
 
-	ld hl, $0000 + 128 * 8		;Define Tiles 128+ (8 Bytes per tile)
+	ld hl, PatternGeneratorTable + 128 * 8		;Define Tiles 128+ (8 Bytes per tile)
 	call VDPSetWriteAddress
 	
 	ld hl, TestSprite		;Copy Tile pixel Data
 	ld b, 8 				;Bytes
 	otir					;C=VdpOut_Data
 	
-	ld hl, $2000 + 128 * 8		;Define Tile Palette 128+ (8 Bytes per tile)
+	ld hl, ColorTable + 128 * 8		;Define Tile Palette 128+ (8 Bytes per tile)
 	call VDPSetWriteAddress
 	
 	ld hl, TestSpritePalette ;Copy Tile Palette Data
 	ld b, 8 					;Bytes
 	otir					;C=VdpOut_Data
 		
-	ld bc, $0808				;X,Y pos
-	call GetVDPScreenPos
+	; ld bc, $0f0c				;X,Y pos
+	; call GetVDPScreenPos
 	
-	ld a, 128				;Tile 128
-	out (c), a
+	; ld a, 128				;Tile 128
+	; out (c), a
 
     di
     halt
@@ -85,7 +92,7 @@ GetVDPScreenPos:
     ld l, a
     
     ld a, h
-    or $18	;Tilemap starts at &1800
+    or $18
     ld h, a
     call VDPSetWriteAddress
 	ret

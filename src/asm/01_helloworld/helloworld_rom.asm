@@ -1,11 +1,16 @@
-    db &FE
-    dw FileStart
-    dw FileEnd - 1
+; Build with:
+; java -jar glass.jar helloworld_rom.asm -L listing.txt -o helloworld.rom
+;
+    ; org statement before the header
+    org $4000
+
+    ; ROM header
+    db "AB"
     dw Main
+    dw 0, 0, 0, 0, 0, 0
 
-    org &C000
-
-CHPUT   equ &00A2
+RomSize equ $4000
+CHPUT   equ $00A2
 
 FileStart:
 Main:
@@ -32,9 +37,11 @@ NewLn:
     ret
 
 Finished:
-    ret
+	di
+	halt
 
 helloWorld:
-    db "Hello world!",0
+    db "Hello world!", 0
 
 FileEnd:
+    ds $4000 + RomSize - FileEnd, 255

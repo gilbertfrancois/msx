@@ -1,31 +1,26 @@
-    db $FE
+; Build with:
+; java -jar glass.jar helloworld_cas.asm -L listing.txt -o helloworld.cas
+;
+    ; CAS header with the filename
+    db $1F, $A6, $DE, $BA, $CC, $13, $7D, $74
+    db $D0, $D0, $D0, $D0, $D0, $D0, $D0, $D0, $D0, $D0
+    db "hellow"
+    db $1F, $A6, $DE, $BA, $CC, $13, $7D, $74
     dw FileStart
     dw FileEnd - 1
     dw Main
 
+    ; org statement after the header
     org $C000
 
 CHPUT   equ $00A2
-POSIT	equ $00C6
-BEEP    equ $00C0
 
 FileStart:
 Main:
-	ld hl, $040B
-	call Locate
     ld hl, helloWorld
     call PrintStr
     call NewLn
-	ld hl, $0114
-	call Locate
-	call BEEP
     call Finished
-
-Locate:
-	; push hl
-	call POSIT
-	; pop hl 
-	ret
 
 PrintStr:
     ld a, (hl)
@@ -48,6 +43,6 @@ Finished:
     ret
 
 helloWorld:
-    db "Hello world!",0
+    db "Hello world!", 0
 
 FileEnd:
