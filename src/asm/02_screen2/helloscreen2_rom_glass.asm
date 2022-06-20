@@ -8,96 +8,86 @@ VDPOutData			equ $98
 VDPOutControl		equ $99
 CHGMOD				equ $005f
 
-PatternGeneratorTable			equ $0000
-; PatternNameTable				equ $1800
-ColorTable						equ $2000
-; SpriteAttributes				equ $1b00
-; SpritePatternGeneratorTable		equ $1800
-; Unused							equ $3c00
-
-RomSize					equ $4000
+RomSize				equ $4000
 
 Execute:
     ld a, 2
     call CHGMOD
 
-    ; ld bc, 0e201h  ; write 1110 0010 = 0xe2 to VDP(1) 
-    ; call WRTVDP
+	ld hl, $0000
+	call VDPSetWriteAddress
+	ld hl, TestSprite
+	ld b, 8
+	otir
 
-	ld hl, PatternGeneratorTable + 128 * 8		;Define Tiles 128+ (8 Bytes per tile)
+	ld hl, $2000
 	call VDPSetWriteAddress
-	
-	ld hl, TestSprite		;Copy Tile pixel Data
-	ld b, 8 				;Bytes
-	otir					;C=VdpOut_Data
-	
-	ld hl, ColorTable + 128 * 8		;Define Tile Palette 128+ (8 Bytes per tile)
-	call VDPSetWriteAddress
-	
-	ld hl, TestSpritePalette ;Copy Tile Palette Data
-	ld b, 8 					;Bytes
-	otir					;C=VdpOut_Data
+	ld hl, TestSpritePalette
+	ld b, 8
+	otir
 		
-	; ld bc, $0f0c				;X,Y pos
-	; call GetVDPScreenPos
-	
-	; ld a, 128				;Tile 128
-	; out (c), a
+	ld hl, $0008
+	call VDPSetWriteAddress
+	ld hl, TestSprite
+	ld b, 8
+	otir
+
+	ld hl, $000f
+	call VDPSetWriteAddress
+	ld hl, TestSprite
+	ld b, 8
+	otir
+
+	ld hl, $0020
+	call VDPSetWriteAddress
+	ld hl, TestSprite
+	ld b, 8
+	otir
+
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
 
     di
     halt
 
-TestSprite:				;1 bit per pixel smiley
-	db %00111100	
-	db %01111110	
-	db %11011011	
-	db %11111111	
-	db %11111111	
-	db %11011011	
-	db %01100110	
-	db %00111100
-
-TestSpritePalette:
-	;   FB 		=Fore		Back	
-	db $A0		;DarkYellow	Black
-	db $A0		;DarkYellow	Black
-	db $BC		;Yellow		DarkGreen
-	db $BC		;Yellow		DarkGreen
-	db $BC		;Yellow		DarkGreen
-	db $BC		;Yellow		DarkGreen
-	db $AC		;DarkYellow	DarkGreen
-	db $A0		;DarkYellow	Black
-	
 VDPSetWriteAddress:
     ld a, l
     out (VDPOutControl), a
     ld a, h
-    or $01000000
+    or %01000000
     out (VDPOutControl), a
     ld c, VDPOutData
     ret
 
-GetVDPScreenPos:
-    ld h, c ; B=xpos (0, 31), C=ypos (0, 23)
-    xor a
-    
-    srl h	;32 bytes per line, so shift L left 5 times, and push any overflow into H
-    rr a
-    srl h
-    rr a
-    srl h
-    rr a
-    
-    or b	;Or in the X co-ordinate
-    ld l, a
-    
-    ld a, h
-    or $18
-    ld h, a
-    call VDPSetWriteAddress
-	ret
+TestSprite:	
+	db %10000001	
+	db %11000001	
+	db %10100001	
+	db %10010001	
+	db %10001001	
+	db %10000101	
+	db %10000011	
+	db %10000001	
 
-
+TestSpritePalette:
+	db $12
+	db $13
+	db $14
+	db $15
+	db $17
+	db $16
+	db $18
+	db $19
+	
 ProgEnd:
 ; Padding with 255 to make the file of 16K size (can be 4K, 8K, 16k, etc) but
 ; some MSX emulators or Rom loaders can not load 4K/8K Roms.
