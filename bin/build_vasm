@@ -8,5 +8,5 @@ rm -f ${PROJECT_ROOT}/build/*
 
 vasmz80_oldstyle ${1} -chklabels -nocase \
     -Dvasm=1 -Fbin \
-    -L ${PROJECT_ROOT}/build/listing.sym \
+    -L ${PROJECT_ROOT}/build/out.sym \
     -o ${PROJECT_ROOT}/build/out.${2}
