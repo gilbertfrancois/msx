@@ -1,5 +1,4 @@
 ; Hello World Screen 2
-; 2022, Gilbert Francois Duivesteijn
 ;
 ; Show bitmap tiles, using BIOS functions.
 ;
@@ -40,13 +39,13 @@ Main:
     call LDIRVM
 
     ; Place pattern0 to (x,y)=(2, 1)
-    ld hl, $1800 + 2 + 1*32
+    ld hl, $1800 + 1 + 1*32
     call SETWRT
     ld a, $00
     out (VDPData), a
 
     ; Place pattern0 to (x,y)=(4, 2)
-    ld hl, $1800 + 4 + 1*32
+    ld hl, $1800 + 2 + 2*32
     call SETWRT
     ld a, $00
     out (VDPData), a
@@ -57,12 +56,12 @@ Main:
 
 Pattern0:
     db %10101010
-    db %01000001
-    db %10100000
-    db %00010001
-    db %10001000
-    db %00000101
+    db %01010101
     db %10000010
+    db %01000001
+    db %10000010
+    db %01000001
+    db %10101010
     db %01010101
 
 Color0:

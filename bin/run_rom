@@ -5,3 +5,4 @@ PROJECT_ROOT=${DIR}/..
 
 /Applications/openMSX.app/Contents/MacOS/openmsx -machine Canon_V-20 -cart ${PROJECT_ROOT}/build/out.rom
 # /Applications/openMSX.app/Contents/MacOS/openmsx -machine C-BIOS_MSX2 -cart ${PROJECT_ROOT}/build/out.rom
+# /Applications/openMSX.app/Contents/MacOS/openmsx -machine C-BIOS_MSX1_EU -cart ${PROJECT_ROOT}/build/out.rom

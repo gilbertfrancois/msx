@@ -15,8 +15,13 @@
 
 CHPUT   equ $00A2
 
+CHGMOD  equ $005f
+
 FileStart:
 Main:
+    ld a, 0
+    call CHGMOD
+
     ld hl, helloWorld
     call PrintStr
     call NewLn
