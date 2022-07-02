@@ -1,13 +1,17 @@
-    db $FE
+ORGADR  equ $c000
+CHPUT   equ $00A2
+CHGMOD  equ $005f
+ 
+	; Place header before the binary.
+	org ORGADR - 7
+	; Bin header, 7 bytes
+	db $fe
     dw FileStart
     dw FileEnd - 1
     dw Main
 
     ; org statement after the header
-    org $C000
-
-CHPUT   equ $00A2
-CHGMOD  equ $005f
+    org ORGADR
 
 FileStart:
 Main:

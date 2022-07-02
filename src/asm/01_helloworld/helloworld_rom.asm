@@ -1,17 +1,14 @@
-; Build with:
-; java -jar glass.jar helloworld_rom.asm -L listing.txt -o helloworld.rom
-;
-    ; org statement before the header
-    org $4000
+ORGADR  equ $4000
+CHPUT   equ $00A2
+CHGMOD  equ $005f
+RomSize equ $4000
 
+    ; org statement before the header
+    org ORGADR
     ; ROM header
     db "AB"
     dw Main
     dw 0, 0, 0, 0, 0, 0
-
-RomSize equ $4000
-CHPUT   equ $00A2
-CHGMOD  equ $005f
 
 FileStart:
 Main:

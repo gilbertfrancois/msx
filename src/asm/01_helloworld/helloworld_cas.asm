@@ -1,7 +1,8 @@
-; Build with:
-; java -jar glass.jar helloworld_cas.asm -L listing.txt -o helloworld.cas
-;
-    ; CAS header with the filename
+ORGADR  equ $c000
+
+	org ORGADR - 38
+
+    ; CAS header with the filename, 38 bytes 
     db $1F, $A6, $DE, $BA, $CC, $13, $7D, $74
     db $D0, $D0, $D0, $D0, $D0, $D0, $D0, $D0, $D0, $D0
     db "hellow"
@@ -11,10 +12,9 @@
     dw Main
 
     ; org statement after the header
-    org $C000
+    org ORGADR
 
 CHPUT   equ $00A2
-
 CHGMOD  equ $005f
 
 FileStart:
