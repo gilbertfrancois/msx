@@ -1,19 +1,19 @@
 ; Hello World Screen 2
-;
 ; Show bitmap tiles, using self written 'copy to VRAM' routines.
 ;
-    ; ROM header
-    org $4000
-    db "AB"
-    dw Main
-    dw 0, 0, 0, 0, 0, 0
-
 CHGMOD      equ $005f
-    ; a for screen mode
 VDPData     equ $98
 VDPControl  equ $99
 RomSize     equ $4000
 TilePos     equ 0 * 8
+
+    ; org statement before the header
+    org ORGADR
+    ; ROM header
+    db "AB"
+    dw Main
+    dw 0, 0, 0, 0, 0, 0
+
 
 Main:
     ; Change to screen 2

@@ -1,25 +1,22 @@
 ; Hello World Screen 2
-;
 ; Show bitmap tiles, using BIOS functions.
-;
-    ; ROM header
-    org $4000
-    db "AB"
-    dw Main
-    dw 0, 0, 0, 0, 0, 0
-
+; 
+ORGADR      equ $4000
 CHGMOD      equ $005f
-    ; a for screen mode
 LDIRVM      equ $005c
-    ; HL for source address (memory), 
-    ; DE for destination address (VRAM), 
-    ; BC for the length. All bits of the VRAM address are valid.
 SETWRT      equ $0053
-    ;HL for VRAM address
 VDPData     equ $98
 VDPControl  equ $99
 RomSize     equ $4000
 TilePos     equ 0 * 8
+
+    ; org statement before the header
+    org ORGADR
+    ; ROM header
+    db "AB"
+    dw Main
+    dw 0, 0, 0, 0, 0, 0
+
 
 Main:
     ; Change to screen 2
