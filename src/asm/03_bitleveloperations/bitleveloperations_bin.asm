@@ -1,33 +1,21 @@
-    db $FE
+ORGADR  equ $c000
+CHGMOD      equ $005f
+LDIRVM      equ $005c
+LDIRMV      equ $0059
+VDPData     equ $98
+VDPControl  equ $99
+VramCache   equ $c400
+
+	; Place header before the binary.
+	org ORGADR - 7
+	; Bin header, 7 bytes
+	db $fe
     dw FileStart
     dw FileEnd - 1
     dw Main
 
     ; org statement after the header
-    org $c000
-
-CHGMOD      equ $005f
-; Function : Switches to given screenmode
-; Input    : A  - screen mode
-; Registers: All
-
-LDIRVM      equ $005c
-; Function : Block transfer from memory to VRAM 
-; Input    : BC - blocklength
-;            DE - Start address of VRAM
-;            HL - Start address of memory
-; Registers: All
-
-LDIRMV      equ $0059
-; Function : Block transfer from VRAM to memory 
-; Input    : BC - blocklength
-;            DE - Start address of memory
-;            HL - Start address of VRAM
-; Registers: All
-
-VDPData     equ $98
-VDPControl  equ $99
-VramCache   equ $c400
+	org ORGADR
 
 FileStart:
 Main:

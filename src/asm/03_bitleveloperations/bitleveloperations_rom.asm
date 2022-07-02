@@ -1,35 +1,22 @@
 ; Bit level operations in screen 1
 ; ROM version
 ;
-    ; ROM header
-    org $4000
-    db "AB"
-    dw Main
-    dw 0, 0, 0, 0, 0, 0
-
+ORGADR      equ $4000
 CHGMOD      equ $005f
-; Function : Switches to given screenmode
-; Input    : A  - screen mode
-; Registers: All
-
 LDIRVM      equ $005c
-; Function : Block transfer from memory to VRAM 
-; Input    : BC - blocklength
-;            DE - Start address of VRAM
-;            HL - Start address of memory
-; Registers: All
-
 LDIRMV      equ $0059
-; Function : Block transfer from VRAM to memory 
-; Input    : BC - blocklength
-;            DE - Start address of memory
-;            HL - Start address of VRAM
-; Registers: All
-
 VDPData     equ $98
 VDPControl  equ $99
 RomSize     equ $4000
 VramCache   equ $c000
+
+    ; org statement before the header
+    org ORGADR
+    ; ROM header
+    db "AB"
+    dw Main
+    dw 0, 0, 0, 0, 0, 0
+
 
 Main:
     ; Go to screen 1
@@ -48,9 +35,9 @@ Main:
 Again:
     ld a, (hl)
     ; uncomment one of the 3 lines below to see the effect
-    ; and %1111000
-    or %11110000
-    ; xor %11110000
+    ; and %11110000
+    ; or %11110000
+    xor %11110000
     ld (hl), a
     inc hl
     dec bc
