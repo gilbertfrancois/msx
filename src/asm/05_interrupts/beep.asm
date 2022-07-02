@@ -4,18 +4,21 @@
 ;    https://msx.org/forum/msx-talk/hardware/way-detect-vblank-time
 ;    https://www.youtube.com/watch?v=aUkHk_mjtOU
 
-    ; BIN header
-    db $FE
+ORGADR      equ $c000
+BEEP        equ $00c0
+HTIMI       equ $fd9f
+MaxCount    equ 50
+
+	; Place header before the binary.
+	org ORGADR - 7
+	; Bin header, 7 bytes
+	db $fe
     dw FileStart
     dw FileEnd - 1
     dw Main
 
     ; org statement after the header
-    org $C000
-
-BEEP     equ $00c0
-HTIMI    equ $fd9f
-MaxCount equ 50
+	org ORGADR
 
 FileStart:
 Main:

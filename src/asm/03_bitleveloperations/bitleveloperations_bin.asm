@@ -1,4 +1,4 @@
-ORGADR  equ $c000
+ORGADR      equ $c000
 CHGMOD      equ $005f
 LDIRVM      equ $005c
 LDIRMV      equ $0059
