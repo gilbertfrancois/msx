@@ -1,7 +1,7 @@
 ORGADR  equ $c000
 
+	; Place header before the binary.
 	org ORGADR - 38
-
     ; CAS header with the filename, 38 bytes 
     db $1F, $A6, $DE, $BA, $CC, $13, $7D, $74
     db $D0, $D0, $D0, $D0, $D0, $D0, $D0, $D0, $D0, $D0
