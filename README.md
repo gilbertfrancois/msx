@@ -140,7 +140,7 @@ On an MSX2 with floppy drive, it is easy to dump the screen with the `bsave "fil
 
 Nowadays we are spoiled with cross compilers and fast computers. However, it is still fun to write assembly code on a real msx computer. Click on the link below for a tutorial on how to use the assembler Champ and see how I programmed in assembly in the 80s! Champ is fantastic, since it is a assembler, editor, debugger and monitor all in one. Moreover, it allows the developer to switch between the development environment and basic interpreter.
 
-[TUTORIAL: Writing and debugging Assembly for MSX with Champ](WritingASM.md)
+[Journey into MSX Z80 Assembly programming](https://gilbertfrancois.github.io)
 
 ### Memory Visualizers
 
