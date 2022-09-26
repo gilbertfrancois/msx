@@ -25,7 +25,7 @@ Around 1986, when I was in 2nd grade of Gymnasium, I bought a Canon V-20 MSX com
 
 Since there was no such thing as Github back then, I wrote the code down in a notebook (pen and paper!). Only later, I got a cassette recorder and saved the programs on tape. Now, > 35 years later,  the tapes are lost and I didn't have this computer anymore. However, in july 2021, I started to type in some of the programs from the old notebook and put them in Git for conservation and most of all, for fun. 
 
-
+Please visit also my other MSX page: [Journey into MSX Z80 Assembly programming](https://gilbertfrancois.github.io)
 
 ## The art of mathematics
 
