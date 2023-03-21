@@ -7,7 +7,7 @@
   * [The art of mathematics](#the-art-of-mathematics)
     + [Mandelbrot](#mandelbrot)
     + [Strange Attractors](#strange-attractors)
-    + [Phyllotaxis](#phyllotaxis)
+    + [Fluid Flow Simulation](#fluid-flow-simulation)
     + [Sketches](#sketches)
     + [3D Plot](#3d-plot)
   * [Graphics](#graphics)
@@ -16,6 +16,10 @@
   * [Assembly](#assembly)
     + [TUTORIAL: Writing and debugging assembly on a real MSX computer](#tutorial--writing-and-debugging-assembly-on-a-real-msx-computer)
     + [Memory Visualizers](#memory-visualizers)
+  * [Text programs](#text-programs)
+    + [Cyrillic font loader](#cyrillic-font-loader)
+    + [Vocabulary trainer](#vocabulary-trainer)
+
 
 
 
@@ -56,40 +60,39 @@ yn = sin(ax) + d sin(ay)
 
 Then after taking an initial (x,y) coordinate, the new points are computed by repeating the formulas over and over again. The parameters a, b, c and d are chosen randomly. However, finding a combination of these parameters that result in a nice looking plot can be tricky. In many cases the combination of parameters results in a plot of only a few pixels.
 
-|                                      |                                      |
+| ![](./assets/images/attractor08.png) | ![](./assets/images/attractor02.png) |
 | ------------------------------------ | ------------------------------------ |
-| ![](./assets/images/attractor06.png) | ![](./assets/images/attractor02.png) |
-| ![](./assets/images/attractor04.png) | ![](./assets/images/attractor05.png) |
-|                                      |                                      |
 
-### Phyllotaxis
-[phyllo.bas](./src/basic/phyllo.bas) The beautiful arrangement of leaves in some plants, called phyllotaxis, obeys a number of subtle mathematical relationships. For instance, the florets in the head of a sunflower form two oppositely directed spirals: 55 of them clockwise and 34 counterclockwise. Surprisingly, these numbers are consecutive Fibonacci numbers. The phyllotaxis can be easily drawn by using the following formulas:
+| ![](./assets/images/attractor04.png) | ![](./assets/images/attractor05.png) | ![](./assets/images/attractor03.png) |
+| ------------------------------------ | ------------------------------------ | ------------------------------------ |
+| ![](./assets/images/attractor06.png) | ![](./assets/images/attractor07.png) | ![](./assets/images/attractor01.png) |
 
-```
-phi = n*137.5
-  r = sqr(n)
-  x = r*cos(phi)
-  y = r*sin(phi)
-```
 
-The challenge for plotting this on an MSX1 is to make it fast(er) by using precomputed cos and sin lookup tables and to create a nice color image that does not show the limitations of color rendering from the MSX1.
-|                                                              |
-| ------------------------------------------------------------ |
-| ![](./assets/images/phyllotaxis.png)                             |
-| Phyllotaxis, rendered on a Canon V-20. |
+
+
+
+### Fluid Flow Simulation
+
+[flow1.bas](./src/basic/flow1.bas), [flow2.bas](./src/basic/flow2.bas) , [flow3.bas](./src/basic/flow3.bas) I was always intreaged by fluid flow simulations. However, solving the Navier-Stokes equations on a MSX with given computational power and memory limitations is not really feasible, even if you let the computer run for several days. However, you can still get decent flow-like looking images, using Perlin noise. This technique is mainly used in the game industry to get fluid flow like behavior with the least amount of computational cost. To speed-up the computations on the MSX even more, I'm using lookup tables for sin() and cos() operators.
+
+| ![flow1](./assets/images/flow1.png) | ![flow3](./assets/images/flow3.png) |
+| ----------------------------------- | ----------------------------------- |
+| ![flow5](./assets/images/flow5.png) | ![flow2](./assets/images/flow2.png) |
+| ![flow4](./assets/images/flow4.png) | ![flow6](./assets/images/flow6.png) |
+
 
 ### Sketches
 
-A collection of small sketches.
+A collection of small sketches, made in Basic.
 
-|                                              |                                          |
-| :------------------------------------------- | :--------------------------------------- |
-| ![pascal](./assets/images/pascal.png)        | ![openmsx0008](./assets/images/maze.png) |
-| [Triangle of Pascal](./src/basic/pascal.bas) | [Maze](./src/basic/maze.bas)             |
-| ![Groovy](./assets/images/groovy.png)        | ![Rainbow](./assets/images/rainbow.png)  |
-| [Groovy](./src/basic/groovy.bas)             | [Rainbow](./src/basic/rainbow.bas)       |
-| ![dots](./assets/images/rug.png)             | ![Blocks](./assets/images/blocks1.png)   |
-| [Flag](./src/basic/rug.bas)                  | [Blocks](./src/basic/blocks1.bas)        |
+|                                              |                                          |                                        |
+| :------------------------------------------- | :--------------------------------------- | -------------------------------------- |
+| ![pascal](./assets/images/pascal.png)        | ![openmsx0008](./assets/images/maze.png) | ![dots](./assets/images/dots1.png)     |
+| [Triangle of Pascal](./src/basic/pascal.bas) | [Maze](./src/basic/maze.bas)             | [Dots](./src/basic/dots1.bas)          |
+| ![Groovy](./assets/images/groovy.png)        | ![Rainbow](./assets/images/rainbow.png)  | ![Blocks](./assets/images/blocks1.png) |
+| [Groovy](./src/basic/groovy.bas)             | [Rainbow](./src/basic/rainbow.bas)       | [Blocks](./src/basic/blocks1.bas)      |
+| ![Spiral](./assets/images/spirals1.png)      | ![Dance](./assets/images/dance5.png)     | ![](./assets/images/phyllotaxis.png)   |
+| [spirals1.bas](./src/basic/spirals1.bas)     | [dance.bas](./src/basic/dance.bas)       | [phyllo.bas](./src/basic/phyllo.bas)   |
 
 
 
