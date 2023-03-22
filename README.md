@@ -2,26 +2,7 @@
 
 *Gilbert François Duivesteijn*
 
-- [MSX](#msx)
-  * [Abstract](#abstract)
-  * [The art of mathematics](#the-art-of-mathematics)
-    + [Mandelbrot](#mandelbrot)
-    + [Strange Attractors](#strange-attractors)
-    + [Fluid Flow Simulation](#fluid-flow-simulation)
-    + [Sketches](#sketches)
-    + [3D Plot](#3d-plot)
-  * [Graphics](#graphics)
-    + [Palette](#palette)
-    + [Screen 2 dump to data recorder](#screen-2-dump-to-data-recorder)
-  * [Assembly](#assembly)
-    + [TUTORIAL: Writing and debugging assembly on a real MSX computer](#tutorial--writing-and-debugging-assembly-on-a-real-msx-computer)
-    + [Memory Visualizers](#memory-visualizers)
-  * [Text programs](#text-programs)
-    + [Cyrillic font loader](#cyrillic-font-loader)
-    + [Vocabulary trainer](#vocabulary-trainer)
-
-
-
+[TOC]
 
 ## Abstract
 
@@ -30,6 +11,8 @@ Around 1986, when I was in 2nd grade of Gymnasium, I bought a Canon V-20 MSX com
 Since there was no such thing as Github back then, I wrote the code down in a notebook (pen and paper!). Only later, I got a cassette recorder and saved the programs on tape. Now, > 35 years later,  the tapes are lost and I didn't have this computer anymore. However, in july 2021, I started to type in some of the programs from the old notebook and put them in Git for conservation and most of all, for fun. 
 
 Please visit also my other MSX page: [Journey into MSX Z80 Assembly programming](https://gilbertfrancois.github.io)
+
+
 
 ## The art of mathematics
 
@@ -42,12 +25,13 @@ zn = z^2 + c
 ```
 is tested for every point within the domain. When after a finite amount of iterations the value `z` goes to infinity, the value is outside the Mandelbrot set. If the value stays `||z|| < 2`then the value is inside the Mandelbrot set. Nowadays, these fractals can be rendered super fast with millions of colours. In 1987, on the MSX, I made a monochrome implementation, using 2 options: either make a zebra pattern by taking the mod of the "n-iterations to escape", or slice the n-iterations value and plot it as in- or outside the set. The zebra pattern works best for zoomed out views, the clipping pattern works best on zoomed in areas.
 
-|                                                              |                                                              |
-| :----------------------------------------------------------: | ------------------------------------------------------------ |
 |            ![](./assets/images/mandelbrot_1.png)             | ![](./assets/images/mandelbrot_3.png)                        |
+| ---------------------------------------------------------- | ------------------------------------------------------------ |
 | Mandelbrot set with (xc, yc)=(-0.5, 0), size=2.0, depth=16, colormap=zebra. | Mandelbrot with (xc, yc)=(-0.7792, 0.1345), size=7.984e-4, depth=128, colormap=clip. |
 |            ![](./assets/images/mandelbrot_4.png)             | ![](./assets/images/mandelbrot_5.png)                        |
 | Mandelbrot with (xc, yc)=(-0.4781, -0.6311), size=2.441e-3, depth=48, colormap=zebra. | Mandelbrot with (xc, yc)=(-0.4781, -0.6311), size=2.441e-3, depth=64, colormap=clip. |
+
+
 
 ### Strange Attractors
 
@@ -69,8 +53,6 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 
 
 
-
-
 ### Fluid Flow Simulation
 
 [flow1.bas](./src/basic/flow1.bas), [flow2.bas](./src/basic/flow2.bas) , [flow3.bas](./src/basic/flow3.bas) I was always intreaged by fluid flow simulations. However, solving the Navier-Stokes equations on a MSX with given computational power and memory limitations is not really feasible, even if you let the computer run for several days. However, you can still get decent flow-like looking images, using Perlin noise. This technique is mainly used in the game industry to get fluid flow like behavior with the least amount of computational cost. To speed-up the computations on the MSX even more, I'm using lookup tables for sin() and cos() operators.
@@ -81,18 +63,18 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 | ![flow4](./assets/images/flow4.png) | ![flow6](./assets/images/flow6.png) |
 
 
+
 ### Sketches
 
 A collection of small sketches, made in Basic.
 
-|                                              |                                          |                                        |
-| :------------------------------------------- | :--------------------------------------- | -------------------------------------- |
 | ![pascal](./assets/images/pascal.png)        | ![openmsx0008](./assets/images/maze.png) | ![dots](./assets/images/dots1.png)     |
+| :------------------------------------------- | :--------------------------------------- | -------------------------------------- |
 | [Triangle of Pascal](./src/basic/pascal.bas) | [Maze](./src/basic/maze.bas)             | [Dots](./src/basic/dots1.bas)          |
 | ![Groovy](./assets/images/groovy.png)        | ![Rainbow](./assets/images/rainbow.png)  | ![Blocks](./assets/images/blocks1.png) |
 | [Groovy](./src/basic/groovy.bas)             | [Rainbow](./src/basic/rainbow.bas)       | [Blocks](./src/basic/blocks1.bas)      |
-| ![Spiral](./assets/images/spirals1.png)      | ![Dance](./assets/images/dance5.png)     | ![](./assets/images/phyllotaxis.png)   |
-| [spirals1.bas](./src/basic/spirals1.bas)     | [dance.bas](./src/basic/dance.bas)       | [phyllo.bas](./src/basic/phyllo.bas)   |
+| ![Spiral](./assets/images/barcode.png)       | ![Dance](./assets/images/dance05.png)    | ![](./assets/images/phyllotaxis.png)   |
+| [barcode.bas](./src/basic/barcode.bas)       | [dance.bas](./src/basic/dance.bas)       | [phyllo.bas](./src/basic/phyllo.bas)   |
 
 
 
@@ -100,9 +82,8 @@ A collection of small sketches, made in Basic.
 
 [plot3d.bas](./src/basic/plot3d.bas) plotting program to visualize 3D plots `f(x, y) = z`. To change the input function and domain, edit the first lines of the code.
 
-|                                              |                                              |
-| :------------------------------------------- | :------------------------------------------- |
 | ![plot1](./assets/images/plot3d_2.png) | ![plot2](./assets/images/plot3d_1.png) |
+| :------------------------------------------- | :------------------------------------------- |
 | Plot view of function $f(x,y)=x^3y-y^3x$     | Values view                                  |
 
 
@@ -113,9 +94,8 @@ A collection of small sketches, made in Basic.
 
 [palette.bas](./src/basic/palette.bas) This program shows the 15 MSX(1) colors on screen 2. I always found the default sorting of the colours quite odd. I tried to order them in a more logical way. The tones of the colors in the palette are different on an MSX and MSX2. Note that yellow has only 2 tones. To simulate the medium tone of yellow, the color patch is an interlaced representation of color 10 and 11. *(Screenshots made with openMSX)*
 
-|                                                             |                                                              |
-| ----------------------------------------------------------- | ------------------------------------------------------------ |
 | ![palette_canon_v20](./assets/images/palette_canon_v20.png) | ![palette_sony_hb700p](./assets/images/palette_sony_hb700p.png) |
+| ----------------------------------------------------------- | ------------------------------------------------------------ |
 | Canon V-20 MSX                                              | Sony HB-700P MSX2                                            |
 
 |  B/W |  Red |  Yellow | Green | Blue | Magenta |
@@ -123,6 +103,7 @@ A collection of small sketches, made in Basic.
 |    1 |    6 |      10 |    12 |    4 |      13 |
 |   14 |    8 | (10/11) |     2 |    5 |         |
 |   15 |    9 |      11 |     3 |    7 |         |
+
 
 
 ### Screen 2 dump to data recorder
@@ -137,7 +118,7 @@ On an MSX2 with floppy drive, it is easy to dump the screen with the `bsave "fil
 
 
 
-## Assembly
+## Assembly programming
 
 ### TUTORIAL: Writing and debugging assembly on a real MSX computer
 
@@ -145,17 +126,28 @@ Nowadays we are spoiled with cross compilers and fast computers. However, it is 
 
 [Journey into MSX Z80 Assembly programming](https://gilbertfrancois.github.io)
 
+
+
 ### Memory Visualizers
 
-[memory.bas](./src/basic/memory.bas) I made this program in 1988 to get a better understanding of the used memory of my Canon V-20. The program is expected to work well on any MSX with 64kB RAM. If you have another configuration, some parameters have to be adapted. The program is not efficient in terms of speed.
+[memory.bas](./src/basic/memory.bas) I made this program around 1986-1987 to get a better understanding of the used memory of my Canon V-20. The program is expected to work well on any MSX with 64kB RAM. If you have another configuration, some parameters have to be adapted. The program is not efficient in terms of speed.
 
-|                                                              |
-| ------------------------------------------------------------ |
 | ![](./assets/images/memview.png)                             |
+| ------------------------------------------------------------ |
 | Memory viewer for MSX(1), showing the memory usage of a Canon V-20. |
 
 [memmon.bas](./src/basic/memmon.bas) Memmon is a very simple memory monitor, written in basic. It asks for the start address and shows the memory content of the following 128 bytes. I developed this program to help me with finding the last used address in my compiled assembly programs, needed for saving the binary data to cassette.
-|                                              |                                              |
-| -------------------------------------------- | -------------------------------------------- |
 | ![memmon_page1](./assets/images/memmon1.png) | ![memmon_page2](./assets/images/memmon2.png) |
+| -------------------------------------------- | -------------------------------------------- |
 | Simple Memory Monitor, screen 1              | Simple Memory Monitor, screen 2              |
+
+
+
+### VDP Wizard
+
+This program helps you to find the right register settings for the 99x8 Video Display Processor to set it in de mode of choice.
+
+| ![vdpwiz1](./assets/images/vdpwiz1.png) | ![vdpwiz2](./assets/images/vdpwiz2.png) |
+| --------------------------------------- | --------------------------------------- |
+| VDP Wizard: User input                  | VDP Wizard: Register settings.          |
+
