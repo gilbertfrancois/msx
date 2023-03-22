@@ -2,7 +2,7 @@
 
 *Gilbert François Duivesteijn*
 
-[TOC]
+
 
 ## Abstract
 
