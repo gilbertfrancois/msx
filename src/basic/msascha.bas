@@ -2,7 +2,7 @@
 20 ' Gilbert Francois Duivesteijn
 30 '
 40 COLOR 15,4,4
-50 KEY OFF: CLS
+50 KEY OFF: CLS:WIDTH 40
 60 PRINT"Sascha liebt nicht grosse Worte"
 70 PRINT ""
 80 PRINT "----------------------------------------"
@@ -18,6 +18,7 @@
 180 PRINT "nja nja nja nja nja nja nja."
 190 PRINT ""
 200 LOCATE 0,18
+205 PLAY "t140","t140"
 210 PLAY "s09m40000","s00m40000"
 220 PLAY "o5e4e4e4c4","o2a2o3e2"
 230 PLAY "o5e4e4e4c4","o2a2o3e2"
