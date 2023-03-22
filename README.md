@@ -55,7 +55,7 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 
 ### Fluid Flow Simulation
 
-[flow1.bas](./src/basic/flow1.bas), [flow2.bas](./src/basic/flow2.bas) , [flow3.bas](./src/basic/flow3.bas) I was always intreaged by fluid flow simulations. However, solving the Navier-Stokes equations on a MSX with given computational power and memory limitations is not really feasible, even if you let the computer run for several days. However, you can still get decent flow-like looking images, using Perlin noise. This technique is mainly used in the game industry to get fluid flow like behavior with the least amount of computational cost. To speed-up the computations on the MSX even more, I'm using lookup tables for sin() and cos() operators.
+[flow.bas](./src/basic/flow.bas) I was always intreaged by fluid flow simulations. However, solving the Navier-Stokes equations on a MSX with given computational power and memory limitations is not really feasible, even if you let the computer run for several days. However, you can still get decent flow-like looking images, using Perlin noise. This technique is mainly used in the game industry to get fluid flow like behavior with the least amount of computational cost. To speed-up the computations on the MSX even more, I'm using lookup tables for sin() and cos() operators.
 
 | ![flow1](./assets/images/flow1.png) | ![flow3](./assets/images/flow3.png) |
 | ----------------------------------- | ----------------------------------- |
@@ -68,13 +68,13 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 
 A collection of small sketches, made in Basic.
 
-| ![pascal](./assets/images/pascal.png)        | ![openmsx0008](./assets/images/maze.png) | ![dots](./assets/images/dots1.png)     |
-| :------------------------------------------- | :--------------------------------------- | -------------------------------------- |
-| [Triangle of Pascal](./src/basic/pascal.bas) | [Maze](./src/basic/maze.bas)             | [Dots](./src/basic/dots1.bas)          |
-| ![Groovy](./assets/images/groovy.png)        | ![Rainbow](./assets/images/rainbow.png)  | ![Blocks](./assets/images/blocks1.png) |
-| [Groovy](./src/basic/groovy.bas)             | [Rainbow](./src/basic/rainbow.bas)       | [Blocks](./src/basic/blocks1.bas)      |
-| ![Spiral](./assets/images/barcode.png)       | ![Dance](./assets/images/dance05.png)    | ![](./assets/images/phyllotaxis.png)   |
-| [barcode.bas](./src/basic/barcode.bas)       | [dance.bas](./src/basic/dance.bas)       | [phyllo.bas](./src/basic/phyllo.bas)   |
+| ![pascal](./assets/images/pascal.png)        | ![openmsx0008](./assets/images/maze.png)                     | ![dots](./assets/images/dots1.png)     |
+| :------------------------------------------- | :----------------------------------------------------------- | -------------------------------------- |
+| [Triangle of Pascal](./src/basic/pascal.bas) | [Maze](./src/basic/maze.bas)                                 | [Dots](./src/basic/dots1.bas)          |
+| ![Groovy](./assets/images/groovy.png)        | ![Rainbow](./assets/images/rainbow.png)                      | ![Blocks](./assets/images/blocks1.png) |
+| [Groovy](./src/basic/groovy.bas)             | [Rainbow](./src/basic/rainbow.bas)                           | [Blocks](./src/basic/blocks1.bas)      |
+| ![Spiral](./assets/images/barcode.png)       | ![Dance](./assets/images/dance05.png)                        | ![](./assets/images/phyllotaxis.png)   |
+| [barcode.bas](./src/basic/barcode.bas)       | [pendulum.bas](./src/basic/pendulum.bas)  [pendfast.bas](./src/basic/penfast.bas) | [phyllo.bas](./src/basic/phyllo.bas)   |
 
 
 
