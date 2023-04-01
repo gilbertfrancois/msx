@@ -68,13 +68,17 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 
 A collection of small sketches, made in Basic.
 
-| ![pascal](./assets/images/pascal.png)        | ![openmsx0008](./assets/images/maze.png)                     | ![dots](./assets/images/dots1.png)     |
-| :------------------------------------------- | :----------------------------------------------------------- | -------------------------------------- |
-| [Triangle of Pascal](./src/basic/pascal.bas) | [Maze](./src/basic/maze.bas)                                 | [Dots](./src/basic/dots1.bas)          |
-| ![Groovy](./assets/images/groovy.png)        | ![Rainbow](./assets/images/rainbow.png)                      | ![Blocks](./assets/images/blocks1.png) |
-| [Groovy](./src/basic/groovy.bas)             | [Rainbow](./src/basic/rainbow.bas)                           | [Blocks](./src/basic/blocks1.bas)      |
-| ![Spiral](./assets/images/barcode.png)       | ![Dance](./assets/images/dance05.png)                        | ![](./assets/images/phyllotaxis.png)   |
-| [barcode.bas](./src/basic/barcode.bas)       | [pendulum.bas](./src/basic/pendulum.bas)  [pendfast.bas](./src/basic/penfast.bas) | [phyllo.bas](./src/basic/phyllo.bas)   |
+| ![pascal](./assets/images/squares.png)  | ![Barcodes](./assets/images/barcode.png) |
+| --------------------------------------- | ---------------------------------------- |
+| [squares.bas](./src/basic/squares.bas)  | [barcode.bas](./src/basic/barcode.bas)   |
+| ![spiders](./assets/images/spiders.png) | ![dots](./assets/images/dots1.png)       |
+| [spiders.bas](./src/basic/spiders.bas)  | [dots1.bas](./src/basic/dots1.bas)       |
+| ![](./assets/images/phyllotaxis.png)    | ![](./assets/images/spirals1.png)        |
+| [phyllo.bas](./src/basic/phyllo.bas)    | [spirals1.bas](./src/basic/spirals1.bas) |
+| ![Groovy](./assets/images/groovy.png)   | ![Rainbow](./assets/images/rainbow.png)  |
+| [groovy.bas](./src/basic/groovy.bas)    | [rainbow.bas](./src/basic/rainbow.bas)   |
+
+
 
 
 
