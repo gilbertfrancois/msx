@@ -91,15 +91,17 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 
 A collection of small sketches, made in Basic.
 
-| ![pascal](./assets/images/squares.png)  | ![Barcodes](./assets/images/barcode.png) |
-| --------------------------------------- | ---------------------------------------- |
-| [squares.bas](./src/basic/squares.bas)  | [barcode.bas](./src/basic/barcode.bas)   |
-| ![spiders](./assets/images/spiders.png) | ![dots](./assets/images/dots1.png)       |
-| [spiders.bas](./src/basic/spiders.bas)  | [dots1.bas](./src/basic/dots1.bas)       |
-| ![](./assets/images/phyllotaxis.png)    | ![](./assets/images/spirals1.png)        |
-| [phyllo.bas](./src/basic/phyllo.bas)    | [spirals1.bas](./src/basic/spirals1.bas) |
-| ![Groovy](./assets/images/groovy.png)   | ![Rainbow](./assets/images/rainbow.png)  |
-| [groovy.bas](./src/basic/groovy.bas)    | [rainbow.bas](./src/basic/rainbow.bas)   |
+| ![pascal](./assets/images/squares.png)              | ![Barcodes](./assets/images/barcode.png)            |
+| --------------------------------------------------- | --------------------------------------------------- |
+| [squares.bas](./src/basic/squares.bas)              | [barcode.bas](./src/basic/barcode.bas)              |
+| ![spiders](./assets/images/spiders.png)             | ![dots](./assets/images/dots1.png)                  |
+| [spiders.bas](./src/basic/spiders.bas)              | [dots1.bas](./src/basic/dots1.bas)                  |
+| ![](./assets/images/phyllotaxis.png)                | ![](./assets/images/spirals1.png)                   |
+| [phyllo.bas](./src/basic/phyllo.bas)                | [spirals1.bas](./src/basic/spirals1.bas)            |
+| ![Groovy](./assets/images/groovy.png)               | ![Rainbow](./assets/images/rainbow.png)             |
+| [groovy.bas](./src/basic/groovy.bas)                | [rainbow.bas](./src/basic/rainbow.bas)              |
+| ![randomwalker](./assets/images/randomwalker01.png) | ![randomwalker](./assets/images/randomwalker02.png) |
+| [rndwalk1.bas](./src/basic/rndwalk1.bas)            | [rndwalk2.bas](./src/basic/rndwalk1.bas)            |
 
 
 
