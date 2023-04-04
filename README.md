@@ -76,6 +76,17 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 
 
 
+### Vector fields
+
+[vecfield.bas](./src/basic/vecfield.bas) The vector field code visualises the output of [libnoise.bas](./src/basic/libnoise.bas), my own implementation of the perlin noise, as described in: *Perlin, Ken* (July 1985). "An Image Synthesizer". *SIGGRAPH Comput. Graph*. **19** (97–8930): 287–296. [10.1145/325165.325247](https://doi.org/10.1145%2F325165.325247). A reference implementation with verification and validation is available in this repository: 
+
+[gilbertfrancois/partial-differential-equations/notebook/Perlin noise.ipynb](https://github.com/gilbertfrancois/partial-differential-equations/blob/7a5a9f7d42f8695e5dcff719a41bc208d1bcea20/notebook/Perlin%20noise.ipynb)
+
+| ![vector field](./assets/images/vecfield1.png) | ![vector field](./assets/images/vecfield2.png) |
+| ---------------------------------------------- | ---------------------------------------------- |
+
+
+
 ### Sketches
 
 A collection of small sketches, made in Basic.
