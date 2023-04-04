@@ -1,71 +1,50 @@
-100 ' Stream lines
+100 ' Vector field
 110 ' Gilbert Francois Duivesteijn
-120 '
-130 ' NOTE: It takes approximately
-140 '       3 to 12 hours to render.
+120 ' 
+130 '
+140 ' Settings
 150 '
-160 '
-170 ' Settings
-180 '
-190 SD=RND(-TIME)  ' rnd seed
-200 NX=7: NY=5     ' nr of cells
-210 OX=0: OY=0     ' offset
-220 R=3            ' integr step
-230 ST=12          ' grid step
-240 SO=ST/2-1      ' step offset
-250 PI=4*ATN(1)    ' Pi
-260 DR=PI/180      ' DEG to RAD
-270 RD=180/PI      ' RAD to DEG
-280 '
-290 ' Start
-300 ' 
-310 COLOR 1,15,14
-320 SCREEN 0
-330 WIDTH 40: CLS
-340 '
-350 ' Generate vector field
-360 '
-370 GOSUB 16000
-380 '
-390 ' Main loop
-400 '
-410 SCREEN 2
-420 FOR XJ=SO TO 255-SO STEP ST
-430 FOR YJ=SO TO 191-SO STEP ST
-440 XI=RND(1)*255
-450 YI=RND(1)*191
-460 OA=0
-470 GOSUB 550    ' draw streamline
-480 OA=180
-490 GOSUB 550    ' draw streamline
-500 NEXT YJ
-510 NEXT XJ
-520 BEEP
-530 IF INKEY$ <> " " THEN GOTO 530
-540 END
-550 '
-560 ' Draw streamline
-570 '
-580 X0=XI: Y0=YI
-590 FOR T=0 TO 300
-600 X=X0: Y=Y0
-610 IF X>255 OR X<0 THEN RETURN
-620 IF Y>191 OR Y<0 THEN RETURN
-630 GOSUB 16470 ' Compute direction Z
-640 A=360*Z+OA
-650 X1=X0+R*COS(A*DR)
-660 Y1=Y0+R*SIN(A*DR)
-670 LINE(X0,Y0)-(X1,Y1)
-680 X0=X1: Y0=Y1
-690 NEXT T
-700 RETURN
+160 SD=RND(-TIME)   ' rnd seed
+170 NX=4: NY=3      ' nr of cells
+180 OX=0: OY=0      ' offset
+190 ST=8            ' grid step
+200 SO=ST/2-1       ' step offset
+210 R=SO            ' half vec size
+220 PI=4*ATN(1)     ' Pi
+230 '
+240 ' Start
+250 ' 
+260 COLOR 1,15,14
+270 SCREEN 0
+280 WIDTH 40: CLS
+290 '
+300 ' Generate vector field
+310 '
+320 GOSUB 16000
+330 '
+340 ' Main loop
+350 '
+360 SCREEN 2
+370 FOR X=SO TO 255-SO STEP ST
+380 FOR Y=SO TO 191-SO STEP ST
+390 GOSUB 16470  ' Compute direction Z
+400 A=2*PI*Z
+410 X0=X+R*COS(A)
+420 Y0=Y+R*SIN(A)
+430 X1=X+R*COS(A+PI)
+440 Y1=Y+R*SIN(A+PI)
+450 LINE(X0,Y0)-(X1,Y1)
+460 NEXT Y
+470 NEXT X
+480 IF INKEY$ <> " " THEN GOTO 480
+490 END
 16000 '
 16010 ' libnoise
 16020 ' Perlin noise generator
 16030 ' Gilbert Francois Duivesteijn
 16040 '
 16050 ' init: 16000
-16060 ' run: 16470
+16060 ' run:  16470
 16070 '
 16080 ' Init Perlin noise
 16090 ' in: NX,NY: nr of cells
