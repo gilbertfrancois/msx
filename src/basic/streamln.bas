@@ -2,72 +2,68 @@
 110 ' Gilbert Francois Duivesteijn
 120 '
 130 ' NOTE: It takes approximately
-140 '       min 3 hours to render.
+140 '       3 to 12 hours to render.
 150 '
 160 COLOR 1,15,15:CLS
-170 SCREEN 2
-180 NX=7: NY=5      ' nr of cells
-190 OX=0: OY=0      ' offset
-200 R=3             ' integr step
-210 ST=12           ' grid step
-220 SO=ST/2-1       ' step offset
-230 PI=4*ATN(1)     ' Pi
-240 DR=PI/180       ' DEG to RAD
-250 RD=180/PI       ' RAD to DEG
-260 GOSUB 16000
-270 'GOSUB 630
-280 T0=TIME
-290 FOR XJ=SO TO 255-SO STEP ST
-300 FOR YJ=SO TO 191-SO STEP ST
-305 XI=RND(TIME)*255
-306 YI=RND(TIME)*191
-310 OA=0
-320 GOSUB 440
-330 OA=180
-340 GOSUB 440
-350 NEXT YJ
-360 NEXT XJ
-370 T1=TIME
-380 BEEP
-385 COLOR 1,15,14
-390 IF INKEY$ <> " " THEN GOTO 390
-400 SCREEN 0
-410 PRINT "Elapsed time:"
-420 PRINT STR$((T1-T0)/50) +" seconds."
-430 END
-440 '
-450 ' Follow streamline
-460 '
-470 X0=XI: Y0=YI
-480 FOR T=0 TO 300
-490 X=X0: Y=Y0
-500 IF X>255 OR X<0 THEN RETURN
-510 IF Y>191 OR Y<0 THEN RETURN
-520 GOSUB 16470
-530 A=360*Z+OA
-540 X1=X0+R*COS(A*DR)
-550 Y1=Y0+R*SIN(A*DR)
-560 LINE(X0,Y0)-(X1,Y1)
-570 X0=X1: Y0=Y1
-580 NEXT T
-590 RETURN
-600 '
-610 ' Render dots
-620 '
-630 FOR XI=SO TO 255-SO STEP ST
-640 FOR XI=SO TO 255-SO STEP ST
-650 FOR YI=SO TO 191-SO STEP ST
-660 PSET(XI,YI),14
-670 NEXT YI
-680 NEXT XI
-690 RETURN
+170 '
+180 ' Settings
+190 '
+200 SD=RND(-TIME)   ' rnd seed
+210 NX=7: NY=5      ' nr of cells
+220 OX=0: OY=0      ' offset
+230 R=3             ' integr step
+240 ST=12           ' grid step
+250 SO=ST/2-1       ' step offset
+260 PI=4*ATN(1)     ' Pi
+270 DR=PI/180       ' DEG to RAD
+280 RD=180/PI       ' RAD to DEG
+290 '
+300 ' Generate vector field
+310 '
+320 GOSUB 16000
+330 '
+340 ' Main loop
+350 '
+360 SCREEN 2
+370 T0=TIME
+380 FOR XJ=SO TO 255-SO STEP ST
+390 FOR YJ=SO TO 191-SO STEP ST
+400 XI=RND(TIME)*255
+410 YI=RND(TIME)*191
+420 OA=0
+430 GOSUB 530    ' draw streamline
+440 OA=180
+450 GOSUB 530    ' draw streamline
+460 NEXT YJ
+470 NEXT XJ
+480 T1=TIME
+490 BEEP
+500 COLOR 1,15,14
+510 IF INKEY$ <> " " THEN GOTO 510
+520 END
+530 '
+540 ' Draw streamline
+550 '
+560 X0=XI: Y0=YI
+570 FOR T=0 TO 300
+580 X=X0: Y=Y0
+590 IF X>255 OR X<0 THEN RETURN
+600 IF Y>191 OR Y<0 THEN RETURN
+610 GOSUB 16470  ' Compute gradient
+620 A=360*Z+OA
+630 X1=X0+R*COS(A*DR)
+640 Y1=Y0+R*SIN(A*DR)
+650 LINE(X0,Y0)-(X1,Y1)
+660 X0=X1: Y0=Y1
+670 NEXT T
+680 RETURN
 16000 '
 16010 ' libnoise
 16020 ' Perlin noise generator
 16030 ' Gilbert Francois Duivesteijn
 16040 '
 16050 ' init: 16000
-16060 ' run: 16600
+16060 ' run: 16470
 16070 '
 16080 ' Init Perlin noise
 16090 ' in: NX,NY: nr of cells
@@ -85,8 +81,8 @@
 16210 DIM GY(NX,NY): ' grad dv/dy
 16220 FOR I=0 TO NX
 16230 FOR J=0 TO NY
-16240 GX(I,J) = 2*RND(1000)-1
-16250 GY(I,J) = 2*RND(2000)-1
+16240 GX(I,J) = 2*RND(1)-1
+16250 GY(I,J) = 2*RND(1)-1
 16260 NEXT J
 16270 NEXT I
 16280 T1=TIME
