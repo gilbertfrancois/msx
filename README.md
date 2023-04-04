@@ -64,7 +64,7 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 
 
 
-## Stream lines
+### Stream lines
 
 [streamln.bas](./src/basic/streamln.bas) Another variation of showing pseudo flows is to integrate a vector field. I used again my own implementation of the perlin noise, like in the flow.bas code. Then, from a given point in the flow field, I follow the flow upstream and downstream until it goes out of the computational domain.
 
