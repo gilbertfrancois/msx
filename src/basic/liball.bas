@@ -12,6 +12,7 @@
 16110 '      PX,PY: pxls per cell
 16120 '
 16130 PRINT "[i] Generating random gradient."
+16135 I=RND(-TIME)   ' reseed rnd gen
 16140 T0=TIME
 16150 PX=(256-2*OX)/NX
 16160 PY=(192-2*OY)/NY
@@ -21,8 +22,8 @@
 16200 DIM GY(NX,NY): ' grad dv/dy
 16210 FOR I=0 TO NX
 16220 FOR J=0 TO NY
-16230 GX(I,J) = 2*RND(TIME)-1
-16240 GY(I,J) = 2*RND(TIME)-1
+16230 GX(I,J) = 2*RND(1)-1
+16240 GY(I,J) = 2*RND(1)-1
 16250 NEXT J
 16260 NEXT I
 16270 T1=TIME
