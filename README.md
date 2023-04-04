@@ -55,12 +55,24 @@ Then after taking an initial (x,y) coordinate, the new points are computed by re
 
 ### Fluid Flow Simulation
 
-[flow.bas](./src/basic/flow.bas) I was always intreaged by fluid flow simulations. However, solving the Navier-Stokes equations on a MSX with given computational power and memory limitations is not really feasible, even if you let the computer run for several days. However, you can still get decent flow-like looking images, using Perlin noise. This technique is mainly used in the game industry to get fluid flow like behavior with the least amount of computational cost. To speed-up the computations on the MSX even more, I'm using lookup tables for sin() and cos() operators.
+[flow.bas](./src/basic/flow.bas) I was always intreaged by fluid flow simulations. However, solving the Navier-Stokes equations on a MSX with given computational power and memory limitations is not really feasible, even if you let the computer run for several days. However, you can still get decent flow-like looking images, using perlin noise. This technique is mainly used in the game industry to get fluid flow like behavior with the least amount of computational cost. I've made my own implementation of perlin noise, which I use in this code. To speed-up the computations on the MSX even more, I'm using lookup tables for sin() and cos() operators.
 
 | ![flow1](./assets/images/flow1.png) | ![flow3](./assets/images/flow3.png) |
 | ----------------------------------- | ----------------------------------- |
 | ![flow5](./assets/images/flow5.png) | ![flow2](./assets/images/flow2.png) |
 | ![flow4](./assets/images/flow4.png) | ![flow6](./assets/images/flow6.png) |
+
+
+
+## Stream lines
+
+[streamln.bas](./src/basic/streamln.bas) Another variation of showing pseudo flows is to integrate a vector field. I used again my own implementation of the perlin noise, like in the flow.bas code. Then, from a given point in the flow field, I follow the flow upstream and downstream until it goes out of the computational domain.
+
+| ![streamline](./assets/images/streamln_9_3_12r.png) | ![streamline](./assets/images/streamln_3_2_12r.png) |
+| --------------------------------------------------- | --------------------------------------------------- |
+
+| ![streamline](./assets/images/streamln_6_4_12r.png) | ![streamline](./assets/images/streamln_12_8_12r.png) | ![streamline](./assets/images/streamln_11_2_12r.png) |
+| --------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------- |
 
 
 
