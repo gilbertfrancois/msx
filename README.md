@@ -101,9 +101,9 @@ A collection of small sketches, made in Basic.
 | ![Groovy](./assets/images/groovy.png)               | ![Rainbow](./assets/images/rainbow.png)             |
 | [groovy.bas](./src/basic/groovy.bas)                | [rainbow.bas](./src/basic/rainbow.bas)              |
 | ![randomwalker](./assets/images/randomwalker01.png) | ![randomwalker](./assets/images/randomwalker02.png) |
-| [fibonacc.bas](./src/basic/fibonacc.bas)            | [blocks1.bas](./src/basic/blocks1.bas)              |
+| [rndwalk1.bas](./src/basic/rndwalk1.bas)            | [rndwalk2.bas](./src/basic/rndwalk2.bas)            |
 | ![fibonacci](./assets/images/fibonacci01.png)       | ![blocks](./assets/images/blocks1.png)              |
-|                                                     |                                                     |
+| [fibonacc.bas](./src/basic/fibonacc.bas)            | [blocks1.bas](./src/basic/blocks1.bas)              |
 
 
 
