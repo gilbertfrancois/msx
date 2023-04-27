@@ -22,7 +22,7 @@ Please visit also my other MSX page: [Journey into MSX Z80 Assembly programming]
 
 $$z_n = z^2 + c$$
 
-is tested for every point within the domain. When after a finite amount of iterations the value $z$ goes to infinity, the value is outside the Mandelbrot set. If the value stays  $||z|| < 2$ then the value is inside the Mandelbrot set. Nowadays, these fractals can be rendered super fast with millions of colours. In 1987, on the MSX, I made a monochrome implementation, using 2 options: either make a zebra pattern by taking the mod of the "$n$-iterations to escape", or slice the $n$-iterations value and plot it as in- or outside the set. The zebra pattern works best for zoomed out views, the clipping pattern works best on zoomed in areas.
+is tested for every point within the domain. When after a finite amount of iterations the value $z$ goes to infinity, the value is outside the Mandelbrot set. If the value stays  $||z|| < 2$ then the value is inside the Mandelbrot set. Nowadays, these fractals can be rendered super fast with millions of colours. In 1987, on the MSX, I made a monochrome implementation, using 2 options: either make a zebra pattern by taking the mod of the $n$-iterations to escape, or slice the $n$-iterations value and plot it as in- or outside the set. The zebra pattern works best for zoomed out views, the clipping pattern works best on zoomed in areas.
 
 | ![](./assets/images/mandelbrot_1.png)                        | ![](./assets/images/mandelbrot_3.png)                        |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
