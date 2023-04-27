@@ -108,7 +108,7 @@ A collection of small sketches, made in Basic.
 
 ### 2D Plot
 
-[plot2d.bas](./src/basic/plot2d.bas) plotting program to visualize 3D plots $f(x) = y$. To change the input function and domain, edit the first lines of the code.
+[plot2d.bas](./src/basic/plot2d.bas) plotting program to visualize 2D plots $f(x) = y$. To change the input function and domain, edit the first lines of the code.
 
 | ![plot1](./assets/images/plot2d_01.png) | ![plot2](./assets/images/plot2d_02.png) |
 | :------------------------------------------- | :------------------------------------------- |
