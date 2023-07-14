@@ -6,16 +6,16 @@ VDPData     equ $98
 VDPControl  equ $99
 VramCache   equ $c400
 
-	; Place header before the binary.
-	org ORGADR - 7
-	; Bin header, 7 bytes
-	db $fe
+    ; Place header before the binary.
+    org ORGADR - 7
+    ; Bin header, 7 bytes
+    db $fe
     dw FileStart
     dw FileEnd - 1
     dw Main
 
     ; org statement after the header
-	org ORGADR
+    org ORGADR
 
 FileStart:
 Main:

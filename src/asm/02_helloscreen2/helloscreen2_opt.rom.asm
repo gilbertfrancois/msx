@@ -1,6 +1,7 @@
 ; Hello World Screen 2
 ; Show bitmap tiles, using self written 'copy to VRAM' routines.
 ;
+ORGADR      equ $4000
 CHGMOD      equ $005f
 VDPData     equ $98
 VDPControl  equ $99
@@ -19,7 +20,7 @@ Main:
     ; Change to screen 2
     ld a, 2
     call CHGMOD
-	 
+     
     ; Copy Pattern0 to VRAM
     ld hl, $0000 + TilePos
     call SetVDPWriteAddress
@@ -66,7 +67,7 @@ SetVDPWriteAddress:
     or %01000000
     out (VDPControl), a
     ret
-	
+    
 Pattern0:
     db %10101010
     db %01010101

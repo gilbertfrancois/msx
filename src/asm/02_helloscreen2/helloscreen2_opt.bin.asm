@@ -1,7 +1,7 @@
 ; Hello World Screen 2
 ; Show bitmap tiles, using BIOS functions.
 ; 
-ORGADR      equ $4000
+ORGADR      equ $c800
 CHGMOD      equ $005f
 LDIRVM      equ $005c
 SETWRT      equ $0053
@@ -9,20 +9,22 @@ VDPData     equ $98
 VDPControl  equ $99
 RomSize     equ $4000
 TilePos     equ 0 * 8
+CHGET	    equ $009f
 
-    ; org statement before the header
-    org ORGADR
-    ; ROM header
-    db "AB"
+    ; Place header before the binary.
+    org ORGADR - 7
+    ; Bin header, 7 bytes
+    db $fe
+    dw FileStart
+    dw FileEnd - 1
     dw Main
-    dw 0, 0, 0, 0, 0, 0
 
-
+FileStart:
 Main:
     ; Change to screen 2
     ld a, 2
     call CHGMOD
-	 
+
     ; Copy Pattern0 to VRAM
     ld hl, Pattern0
     ld de, $0000 + TilePos
@@ -47,8 +49,13 @@ Main:
     ld a, $00
     out (VDPData), a
 
-    di
-    halt
+    call CHGET
+
+    ; Change to screen 0
+    ld a, 0
+    call CHGMOD
+
+    ret
 
 
 Pattern0:
@@ -71,8 +78,4 @@ Color0:
     db $14
     db $1d
 
-
-ProgEnd:
-    ds $4000 + RomSize - ProgEnd, 255
-
-
+FileEnd:

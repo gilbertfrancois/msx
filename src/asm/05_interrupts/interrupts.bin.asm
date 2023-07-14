@@ -9,16 +9,16 @@ BEEP        equ $00c0
 HTIMI       equ $fd9f
 MaxCount    equ 50
 
-	; Place header before the binary.
-	org ORGADR - 7
-	; Bin header, 7 bytes
-	db $fe
+    ; Place header before the binary.
+    org ORGADR - 7
+    ; Bin header, 7 bytes
+    db $fe
     dw FileStart
     dw FileEnd - 1
     dw Main
 
     ; org statement after the header
-	org ORGADR
+    org ORGADR
 
 FileStart:
 Main:
