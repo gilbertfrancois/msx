@@ -1,0 +1,3 @@
+; Use FMUL X*X
+
+include "fmul.tab"
