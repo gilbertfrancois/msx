@@ -60,8 +60,6 @@ Main:
 
     ret
     
-    include "test.asm"
-
 ; T-Cycles: 64
 ; Bytes: 16
 ; Trashed: None
@@ -87,6 +85,12 @@ ShiftRight4Fast:
     SRL H
     RRA
     LD L, A
+    ret
+
+; Add 16-bit values (with 16-bit result)
+; In: Add DE to HL
+Add16:
+    add hl, de
     ret
 
 ; Multiply 16-bit values (with 16-bit result)
@@ -155,12 +159,6 @@ Fixed2Int:
     ld l, h
     ld h, 0
     ret
-
-Lut:
-    dw $0000, $0008, $0010, $0018, $0020, $0028, $0030, $0038, $0040, $0048, $0050, $0058, $0060, $0068, $0070, $0078
-    
-varX:
-    db 01, 02, 03, 04
 
 FileEnd:
 
