@@ -1,6 +1,3 @@
-        ifndef BIAS
-
-
 ; BINARY16
 ; 1  5        10
 ; FEDC BA98 7654 3210
@@ -554,7 +551,16 @@ FP254           EQU $5bf0   ; 2.540000e+02 sign(0=$0000) exp(  7=$5800) mantisa(
 FP255           EQU $5bf8   ; 2.550000e+02 sign(0=$0000) exp(  7=$5800) mantisa(1016=$3F8)
 FP256           EQU $5c00   ; 2.560000e+02 sign(0=$0000) exp(  8=$5C00) mantisa(   0=$000)
 
+FP0_5PI         EQU $3e48
+FP1_0PI         EQU $4248
+FP1_5PI         EQU $44b6
+FP2_0PI         EQU $4648
+PI              EQU FP1_0PI
+FP3_141592      EQU FP1_0PI
+
 ROOT2F          EQU $3da8   ; 1.414062e+00 sign(0=$0000) exp(  0=$3C00) mantisa( 424=$1A8) FP1_414214 Square root of 2 (1.41421356)
+FP1_414214      EQU ROOT2F
+
 FPMIN           EQU $0000   ; 3.051758e-05 sign(0=$0000) exp(-15=$0000) mantisa(   0=$000)
 FMMIN           EQU $8000   ;-3.051758e-05 sign(1=$8000) exp(-15=$0000) mantisa(   0=$000)
 FM0             EQU FMMIN
@@ -587,5 +593,3 @@ FP0_36          EQU $35c3   ; 3.601074e-01 sign(0=$0000) exp( -2=$3400) mantisa(
 FP1_5           EQU $3e00   ; 1.500000e+00 sign(0=$0000) exp(  0=$3C00) mantisa( 512=$200)
 FP18_75         EQU $4cb0   ; 1.875000e+01 sign(0=$0000) exp(  4=$4C00) mantisa( 176=$0B0)
 FP300           EQU $5cb0   ; 3.000000e+02 sign(0=$0000) exp(  8=$5C00) mantisa( 176=$0B0)
-
-        endif

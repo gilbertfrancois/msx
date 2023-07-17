@@ -1,6 +1,5 @@
-ifndef @FDIV_POW2
 
-include "color_flow_warning.asm"
+    ; include "color_flow_warning.asm"
 
 ;  Input:  BC, HL with a mantissa equal to 1.0 (seee ee00 0000 0000)
 ; Output: HL = BC / HL = BC / (1.0 * 2^HL_exp) = BC * 1.0 * 2^-HL_exp, if ( overflow or underflow ) set carry
@@ -10,13 +9,9 @@ include "color_flow_warning.asm"
 ; New_sign = BC_sign ^ HL_sign
 ; New_exp  = (BC_exp - BIAS) + ( BIAS - HL_exp ) + BIAS = BIAS + BC_exp - HL_exp
 ; New_mant = BC_mant * 1.0 = BC_mant
-@FDIV_POW2:
-ifndef FDIV_POW2
 ; *****************************************
-                 FDIV_POW2              ; *
+FDIV_POW2:
 ; *****************************************
-endif
-
         LD      A, H                ;  1:4
         AND     EXP_MASK            ;  2:7      HL_exp
         LD      L, A                ;  1:4
@@ -66,12 +61,8 @@ FDIV_POW2_OVER:
         LD      A, H                ;  1:4
         OR      $FF - SIGN_MASK     ;  2:7
         LD      H, A                ;  1:4
-    if color_flow_warning
-        CALL    OVER_COL_WARNING   ;  3:17
-    endif
     if carry_flow_warning
         SCF                         ;  1:4      carry = error
     endif
         RET                         ;  1:10
      
-endif

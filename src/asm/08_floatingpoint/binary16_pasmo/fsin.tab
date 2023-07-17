@@ -1,0 +1,223 @@
+if not defined SIN_TAB_2C33
+
+; Align to 256-byte page boundary
+DEFS    (($ + $FF) / $100) * $100 - $
+
+; X = $2c00..$33ff
+; Y = ((X & $fff0)-$2c00) >> 3 = $00..$fe
+; if ( (X & $ff) <= SIN_LO[Y] ) { sin(X) = X + $ff00 + SIN_LO[Y+1] }
+; if ( (X & $ff) >  SIN_LO[Y] ) { sin(X) = X + $ff00 + SIN_LO[Y+3] }
+SIN_TAB_2C33:
+;   _0  _1  _2  _3  _4  _5  _6  _7  _8  _9  _A  _B  _C  _D  _E  _F
+db $0f,$ff,$1f,$ff,$2f,$ff,$3f,$ff,$4f,$ff,$5f,$ff,$6f,$ff,$7f,$ff   ; 0_     00f,0ff,01f,0ff,02f,0ff,03f,0ff,04f,0ff,05f,0ff,06f,0ff,07f,0ff 0_
+db $8f,$ff,$9f,$ff,$af,$ff,$bf,$ff,$cf,$ff,$df,$ff,$ef,$ff,$ff,$ff   ; 1_     08f,0ff,09f,0ff,0af,0ff,0bf,0ff,0cf,0ff,0df,0ff,0ef,0ff,0ff,0ff 1_
+db $0f,$ff,$1f,$ff,$2f,$ff,$3d,$ff,$4f,$fe,$5f,$fe,$6f,$fe,$7f,$fe   ; 2_     00f,0ff,01f,0ff,02f,0ff,03d,0ff,04f,0fe,05f,0fe,06f,0fe,07f,0fe 2_
+db $8f,$fe,$9f,$fe,$af,$fe,$bf,$fe,$cf,$fe,$df,$fe,$ef,$fe,$ff,$fe   ; 3_     08f,0fe,09f,0fe,0af,0fe,0bf,0fe,0cf,0fe,0df,0fe,0ef,0fe,0ff,0fe 3_
+db $0f,$fe,$1f,$fe,$2f,$fe,$37,$fe,$4f,$fd,$5f,$fd,$6f,$fd,$7f,$fd   ; 4_     00f,0fe,01f,0fe,02f,0fe,037,0fe,04f,0fd,05f,0fd,06f,0fd,07f,0fd 4_
+db $8f,$fd,$9f,$fd,$af,$fd,$bf,$fd,$cf,$fd,$df,$fd,$ef,$fd,$f4,$fd   ; 5_     08f,0fd,09f,0fd,0af,0fd,0bf,0fd,0cf,0fd,0df,0fd,0ef,0fd,0f4,0fd 5_
+db $0f,$fc,$1f,$fc,$2f,$fc,$3f,$fc,$4f,$fc,$5f,$fc,$6f,$fc,$7f,$fc   ; 6_     00f,0fc,01f,0fc,02f,0fc,03f,0fc,04f,0fc,05f,0fc,06f,0fc,07f,0fc 6_
+db $8f,$fc,$9f,$fb,$af,$fb,$bf,$fb,$cf,$fb,$df,$fb,$ef,$fb,$ff,$fb   ; 7_     08f,0fc,09f,0fb,0af,0fb,0bf,0fb,0cf,0fb,0df,0fb,0ef,0fb,0ff,0fb 7_
+db $01,$fc,$1f,$fd,$2f,$fd,$3f,$fd,$4f,$fd,$5f,$fd,$61,$fd,$7f,$fc   ; 8_     001,0fc,01f,0fd,02f,0fd,03f,0fd,04f,0fd,05f,0fd,061,0fd,07f,0fc 8_
+db $8f,$fc,$9f,$fc,$af,$fc,$bf,$fc,$c3,$fc,$df,$fb,$ef,$fb,$ff,$fb   ; 9_     08f,0fc,09f,0fc,0af,0fc,0bf,0fc,0c3,0fc,0df,0fb,0ef,0fb,0ff,0fb 9_
+db $0f,$fb,$18,$fb,$2f,$fa,$3f,$fa,$4f,$fa,$5f,$fa,$62,$fa,$7f,$f9   ; A_     00f,0fb,018,0fb,02f,0fa,03f,0fa,04f,0fa,05f,0fa,062,0fa,07f,0f9 A_
+db $8f,$f9,$9f,$f9,$a6,$f9,$bf,$f8,$cf,$f8,$df,$f8,$e3,$f8,$ff,$f7   ; B_     08f,0f9,09f,0f9,0a6,0f9,0bf,0f8,0cf,0f8,0df,0f8,0e3,0f8,0ff,0f7 B_
+db $0f,$f7,$1c,$f7,$2f,$f6,$3f,$f6,$4f,$f6,$52,$f6,$6f,$f5,$7f,$f5   ; C_     00f,0f7,01c,0f7,02f,0f6,03f,0f6,04f,0f6,052,0f6,06f,0f5,07f,0f5 C_
+db $83,$f5,$9f,$f4,$af,$f4,$b3,$f4,$cf,$f3,$df,$f3,$ef,$f2,$ff,$f2   ; D_     083,0f5,09f,0f4,0af,0f4,0b3,0f4,0cf,0f3,0df,0f3,0ef,0f2,0ff,0f2 D_
+db $0a,$f2,$1f,$f1,$2f,$f1,$32,$f1,$4f,$f0,$59,$f0,$6f,$ef,$7e,$ef   ; E_     00a,0f2,01f,0f1,02f,0f1,032,0f1,04f,0f0,059,0f0,06f,0ef,07e,0ef E_
+db $8f,$ee,$9f,$ee,$a2,$ee,$bf,$ed,$c5,$ed,$df,$ec,$e7,$ec,$ff,$eb   ; F_     08f,0ee,09f,0ee,0a2,0ee,0bf,0ed,0c5,0ed,0df,0ec,0e7,0ec,0ff,0eb F_
+
+; X = $3400..$37ff
+; Y = ((X & $fff8)-$3400) >> 2 = $00..$fe
+; if ( (X & $ff) <= SIN_LO[Y] ) { sin(X) = X + $ff00 + SIN_LO[Y+1] }
+; if ( (X & $ff) >  SIN_LO[Y] ) { sin(X) = X + $ff00 + SIN_LO[Y+3] }
+SIN_TAB_3437:
+;   _0  _1  _2  _3  _4  _5  _6  _7  _8  _9  _A  _B  _C  _D  _E  _F
+db $04,$ec,$09,$f1,$17,$f5,$1b,$f5,$27,$f4,$2f,$f4,$37,$f4,$38,$f4   ; 0_     004,0ec,009,0f1,017,0f5,01b,0f5,027,0f4,02f,0f4,037,0f4,038,0f4 0_
+db $47,$f3,$4f,$f3,$55,$f3,$5f,$f2,$67,$f2,$6f,$f2,$77,$f1,$7f,$f1   ; 1_     047,0f3,04f,0f3,055,0f3,05f,0f2,067,0f2,06f,0f2,077,0f1,07f,0f1 1_
+db $87,$f1,$89,$f1,$97,$f0,$9f,$f0,$a1,$f0,$af,$ef,$b7,$ef,$b9,$ef   ; 2_     087,0f1,089,0f1,097,0f0,09f,0f0,0a1,0f0,0af,0ef,0b7,0ef,0b9,0ef 2_
+db $c7,$ee,$cf,$ee,$d0,$ee,$df,$ed,$e6,$ed,$ef,$ec,$f7,$ec,$fb,$ec   ; 3_     0c7,0ee,0cf,0ee,0d0,0ee,0df,0ed,0e6,0ed,0ef,0ec,0f7,0ec,0fb,0ec 3_
+db $07,$eb,$0f,$eb,$17,$ea,$1f,$ea,$23,$ea,$2f,$e9,$36,$e9,$3f,$e8   ; 4_     007,0eb,00f,0eb,017,0ea,01f,0ea,023,0ea,02f,0e9,036,0e9,03f,0e8 4_
+db $47,$e8,$49,$e8,$57,$e7,$5b,$e7,$67,$e6,$6d,$e6,$77,$e5,$7e,$e5   ; 5_     047,0e8,049,0e8,057,0e7,05b,0e7,067,0e6,06d,0e6,077,0e5,07e,0e5 5_
+db $87,$e4,$8f,$e4,$97,$e3,$9f,$e3,$a0,$e3,$af,$e2,$b0,$e2,$bf,$e1   ; 6_     087,0e4,08f,0e4,097,0e3,09f,0e3,0a0,0e3,0af,0e2,0b0,0e2,0bf,0e1 6_
+db $c0,$e1,$cf,$e0,$d7,$df,$de,$df,$e7,$de,$ed,$de,$f7,$dd,$fc,$dd   ; 7_     0c0,0e1,0cf,0e0,0d7,0df,0de,0df,0e7,0de,0ed,0de,0f7,0dd,0fc,0dd 7_
+db $07,$dc,$0a,$dc,$17,$db,$18,$db,$26,$da,$2f,$d9,$34,$d9,$3f,$d8   ; 8_     007,0dc,00a,0dc,017,0db,018,0db,026,0da,02f,0d9,034,0d9,03f,0d8 8_
+db $41,$d8,$4e,$d7,$57,$d6,$5b,$d6,$67,$d5,$68,$d5,$74,$d4,$7f,$d3   ; 9_     041,0d8,04e,0d7,057,0d6,05b,0d6,067,0d5,068,0d5,074,0d4,07f,0d3 9_
+db $81,$d3,$8d,$d2,$97,$d1,$99,$d1,$a5,$d0,$af,$cf,$b1,$cf,$bc,$ce   ; A_     081,0d3,08d,0d2,097,0d1,099,0d1,0a5,0d0,0af,0cf,0b1,0cf,0bc,0ce A_
+db $c7,$cd,$cf,$cc,$d3,$cc,$de,$cb,$e7,$ca,$e9,$ca,$f4,$c9,$fe,$c8   ; B_     0c7,0cd,0cf,0cc,0d3,0cc,0de,0cb,0e7,0ca,0e9,0ca,0f4,0c9,0fe,0c8 B_
+db $07,$c7,$09,$c7,$13,$c6,$1e,$c5,$27,$c4,$28,$c4,$32,$c3,$3c,$c2   ; C_     007,0c7,009,0c7,013,0c6,01e,0c5,027,0c4,028,0c4,032,0c3,03c,0c2 C_
+db $46,$c1,$4f,$c0,$50,$c0,$59,$bf,$63,$be,$6c,$bd,$76,$bc,$7f,$bb   ; D_     046,0c1,04f,0c0,050,0c0,059,0bf,063,0be,06c,0bd,076,0bc,07f,0bb D_
+db $87,$ba,$88,$ba,$91,$b9,$9b,$b8,$a4,$b7,$ac,$b6,$b5,$b5,$be,$b4   ; E_     087,0ba,088,0ba,091,0b9,09b,0b8,0a4,0b7,0ac,0b6,0b5,0b5,0be,0b4 E_
+db $c7,$b3,$cf,$b2,$d7,$b1,$d8,$b1,$e0,$b0,$e9,$af,$f1,$ae,$ff,$ad   ; F_     0c7,0b3,0cf,0b2,0d7,0b1,0d8,0b1,0e0,0b0,0e9,0af,0f1,0ae,0ff,0ad F_
+
+; X = $3800..$39ff
+; Y = ((X & $fffc)-$3800) >> 1 = $00..$fe
+; if ( (X & $ff) <= SIN_LO[Y] ) { sin(X) = X + $ff00 + SIN_LO[Y+1] }
+; if ( (X & $ff) >  SIN_LO[Y] ) { sin(X) = X + $ff00 + SIN_LO[Y+3] }
+SIN_TAB_3839:
+;   _0  _1  _2  _3  _4  _5  _6  _7  _8  _9  _A  _B  _C  _D  _E  _F
+db $02,$ac,$06,$af,$0a,$b2,$0e,$b5,$12,$b8,$16,$bb,$1a,$be,$1e,$c1   ; 0_     002,0ac,006,0af,00a,0b2,00e,0b5,012,0b8,016,0bb,01a,0be,01e,0c1 0_
+db $22,$c4,$26,$c7,$2a,$ca,$2d,$cc,$33,$cf,$37,$cf,$38,$cf,$3f,$ce   ; 1_     022,0c4,026,0c7,02a,0ca,02d,0cc,033,0cf,037,0cf,038,0cf,03f,0ce 1_
+db $40,$ce,$47,$cd,$4b,$cc,$4e,$cc,$53,$cb,$55,$cb,$5b,$ca,$5c,$ca   ; 2_     040,0ce,047,0cd,04b,0cc,04e,0cc,053,0cb,055,0cb,05b,0ca,05c,0ca 2_
+db $63,$c9,$67,$c8,$6a,$c8,$6f,$c7,$70,$c7,$77,$c6,$7b,$c5,$7e,$c5   ; 3_     063,0c9,067,0c8,06a,0c8,06f,0c7,070,0c7,077,0c6,07b,0c5,07e,0c5 3_
+db $83,$c4,$84,$c4,$8a,$c3,$8f,$c2,$91,$c2,$97,$c1,$9b,$c0,$9d,$c0   ; 4_     083,0c4,084,0c4,08a,0c3,08f,0c2,091,0c2,097,0c1,09b,0c0,09d,0c0 4_
+db $a3,$bf,$a7,$be,$aa,$be,$af,$bd,$b0,$bd,$b5,$bc,$bb,$bb,$bf,$ba   ; 5_     0a3,0bf,0a7,0be,0aa,0be,0af,0bd,0b0,0bd,0b5,0bc,0bb,0bb,0bf,0ba 5_
+db $c1,$ba,$c7,$b9,$cb,$b8,$cd,$b8,$d2,$b7,$d7,$b6,$d8,$b6,$de,$b5   ; 6_     0c1,0ba,0c7,0b9,0cb,0b8,0cd,0b8,0d2,0b7,0d7,0b6,0d8,0b6,0de,0b5 6_
+db $e3,$b4,$e7,$b3,$e9,$b3,$ee,$b2,$f3,$b1,$f4,$b1,$f9,$b0,$fe,$af   ; 7_     0e3,0b4,0e7,0b3,0e9,0b3,0ee,0b2,0f3,0b1,0f4,0b1,0f9,0b0,0fe,0af 7_
+db $03,$ae,$04,$ae,$09,$ad,$0e,$ac,$13,$ab,$17,$aa,$18,$aa,$1d,$a9   ; 8_     003,0ae,004,0ae,009,0ad,00e,0ac,013,0ab,017,0aa,018,0aa,01d,0a9 8_
+db $22,$a8,$27,$a7,$2b,$a6,$2c,$a6,$31,$a5,$36,$a4,$3b,$a3,$3f,$a2   ; 9_     022,0a8,027,0a7,02b,0a6,02c,0a6,031,0a5,036,0a4,03b,0a3,03f,0a2 9_
+db $40,$a2,$45,$a1,$49,$a0,$4e,$9f,$53,$9e,$57,$9d,$58,$9d,$5c,$9c   ; A_     040,0a2,045,0a1,049,0a0,04e,09f,053,09e,057,09d,058,09d,05c,09c A_
+db $61,$9b,$65,$9a,$6a,$99,$6e,$98,$73,$97,$77,$96,$7b,$95,$7c,$95   ; B_     061,09b,065,09a,06a,099,06e,098,073,097,077,096,07b,095,07c,095 B_
+db $80,$94,$85,$93,$89,$92,$8d,$91,$92,$90,$96,$8f,$9a,$8e,$9e,$8d   ; C_     080,094,085,093,089,092,08d,091,092,090,096,08f,09a,08e,09e,08d C_
+db $a3,$8c,$a7,$8b,$ab,$8a,$af,$89,$b3,$88,$b7,$87,$bb,$86,$bf,$85   ; D_     0a3,08c,0a7,08b,0ab,08a,0af,089,0b3,088,0b7,087,0bb,086,0bf,085 D_
+db $c3,$84,$c4,$84,$c8,$83,$cc,$82,$cf,$81,$d3,$80,$d7,$7f,$db,$7e   ; E_     0c3,084,0c4,084,0c8,083,0cc,082,0cf,081,0d3,080,0d7,07f,0db,07e E_
+db $df,$7d,$e3,$7c,$e7,$7b,$eb,$7a,$f2,$79,$f6,$77,$fa,$76,$fe,$75   ; F_     0df,07d,0e3,07c,0e7,07b,0eb,07a,0f2,079,0f6,077,0fa,076,0fe,075 F_
+
+
+; hi = $ff
+SIN_TAB_3A:
+;   _0  _1  _2  _3  _4  _5  _6  _7  _8  _9  _A  _B  _C  _D  _E  _F
+db $74,$74,$73,$73,$73,$73,$72,$72,$72,$72,$71,$71,$71,$70,$70,$70   ; 0_     ff74,ff74,ff73,ff73,ff73,ff73,ff72,ff72,ff72,ff72,ff71,ff71,ff71,ff70,ff70,ff70 0_
+db $70,$6f,$6f,$6f,$6f,$6e,$6e,$6e,$6d,$6d,$6d,$6d,$6c,$6c,$6c,$6c   ; 1_     ff70,ff6f,ff6f,ff6f,ff6f,ff6e,ff6e,ff6e,ff6d,ff6d,ff6d,ff6d,ff6c,ff6c,ff6c,ff6c 1_
+db $6b,$6b,$6b,$6a,$6a,$6a,$6a,$69,$69,$69,$68,$68,$68,$68,$67,$67   ; 2_     ff6b,ff6b,ff6b,ff6a,ff6a,ff6a,ff6a,ff69,ff69,ff69,ff68,ff68,ff68,ff68,ff67,ff67 2_
+db $67,$66,$66,$66,$66,$65,$65,$65,$64,$64,$64,$64,$63,$63,$63,$62   ; 3_     ff67,ff66,ff66,ff66,ff66,ff65,ff65,ff65,ff64,ff64,ff64,ff64,ff63,ff63,ff63,ff62 3_
+db $62,$62,$62,$61,$61,$61,$60,$60,$60,$60,$5f,$5f,$5f,$5e,$5e,$5e   ; 4_     ff62,ff62,ff62,ff61,ff61,ff61,ff60,ff60,ff60,ff60,ff5f,ff5f,ff5f,ff5e,ff5e,ff5e 4_
+db $5d,$5d,$5d,$5d,$5c,$5c,$5c,$5b,$5b,$5b,$5a,$5a,$5a,$5a,$59,$59   ; 5_     ff5d,ff5d,ff5d,ff5d,ff5c,ff5c,ff5c,ff5b,ff5b,ff5b,ff5a,ff5a,ff5a,ff5a,ff59,ff59 5_
+db $59,$58,$58,$58,$57,$57,$57,$57,$56,$56,$56,$55,$55,$55,$54,$54   ; 6_     ff59,ff58,ff58,ff58,ff57,ff57,ff57,ff57,ff56,ff56,ff56,ff55,ff55,ff55,ff54,ff54 6_
+db $54,$54,$53,$53,$53,$52,$52,$52,$51,$51,$51,$50,$50,$50,$4f,$4f   ; 7_     ff54,ff54,ff53,ff53,ff53,ff52,ff52,ff52,ff51,ff51,ff51,ff50,ff50,ff50,ff4f,ff4f 7_
+db $4f,$4f,$4e,$4e,$4e,$4d,$4d,$4d,$4c,$4c,$4c,$4b,$4b,$4b,$4a,$4a   ; 8_     ff4f,ff4f,ff4e,ff4e,ff4e,ff4d,ff4d,ff4d,ff4c,ff4c,ff4c,ff4b,ff4b,ff4b,ff4a,ff4a 8_
+db $4a,$4a,$49,$49,$49,$48,$48,$48,$47,$47,$47,$46,$46,$46,$45,$45   ; 9_     ff4a,ff4a,ff49,ff49,ff49,ff48,ff48,ff48,ff47,ff47,ff47,ff46,ff46,ff46,ff45,ff45 9_
+db $45,$44,$44,$44,$43,$43,$43,$42,$42,$42,$41,$41,$41,$40,$40,$40   ; A_     ff45,ff44,ff44,ff44,ff43,ff43,ff43,ff42,ff42,ff42,ff41,ff41,ff41,ff40,ff40,ff40 A_
+db $3f,$3f,$3f,$3e,$3e,$3e,$3d,$3d,$3d,$3c,$3c,$3c,$3b,$3b,$3b,$3a   ; B_     ff3f,ff3f,ff3f,ff3e,ff3e,ff3e,ff3d,ff3d,ff3d,ff3c,ff3c,ff3c,ff3b,ff3b,ff3b,ff3a B_
+db $3a,$3a,$39,$39,$39,$38,$38,$38,$37,$37,$37,$36,$36,$36,$35,$35   ; C_     ff3a,ff3a,ff39,ff39,ff39,ff38,ff38,ff38,ff37,ff37,ff37,ff36,ff36,ff36,ff35,ff35 C_
+db $35,$34,$34,$34,$33,$33,$33,$32,$32,$32,$31,$31,$31,$30,$30,$30   ; D_     ff35,ff34,ff34,ff34,ff33,ff33,ff33,ff32,ff32,ff32,ff31,ff31,ff31,ff30,ff30,ff30 D_
+db $2f,$2f,$2f,$2e,$2e,$2d,$2d,$2d,$2c,$2c,$2c,$2b,$2b,$2b,$2a,$2a   ; E_     ff2f,ff2f,ff2f,ff2e,ff2e,ff2d,ff2d,ff2d,ff2c,ff2c,ff2c,ff2b,ff2b,ff2b,ff2a,ff2a E_
+db $2a,$29,$29,$29,$28,$28,$28,$27,$27,$26,$26,$26,$25,$25,$25,$24   ; F_     ff2a,ff29,ff29,ff29,ff28,ff28,ff28,ff27,ff27,ff26,ff26,ff26,ff25,ff25,ff25,ff24 F_
+
+; hi = $3a
+SIN_TAB_3B:
+;   _0  _1  _2  _3  _4  _5  _6  _7  _8  _9  _A  _B  _C  _D  _E  _F
+db $24,$25,$25,$26,$26,$27,$28,$28,$29,$2a,$2a,$2b,$2c,$2c,$2d,$2e   ; 0_     3a24,3a25,3a25,3a26,3a26,3a27,3a28,3a28,3a29,3a2a,3a2a,3a2b,3a2c,3a2c,3a2d,3a2e 0_
+db $2e,$2f,$2f,$30,$31,$31,$32,$33,$33,$34,$34,$35,$36,$36,$37,$38   ; 1_     3a2e,3a2f,3a2f,3a30,3a31,3a31,3a32,3a33,3a33,3a34,3a34,3a35,3a36,3a36,3a37,3a38 1_
+db $38,$39,$3a,$3a,$3b,$3b,$3c,$3d,$3d,$3e,$3f,$3f,$40,$40,$41,$42   ; 2_     3a38,3a39,3a3a,3a3a,3a3b,3a3b,3a3c,3a3d,3a3d,3a3e,3a3f,3a3f,3a40,3a40,3a41,3a42 2_
+db $42,$43,$44,$44,$45,$45,$46,$47,$47,$48,$48,$49,$4a,$4a,$4b,$4c   ; 3_     3a42,3a43,3a44,3a44,3a45,3a45,3a46,3a47,3a47,3a48,3a48,3a49,3a4a,3a4a,3a4b,3a4c 3_
+db $4c,$4d,$4d,$4e,$4f,$4f,$50,$50,$51,$52,$52,$53,$54,$54,$55,$55   ; 4_     3a4c,3a4d,3a4d,3a4e,3a4f,3a4f,3a50,3a50,3a51,3a52,3a52,3a53,3a54,3a54,3a55,3a55 4_
+db $56,$57,$57,$58,$58,$59,$5a,$5a,$5b,$5b,$5c,$5d,$5d,$5e,$5f,$5f   ; 5_     3a56,3a57,3a57,3a58,3a58,3a59,3a5a,3a5a,3a5b,3a5b,3a5c,3a5d,3a5d,3a5e,3a5f,3a5f 5_
+db $60,$60,$61,$62,$62,$63,$63,$64,$65,$65,$66,$66,$67,$68,$68,$69   ; 6_     3a60,3a60,3a61,3a62,3a62,3a63,3a63,3a64,3a65,3a65,3a66,3a66,3a67,3a68,3a68,3a69 6_
+db $69,$6a,$6b,$6b,$6c,$6c,$6d,$6e,$6e,$6f,$6f,$70,$70,$71,$72,$72   ; 7_     3a69,3a6a,3a6b,3a6b,3a6c,3a6c,3a6d,3a6e,3a6e,3a6f,3a6f,3a70,3a70,3a71,3a72,3a72 7_
+db $73,$73,$74,$75,$75,$76,$76,$77,$78,$78,$79,$79,$7a,$7b,$7b,$7c   ; 8_     3a73,3a73,3a74,3a75,3a75,3a76,3a76,3a77,3a78,3a78,3a79,3a79,3a7a,3a7b,3a7b,3a7c 8_
+db $7c,$7d,$7d,$7e,$7f,$7f,$80,$80,$81,$82,$82,$83,$83,$84,$84,$85   ; 9_     3a7c,3a7d,3a7d,3a7e,3a7f,3a7f,3a80,3a80,3a81,3a82,3a82,3a83,3a83,3a84,3a84,3a85 9_
+db $86,$86,$87,$87,$88,$88,$89,$8a,$8a,$8b,$8b,$8c,$8d,$8d,$8e,$8e   ; A_     3a86,3a86,3a87,3a87,3a88,3a88,3a89,3a8a,3a8a,3a8b,3a8b,3a8c,3a8d,3a8d,3a8e,3a8e A_
+db $8f,$8f,$90,$91,$91,$92,$92,$93,$93,$94,$95,$95,$96,$96,$97,$97   ; B_     3a8f,3a8f,3a90,3a91,3a91,3a92,3a92,3a93,3a93,3a94,3a95,3a95,3a96,3a96,3a97,3a97 B_
+db $98,$98,$99,$9a,$9a,$9b,$9b,$9c,$9c,$9d,$9e,$9e,$9f,$9f,$a0,$a0   ; C_     3a98,3a98,3a99,3a9a,3a9a,3a9b,3a9b,3a9c,3a9c,3a9d,3a9e,3a9e,3a9f,3a9f,3aa0,3aa0 C_
+db $a1,$a1,$a2,$a3,$a3,$a4,$a4,$a5,$a5,$a6,$a7,$a7,$a8,$a8,$a9,$a9   ; D_     3aa1,3aa1,3aa2,3aa3,3aa3,3aa4,3aa4,3aa5,3aa5,3aa6,3aa7,3aa7,3aa8,3aa8,3aa9,3aa9 D_
+db $aa,$aa,$ab,$ab,$ac,$ad,$ad,$ae,$ae,$af,$af,$b0,$b0,$b1,$b2,$b2   ; E_     3aaa,3aaa,3aab,3aab,3aac,3aad,3aad,3aae,3aae,3aaf,3aaf,3ab0,3ab0,3ab1,3ab2,3ab2 E_
+db $b3,$b3,$b4,$b4,$b5,$b5,$b6,$b6,$b7,$b8,$b8,$b9,$b9,$ba,$ba,$bb   ; F_     3ab3,3ab3,3ab4,3ab4,3ab5,3ab5,3ab6,3ab6,3ab7,3ab8,3ab8,3ab9,3ab9,3aba,3aba,3abb F_
+
+; hi = $fe
+SIN_TAB_3C:
+;   _0  _1  _2  _3  _4  _5  _6  _7  _8  _9  _A  _B  _C  _D  _E  _F
+db $bb,$bb,$bb,$bc,$bc,$bc,$bc,$bc,$bc,$bc,$bc,$bc,$bc,$bc,$bc,$bc   ; 0_     febb,febb,febb,febc,febc,febc,febc,febc,febc,febc,febc,febc,febc,febc,febc,febc 0_
+db $bc,$bc,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd   ; 1_     febc,febc,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd 1_
+db $bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd   ; 2_     febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd 2_
+db $bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd   ; 3_     febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd 3_
+db $bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bd,$bc   ; 4_     febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febd,febc 4_
+db $bc,$bc,$bc,$bc,$bc,$bc,$bc,$bc,$bc,$bc,$bc,$bc,$bc,$bc,$bc,$bb   ; 5_     febc,febc,febc,febc,febc,febc,febc,febc,febc,febc,febc,febc,febc,febc,febc,febb 5_
+db $bb,$bb,$bb,$bb,$bb,$bb,$bb,$bb,$bb,$bb,$ba,$ba,$ba,$ba,$ba,$ba   ; 6_     febb,febb,febb,febb,febb,febb,febb,febb,febb,febb,feba,feba,feba,feba,feba,feba 6_
+db $ba,$ba,$ba,$b9,$b9,$b9,$b9,$b9,$b9,$b9,$b9,$b9,$b8,$b8,$b8,$b8   ; 7_     feba,feba,feba,feb9,feb9,feb9,feb9,feb9,feb9,feb9,feb9,feb9,feb8,feb8,feb8,feb8 7_
+db $b8,$b8,$b8,$b7,$b7,$b7,$b7,$b7,$b7,$b7,$b6,$b6,$b6,$b6,$b6,$b6   ; 8_     feb8,feb8,feb8,feb7,feb7,feb7,feb7,feb7,feb7,feb7,feb6,feb6,feb6,feb6,feb6,feb6 8_
+db $b5,$b5,$b5,$b5,$b5,$b5,$b4,$b4,$b4,$b4,$b4,$b3,$b3,$b3,$b3,$b3   ; 9_     feb5,feb5,feb5,feb5,feb5,feb5,feb4,feb4,feb4,feb4,feb4,feb3,feb3,feb3,feb3,feb3 9_
+db $b3,$b2,$b2,$b2,$b2,$b2,$b1,$b1,$b1,$b1,$b0,$b0,$b0,$b0,$b0,$af   ; A_     feb3,feb2,feb2,feb2,feb2,feb2,feb1,feb1,feb1,feb1,feb0,feb0,feb0,feb0,feb0,feaf A_
+db $af,$af,$af,$af,$ae,$ae,$ae,$ae,$ad,$ad,$ad,$ad,$ac,$ac,$ac,$ac   ; B_     feaf,feaf,feaf,feaf,feae,feae,feae,feae,fead,fead,fead,fead,feac,feac,feac,feac B_
+db $ab,$ab,$ab,$ab,$aa,$aa,$aa,$aa,$a9,$a9,$a9,$a9,$a8,$a8,$a8,$a7   ; C_     feab,feab,feab,feab,feaa,feaa,feaa,feaa,fea9,fea9,fea9,fea9,fea8,fea8,fea8,fea7 C_
+db $a7,$a7,$a7,$a6,$a6,$a6,$a5,$a5,$a5,$a5,$a4,$a4,$a4,$a3,$a3,$a3   ; D_     fea7,fea7,fea7,fea6,fea6,fea6,fea5,fea5,fea5,fea5,fea4,fea4,fea4,fea3,fea3,fea3 D_
+db $a2,$a2,$a2,$a1,$a1,$a1,$a0,$a0,$a0,$a0,$9f,$9f,$9f,$9e,$9e,$9e   ; E_     fea2,fea2,fea2,fea1,fea1,fea1,fea0,fea0,fea0,fea0,fe9f,fe9f,fe9f,fe9e,fe9e,fe9e E_
+db $9d,$9d,$9d,$9c,$9c,$9b,$9b,$9b,$9a,$9a,$9a,$99,$99,$99,$98,$98   ; F_     fe9d,fe9d,fe9d,fe9c,fe9c,fe9b,fe9b,fe9b,fe9a,fe9a,fe9a,fe99,fe99,fe99,fe98,fe98 F_
+
+; hi = $3b
+SIN_TAB_3D:
+;   _0  _1  _2  _3  _4  _5  _6  _7  _8  _9  _A  _B  _C  _D  _E  _F
+db $98,$98,$99,$99,$9a,$9b,$9b,$9c,$9d,$9d,$9e,$9e,$9f,$a0,$a0,$a1   ; 0_     3b98,3b98,3b99,3b99,3b9a,3b9b,3b9b,3b9c,3b9d,3b9d,3b9e,3b9e,3b9f,3ba0,3ba0,3ba1 0_
+db $a1,$a2,$a3,$a3,$a4,$a4,$a5,$a6,$a6,$a7,$a7,$a8,$a8,$a9,$aa,$aa   ; 1_     3ba1,3ba2,3ba3,3ba3,3ba4,3ba4,3ba5,3ba6,3ba6,3ba7,3ba7,3ba8,3ba8,3ba9,3baa,3baa 1_
+db $ab,$ab,$ac,$ac,$ad,$ae,$ae,$af,$af,$b0,$b0,$b1,$b1,$b2,$b3,$b3   ; 2_     3bab,3bab,3bac,3bac,3bad,3bae,3bae,3baf,3baf,3bb0,3bb0,3bb1,3bb1,3bb2,3bb3,3bb3 2_
+db $b4,$b4,$b5,$b5,$b6,$b6,$b7,$b7,$b8,$b8,$b9,$b9,$ba,$bb,$bb,$bc   ; 3_     3bb4,3bb4,3bb5,3bb5,3bb6,3bb6,3bb7,3bb7,3bb8,3bb8,3bb9,3bb9,3bba,3bbb,3bbb,3bbc 3_
+db $bc,$bd,$bd,$be,$be,$bf,$bf,$c0,$c0,$c1,$c1,$c2,$c2,$c3,$c3,$c4   ; 4_     3bbc,3bbd,3bbd,3bbe,3bbe,3bbf,3bbf,3bc0,3bc0,3bc1,3bc1,3bc2,3bc2,3bc3,3bc3,3bc4 4_
+db $c4,$c4,$c5,$c5,$c6,$c6,$c7,$c7,$c8,$c8,$c9,$c9,$ca,$ca,$cb,$cb   ; 5_     3bc4,3bc4,3bc5,3bc5,3bc6,3bc6,3bc7,3bc7,3bc8,3bc8,3bc9,3bc9,3bca,3bca,3bcb,3bcb 5_
+db $cb,$cc,$cc,$cd,$cd,$ce,$ce,$cf,$cf,$cf,$d0,$d0,$d1,$d1,$d2,$d2   ; 6_     3bcb,3bcc,3bcc,3bcd,3bcd,3bce,3bce,3bcf,3bcf,3bcf,3bd0,3bd0,3bd1,3bd1,3bd2,3bd2 6_
+db $d2,$d3,$d3,$d4,$d4,$d4,$d5,$d5,$d6,$d6,$d6,$d7,$d7,$d8,$d8,$d8   ; 7_     3bd2,3bd3,3bd3,3bd4,3bd4,3bd4,3bd5,3bd5,3bd6,3bd6,3bd6,3bd7,3bd7,3bd8,3bd8,3bd8 7_
+db $d9,$d9,$da,$da,$da,$db,$db,$dc,$dc,$dc,$dd,$dd,$dd,$de,$de,$de   ; 8_     3bd9,3bd9,3bda,3bda,3bda,3bdb,3bdb,3bdc,3bdc,3bdc,3bdd,3bdd,3bdd,3bde,3bde,3bde 8_
+db $df,$df,$e0,$e0,$e0,$e1,$e1,$e1,$e2,$e2,$e2,$e3,$e3,$e3,$e4,$e4   ; 9_     3bdf,3bdf,3be0,3be0,3be0,3be1,3be1,3be1,3be2,3be2,3be2,3be3,3be3,3be3,3be4,3be4 9_
+db $e4,$e5,$e5,$e5,$e6,$e6,$e6,$e7,$e7,$e7,$e8,$e8,$e8,$e8,$e9,$e9   ; A_     3be4,3be5,3be5,3be5,3be6,3be6,3be6,3be7,3be7,3be7,3be8,3be8,3be8,3be8,3be9,3be9 A_
+db $e9,$ea,$ea,$ea,$eb,$eb,$eb,$eb,$ec,$ec,$ec,$ec,$ed,$ed,$ed,$ee   ; B_     3be9,3bea,3bea,3bea,3beb,3beb,3beb,3beb,3bec,3bec,3bec,3bec,3bed,3bed,3bed,3bee B_
+db $ee,$ee,$ee,$ef,$ef,$ef,$ef,$f0,$f0,$f0,$f0,$f1,$f1,$f1,$f1,$f2   ; C_     3bee,3bee,3bee,3bef,3bef,3bef,3bef,3bf0,3bf0,3bf0,3bf0,3bf1,3bf1,3bf1,3bf1,3bf2 C_
+db $f2,$f2,$f2,$f3,$f3,$f3,$f3,$f3,$f4,$f4,$f4,$f4,$f5,$f5,$f5,$f5   ; D_     3bf2,3bf2,3bf2,3bf3,3bf3,3bf3,3bf3,3bf3,3bf4,3bf4,3bf4,3bf4,3bf5,3bf5,3bf5,3bf5 D_
+db $f5,$f6,$f6,$f6,$f6,$f6,$f7,$f7,$f7,$f7,$f7,$f7,$f8,$f8,$f8,$f8   ; E_     3bf5,3bf6,3bf6,3bf6,3bf6,3bf6,3bf7,3bf7,3bf7,3bf7,3bf7,3bf7,3bf8,3bf8,3bf8,3bf8 E_
+db $f8,$f9,$f9,$f9,$f9,$f9,$f9,$fa,$fa,$fa,$fa,$fa,$fa,$fa,$fb,$fb   ; F_     3bf8,3bf9,3bf9,3bf9,3bf9,3bf9,3bf9,3bfa,3bfa,3bfa,3bfa,3bfa,3bfa,3bfa,3bfb,3bfb F_
+
+; hi = $fd
+SIN_TAB_3E:
+;   _0  _1  _2  _3  _4  _5  _6  _7  _8  _9  _A  _B  _C  _D  _E  _F
+db $fb,$fa,$f9,$f8,$f7,$f7,$f6,$f5,$f4,$f3,$f2,$f1,$f0,$f0,$ef,$ee   ; 0_     fdfb,fdfa,fdf9,fdf8,fdf7,fdf7,fdf6,fdf5,fdf4,fdf3,fdf2,fdf1,fdf0,fdf0,fdef,fdee 0_
+db $ed,$ec,$eb,$ea,$e9,$e8,$e8,$e7,$e6,$e5,$e4,$e3,$e2,$e1,$e0,$df   ; 1_     fded,fdec,fdeb,fdea,fde9,fde8,fde8,fde7,fde6,fde5,fde4,fde3,fde2,fde1,fde0,fddf 1_
+db $de,$dd,$dd,$dc,$db,$da,$d9,$d8,$d7,$d6,$d5,$d4,$d3,$d2,$d1,$d0   ; 2_     fdde,fddd,fddd,fddc,fddb,fdda,fdd9,fdd8,fdd7,fdd6,fdd5,fdd4,fdd3,fdd2,fdd1,fdd0 2_
+db $cf,$ce,$ce,$cd,$cc,$cb,$ca,$c9,$c8,$c7,$c6,$c5,$c4,$c3,$c2,$c1   ; 3_     fdcf,fdce,fdce,fdcd,fdcc,fdcb,fdca,fdc9,fdc8,fdc7,fdc6,fdc5,fdc4,fdc3,fdc2,fdc1 3_
+db $c0,$bf,$be,$bd,$bc,$bb,$ba,$b9,$b8,$b7,$b6,$b5,$b4,$b3,$b2,$b1   ; 4_     fdc0,fdbf,fdbe,fdbd,fdbc,fdbb,fdba,fdb9,fdb8,fdb7,fdb6,fdb5,fdb4,fdb3,fdb2,fdb1 4_
+db $b0,$af,$ae,$ad,$ac,$ab,$aa,$a9,$a8,$a7,$a6,$a5,$a4,$a3,$a2,$a1   ; 5_     fdb0,fdaf,fdae,fdad,fdac,fdab,fdaa,fda9,fda8,fda7,fda6,fda5,fda4,fda3,fda2,fda1 5_
+db $9f,$9e,$9d,$9c,$9b,$9a,$99,$98,$97,$96,$95,$94,$93,$92,$91,$90   ; 6_     fd9f,fd9e,fd9d,fd9c,fd9b,fd9a,fd99,fd98,fd97,fd96,fd95,fd94,fd93,fd92,fd91,fd90 6_
+db $8e,$8d,$8c,$8b,$8a,$89,$88,$87,$86,$85,$84,$83,$81,$80,$7f,$7e   ; 7_     fd8e,fd8d,fd8c,fd8b,fd8a,fd89,fd88,fd87,fd86,fd85,fd84,fd83,fd81,fd80,fd7f,fd7e 7_
+db $7d,$7c,$7b,$7a,$79,$77,$76,$75,$74,$73,$72,$71,$70,$6e,$6d,$6c   ; 8_     fd7d,fd7c,fd7b,fd7a,fd79,fd77,fd76,fd75,fd74,fd73,fd72,fd71,fd70,fd6e,fd6d,fd6c 8_
+db $6b,$6a,$69,$68,$66,$65,$64,$63,$62,$61,$60,$5e,$5d,$5c,$5b,$5a   ; 9_     fd6b,fd6a,fd69,fd68,fd66,fd65,fd64,fd63,fd62,fd61,fd60,fd5e,fd5d,fd5c,fd5b,fd5a 9_
+db $59,$57,$56,$55,$54,$53,$51,$50,$4f,$4e,$4d,$4c,$4a,$49,$48,$47   ; A_     fd59,fd57,fd56,fd55,fd54,fd53,fd51,fd50,fd4f,fd4e,fd4d,fd4c,fd4a,fd49,fd48,fd47 A_
+db $46,$44,$43,$42,$41,$40,$3e,$3d,$3c,$3b,$39,$38,$37,$36,$35,$33   ; B_     fd46,fd44,fd43,fd42,fd41,fd40,fd3e,fd3d,fd3c,fd3b,fd39,fd38,fd37,fd36,fd35,fd33 B_
+db $32,$31,$30,$2e,$2d,$2c,$2b,$29,$28,$27,$26,$24,$23,$22,$21,$1f   ; C_     fd32,fd31,fd30,fd2e,fd2d,fd2c,fd2b,fd29,fd28,fd27,fd26,fd24,fd23,fd22,fd21,fd1f C_
+db $1e,$1d,$1c,$1a,$19,$18,$16,$15,$14,$13,$11,$10,$0f,$0e,$0c,$0b   ; D_     fd1e,fd1d,fd1c,fd1a,fd19,fd18,fd16,fd15,fd14,fd13,fd11,fd10,fd0f,fd0e,fd0c,fd0b D_
+db $0a,$08,$07,$06,$04,$03,$02,$01,$ff,$fe,$fd,$fb,$fa,$f9,$f7,$f6   ; E_     fd0a,fd08,fd07,fd06,fd04,fd03,fd02,fd01,fcff,fcfe,fcfd,fcfb,fcfa,fcf9,fcf7,fcf6 E_
+db $f5,$f3,$f2,$f1,$ef,$ee,$ed,$eb,$ea,$e9,$e7,$e6,$e5,$e3,$e2,$e1   ; F_     fcf5,fcf3,fcf2,fcf1,fcef,fcee,fced,fceb,fcea,fce9,fce7,fce6,fce5,fce3,fce2,fce1 F_
+
+endif
+
+
+; sin($3000) = $2ffb, e: -3, m: $0000, má být: $2ffb, jest: $2ffc, rozdíl: -1
+; sin($3400) = $33eb, e: -2, m: $0000, má být: $33eb, jest: $33ec, rozdíl: -1
+; sin($3402) = $33ef, e: -2, m: $0002, má být: $33ef, jest: $33ee, rozdíl: 1
+; sin($3403) = $33f1, e: -2, m: $0003, má být: $33f1, jest: $33ef, rozdíl: 2
+; sin($3404) = $33f2, e: -2, m: $0004, má být: $33f2, jest: $33f0, rozdíl: 2
+; sin($3405) = $33f4, e: -2, m: $0005, má být: $33f4, jest: $33f6, rozdíl: -2
+; sin($3406) = $33f6, e: -2, m: $0006, má být: $33f6, jest: $33f7, rozdíl: -1
+; sin($3408) = $33fa, e: -2, m: $0008, má být: $33fa, jest: $33f9, rozdíl: 1
+; sin($3409) = $33fc, e: -2, m: $0009, má být: $33fc, jest: $33fa, rozdíl: 2
+; sin($340a) = $33fe, e: -2, m: $000a, má být: $33fe, jest: $33ff, rozdíl: -1
+; sin($37fa) = $37a6, e: -2, m: $03fa, má být: $37a6, jest: $37a7, rozdíl: -1
+; sin($37fb) = $37a7, e: -2, m: $03fb, má být: $37a7, jest: $37a8, rozdíl: -1
+; sin($37fc) = $37a8, e: -2, m: $03fc, má být: $37a8, jest: $37a9, rozdíl: -1
+; sin($37fd) = $37a9, e: -2, m: $03fd, má být: $37a9, jest: $37aa, rozdíl: -1
+; sin($37fe) = $37aa, e: -2, m: $03fe, má být: $37aa, jest: $37ab, rozdíl: -1
+; sin($37ff) = $37ab, e: -2, m: $03ff, má být: $37ab, jest: $37ac, rozdíl: -1
+; sin($3802) = $37af, e: -1, m: $0002, má být: $37af, jest: $37ae, rozdíl: 1
+; sin($3803) = $37b1, e: -1, m: $0003, má být: $37b1, jest: $37b2, rozdíl: -1
+; sin($3806) = $37b6, e: -1, m: $0006, má být: $37b6, jest: $37b5, rozdíl: 1
+; sin($3807) = $37b8, e: -1, m: $0007, má být: $37b8, jest: $37b9, rozdíl: -1
+; sin($3809) = $37bc, e: -1, m: $0009, má být: $37bc, jest: $37bb, rozdíl: 1
+; sin($380a) = $37bd, e: -1, m: $000a, má být: $37bd, jest: $37bc, rozdíl: 1
+; sin($380b) = $37bf, e: -1, m: $000b, má být: $37bf, jest: $37c0, rozdíl: -1
+; sin($380d) = $37c3, e: -1, m: $000d, má být: $37c3, jest: $37c2, rozdíl: 1
+; sin($380e) = $37c4, e: -1, m: $000e, má být: $37c4, jest: $37c3, rozdíl: 1
+; sin($380f) = $37c6, e: -1, m: $000f, má být: $37c6, jest: $37c7, rozdíl: -1
+; sin($3812) = $37cb, e: -1, m: $0012, má být: $37cb, jest: $37ca, rozdíl: 1
+; sin($3813) = $37cd, e: -1, m: $0013, má být: $37cd, jest: $37ce, rozdíl: -1
+; sin($3816) = $37d2, e: -1, m: $0016, má být: $37d2, jest: $37d1, rozdíl: 1
+; sin($3817) = $37d4, e: -1, m: $0017, má být: $37d4, jest: $37d5, rozdíl: -1
+; sin($381a) = $37d9, e: -1, m: $001a, má být: $37d9, jest: $37d8, rozdíl: 1
+; sin($381b) = $37db, e: -1, m: $001b, má být: $37db, jest: $37dc, rozdíl: -1
+; sin($381e) = $37e0, e: -1, m: $001e, má být: $37e0, jest: $37df, rozdíl: 1
+; sin($381f) = $37e2, e: -1, m: $001f, má být: $37e2, jest: $37e3, rozdíl: -1
+; sin($3822) = $37e7, e: -1, m: $0022, má být: $37e7, jest: $37e6, rozdíl: 1
+; sin($3823) = $37e9, e: -1, m: $0023, má být: $37e9, jest: $37ea, rozdíl: -1
+; sin($3826) = $37ee, e: -1, m: $0026, má být: $37ee, jest: $37ed, rozdíl: 1
+; sin($3827) = $37f0, e: -1, m: $0027, má být: $37f0, jest: $37f1, rozdíl: -1
+; sin($382a) = $37f5, e: -1, m: $002a, má být: $37f5, jest: $37f4, rozdíl: 1
+; sin($382d) = $37fa, e: -1, m: $002d, má být: $37fa, jest: $37f9, rozdíl: 1
+; sin($382e) = $37fc, e: -1, m: $002e, má být: $37fc, jest: $37fd, rozdíl: -1
+; sin($3831) = $3801, e: -1, m: $0031, má být: $3801, jest: $3800, rozdíl: 1
+; sin($39f0) = $3968, e: -1, m: $01f0, má být: $3968, jest: $3969, rozdíl: -1
+; sin($39f1) = $3969, e: -1, m: $01f1, má být: $3969, jest: $396a, rozdíl: -1
+; sin($39f2) = $396a, e: -1, m: $01f2, má být: $396a, jest: $396b, rozdíl: -1

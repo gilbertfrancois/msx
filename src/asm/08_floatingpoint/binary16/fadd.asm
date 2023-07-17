@@ -1,17 +1,12 @@
-    ifndef @FADD
-
-    ; continue from @FSUB (if it was included)
+    ; continue from _FSUB (if it was included)
         
 ; Add two floating-point numbers
 ;  In: HL, DE numbers to add, no restrictions
 ; Out: HL = HL + DE
 ; Pollutes: AF, B, DE
-@FADD:
-    ifndef FADD
 ; *****************************************
-FADD                ; *
+FADD:
 ; *****************************************
-    endif
     if SIGN_BIT = $0F
         LD      A, H                ;  1:4
         XOR     D                   ;  1:4
@@ -24,12 +19,4 @@ FADD                ; *
     endif
     if SIGN_BIT != $07 && SIGN_BIT != $0F
         .ERROR Unexpected value in SIGN_BIT!
-    endif
-    ; continue with FADDP
-    if defined @FADDP
-        .ERROR  You must exclude the file "faddp.asm" or include "fadd.asm" first
-    else
-        include "faddp.asm"
-    endif
-    include "fsubp.asm"
     endif

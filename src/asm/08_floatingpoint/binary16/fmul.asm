@@ -1,17 +1,10 @@
-ifndef @FMUL
-
-        ; continue from @FDIV (if it was included)
-
 ; ---------------------------------------------
 ; Input:  BC, DE
 ; Output: HL = DE * BC, if ( overflow or underflow ) set carry
 ; A_mantisa * 2^A_exp * B_mantisa * 2^B_exp = A_mantisa * B_mantisa *2^(A_exp + B_exp)
-@FMUL:
-ifndef FMUL
 ; *****************************************
-                    FMUL                ; *
+FMUL:                ; *
 ; *****************************************
-endif
 
         LD      A, B                ;  1:4
         AND     $FF - MANT_MASK_HI  ;  2:7
@@ -166,14 +159,9 @@ FMUL_OVERFLOW_S:
 FMUL_OVERFLOW:
         LD      H, A                ;  1:4
         LD      L, $FF              ;  2:7
-    if color_flow_warning
-        CALL    OVER_COL_WARNING    ;  3:17
-    endif
     if carry_flow_warning
         SCF                         ;  1:4          carry = error
     endif
         RET                         ;  1:10
 
-    include "color_flow_warning.asm"
   
-endif

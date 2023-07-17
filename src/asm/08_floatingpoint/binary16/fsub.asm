@@ -1,17 +1,10 @@
-    ifndef _FSUB
-
-    ; continue from @FMOD (if it was included)
-        
 ; Subtract two floating-point numbers
 ;  In: HL, DE numbers to subtract, no restrictions
 ; Out: HL = HL - DE
 ; Pollutes: AF, B, DE
-_FSUB:
-    ifndef FSUB
 ; *****************************************
-FSUB                ; *
+FSUB:
 ; *****************************************
-    endif
     if SIGN_BIT = $0F
         LD      A, D                ;  1:4
         XOR     SIGN_MASK           ;  2:7
@@ -23,14 +16,5 @@ FSUB                ; *
         LD      E, A                ;  1:4      DE = -DE
     endif
     if SIGN_BIT != $07 && SIGN_BIT != $0F
-        .ERROR Unexpected value in SIGN_BIT!
-    endif
-    ; continue with FADD
-
-    ifdef @FADD
-        .ERROR  You must exclude the file "fadd.asm" or include "fsub.asm" first
-    else
-        include "fadd.asm"
-    endif
-
+        .err Unexpected value in SIGN_BIT!
     endif

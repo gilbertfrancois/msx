@@ -1,24 +1,17 @@
-ifndef @FDIV
-
-include "fdiv_pow2.asm"
-
 ; ---------------------------------------------
 ;  Input:  BC , HL
 ; Output: HL = BC / HL   =>   DE = 1 / HL   =>   HL = BC * DE
 ; if ( 1.m = 1.0 ) => 1/(2^x * 1.0) = 1/2^x * 1/1.0 = 2^-x * 1.0    
 ; if ( 1.m > 1.0 ) => 1/(2^x * 1.m) = 1/2^x * 1/1.m = 2^-x * 0.9999 .. 0.5001   =>   2^(-x-1) * 1.0002 .. 1.9998    
 ; Pollutes: AF, BC, DE
-@FDIV:
-ifndef FDIV
 ; *****************************************
-                    FDIV                ; *
+FDIV:                ; *
 ; *****************************************
-endif
         LD      A, H                ;  1:4
         AND     MANT_MASK_HI        ;  2:7      clear carry
         LD      D, A                ;  1:4      D = hi mantissa
         OR      L                   ;  1:4
-        JR      z, FDIV_POW2        ;  2:12/7   fdiv_pow2.asm  
+        JP      z, FDIV_POW2        ;  2:12/7   fdiv_pow2.asm  
         
                                     ;           if ( 1.m > 1.0 ) => 1/(2^x * 1.m) = 1/2^x * 1/1.m = 2^-x * 0.9999 .. 0.5001   =>   2^(-x-1) * 1.0002 .. 1.9998            
         LD      A, D                ;  1:4
@@ -54,11 +47,3 @@ FDIV_LD_D_A:
         ; DE = 1 / HL
         ; continue with FMUL
         
-        ; HL = DE * BC
-if defined @FMUL
-    .ERROR  You must exclude the file "fmul.asm" or include "fdiv.asm" first
-else
-    include "fmul.asm"
-endif
-     
-endif

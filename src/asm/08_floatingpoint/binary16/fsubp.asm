@@ -1,7 +1,3 @@
-    ifndef @FSUBP
-
-    include "color_flow_warning.asm"
-
 ; Subtraction two floating-point numbers with the same signs
 ;  In: HL,DE numbers to add, no restrictions
 ; Out: HL = HL + DE, if ( carry_flow_warning && underflow ) set carry
@@ -9,12 +5,9 @@
 ; -------------- HL - DE ---------------
 ; HL = (+HL) - (+DE) = (+HL) + (-DE)
 ; HL = (-HL) - (-DE) = (-HL) + (+DE)
-@FSUBP:
-    ifndef FSUBP
 ; *****************************************
-FSUBP                ; *
+FSUBP:                ; *
 ; *****************************************
-        endif
         LD      A, D                ;  1:4
         XOR     SIGN_MASK           ;  2:7
         LD      D, A                ;  1:4
@@ -126,9 +119,6 @@ FSUBP_UNDERFLOW:
         AND     SIGN_MASK           ;  2:7
         LD      H, A                ;  1:4
         LD      L, $00              ;  2:7
-    if color_flow_warning
-        CALL    UNDER_COL_WARNING   ;  3:17
-    endif
     if carry_flow_warning
         SCF                         ;  1:4      carry = error
     endif        
@@ -152,10 +142,3 @@ FSUBP_TOOBIG:
 
         DEC     HL                  ;  1:6      exp-- => seee ee00 0000 0000 => seee ee11 1111 1111
         RET                         ;  1:10     HL_exp = 10 + 1 + DE_exp  => HL_exp >= 11 => exp-1 not underflow
-        
-        
-    ifndef @SRL_DE
-    include "srl_de.asm"
-    endif
-
-    endif

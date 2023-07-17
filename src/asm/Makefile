@@ -1,11 +1,11 @@
 ASM="vasmz80_oldstyle"
 DIST_DIR="../../dist"
-DOS_DIR="../../dist/dos"
+DOS_DIR="../../dist/msxdos1"
 ROM_DIR="../../dist/rom"
 CAS_DIR="../../dist/cas"
 BIN_DIR="../../dist/bin"
 
-ASM_FLAGS=-Fbin -chklabels -nocase -L ${DIST_DIR}/$@.sym 
+ASM_FLAGS=-Fbin -chklabels -nocase
 
 # helloworld: 01_helloworld/helloworld_bin.asm
 # 	$(ASM) -Fbin -o ${DIST_DIR}/helloworld.bin 01_helloworld/helloworld_bin.asm
@@ -20,7 +20,7 @@ folders:
 	mkdir -p ${BIN_DIR}
 
 helloworld: 
-	$(ASM) ${ASM_FLAGS} 01_helloworld/helloworld.bin.asm -o ${BIN_DIR}/helloworld.bin
+	$(ASM) ${ASM_FLAGS} 01_helloworld/helloworld.bin.asm -L ${BIN_DIR}/$@.bin.sym -o ${BIN_DIR}/$@.bin
 	$(ASM) ${ASM_FLAGS} 01_helloworld/helloworld.cas.asm -o ${CAS_DIR}/helloworld.cas
 	$(ASM) ${ASM_FLAGS} 01_helloworld/helloworld.com.asm -o ${DOS_DIR}/helloworld.com
 	$(ASM) ${ASM_FLAGS} 01_helloworld/helloworld.rom.asm -o ${ROM_DIR}/helloworld.rom
@@ -45,7 +45,8 @@ ifthenelse:
 	$(ASM) ${ASM_FLAGS} 07_ifthenelse/ifthenelse.bin.asm -o ${BIN_DIR}/ifthenelse.bin
 
 floatingpoint:
-	$(ASM) ${ASM_FLAGS} 08_floatingpoint/fp.bin.asm -I ./binary16 -o ${BIN_DIR}/fp.bin
+	# pasmo -I 08_floatingpoint/binary16_pasmo 08_floatingpoint/fpp.bin.asm ${BIN_DIR}/fpp.bin
+	$(ASM) ${ASM_FLAGS} 08_floatingpoint/fp.bin.asm -I ./binary16 -Llo -L ${BIN_DIR}/fp.sym -o ${BIN_DIR}/fp.bin
 
 runbin:
 	/Applications/openMSX.app/Contents/MacOS/openmsx -machine Canon_V-20 -ext Philips_VY_0010 -diska `pwd`/../../dist/bin

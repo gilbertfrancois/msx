@@ -1,6 +1,3 @@
-        ifndef @FADDP
-        ; continue from @FADD (if it was included)
-     
 ; Add two floating point numbers with the same sign
 ;  In: HL, DE numbers to add, no restrictions
 ; Out: HL = HL + DE,  if ( overflow ) set carry
@@ -8,12 +5,9 @@
 ; -------------- HL + DE ---------------
 ; HL = (+HL) + (+DE)
 ; HL = (-HL) + (-DE)
-@FADDP:
-        ifndef FADDP
 ; *****************************************
-FADDP                ; *
+FADDP:
 ; *****************************************
-        endif
         LD      A, H                ;  1:4
         OR      MANT_MASK_HI        ;  2:7
         SUB     D                   ;  1:4
@@ -85,9 +79,6 @@ FADDP_EQ_EXP:                       ;           HL exp = DE exp
 ; In: (BIT 7, D) = SIGN
 ; Out: HL = +- infinity
 FADDP_OVERFLOW:
-    if color_flow_warning
-        CALL    OVER_COL_WARNING    ;  3:17
-    endif
         RL      D                   ;  2:8
         JR      nc,  FADDP_OUT_FPMAX;  2:12/7
 
@@ -105,7 +96,3 @@ FADDP_OUT_FPMAX:
     endif
         RET                         ;  1:10
 
-    include "srl_de.asm"
-    include "color_flow_warning.asm"
-
-    endif
