@@ -49,7 +49,9 @@ floatingpoint:
 	$(ASM) ${ASM_FLAGS} 08_floatingpoint/fp.bin.asm -I ./binary16 -Llo -L ${BIN_DIR}/fp.sym -o ${BIN_DIR}/fp.bin
 
 runbin:
-	/Applications/openMSX.app/Contents/MacOS/openmsx -machine Canon_V-20 -ext Philips_VY_0010 -diska `pwd`/../../dist/bin
+	# /Applications/openMSX.app/Contents/MacOS/openmsx -machine Canon_V-20 -ext Philips_VY_0010 -diska `pwd`/../../dist/bin
+	# /Applications/openMSX.app/Contents/MacOS/openmsx -machine Canon_V-20 -ext Philips_VY_0010 -diska `pwd`/../../dist/bin
+	/Applications/openMSX.app/Contents/MacOS/openmsx -machine Philips_VG_8235-20 -diska `pwd`/../../dist/bin
 
 rundos:
 	/Applications/openMSX.app/Contents/MacOS/openmsx -machine Canon_V-20 -ext Philips_VY_0010 -diska `pwd`/../../dist/dos
