@@ -46,7 +46,7 @@ ifthenelse:
 
 floatingpoint:
 	# pasmo -I 08_floatingpoint/binary16_pasmo 08_floatingpoint/fpp.bin.asm ${BIN_DIR}/fpp.bin
-	$(ASM) ${ASM_FLAGS} 08_floatingpoint/fp.bin.asm -I ./binary16 -Llo -L ${BIN_DIR}/fp.sym -o ${BIN_DIR}/fp.bin
+	$(ASM) ${ASM_FLAGS} 08_floatingpoint/fp.bin.asm -I ./binary16 -L ${BIN_DIR}/fp.sym -o ${BIN_DIR}/fp.bin
 
 runbin:
 	/Applications/openMSX.app/Contents/MacOS/openmsx -machine Canon_V-20 -ext Philips_VY_0010 -diska `pwd`/../../dist/bin
