@@ -24,10 +24,10 @@ $$z_n = z^2 + c$$
 
 is tested for every point within the domain. When after a finite amount of iterations the value $z$ goes to infinity, the value is outside the Mandelbrot set. If the value stays  $||z|| < 2$ then the value is inside the Mandelbrot set. Nowadays, these fractals can be rendered super fast with millions of colours. In 1987, on the MSX, I made a monochrome implementation, using 2 options: either make a zebra pattern by taking the mod of the $n$-iterations to escape, or slice the $n$-iterations value and plot it as in- or outside the set. The zebra pattern works best for zoomed out views, the clipping pattern works best on zoomed in areas.
 
-| ![](./assets/images/mandelbrot_1.png)                        | ![](./assets/images/mandelbrot_3.png)                        |
+| ![mandelbrot](assets/images/mandelbrot_1.png)                        | ![mandelbrot](assets/images/mandelbrot_3.png)                        |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | Mandelbrot set with $(x_c, y_c)=(-0.5, 0)$, size=2.0, depth=16, colormap=zebra. | Mandelbrot with $(x_c, y_c)=(-0.7792, 0.1345)$, size=7.984e-4, depth=128, colormap=clip. |
-| ![](./assets/images/mandelbrot_4.png)                        | ![](./assets/images/mandelbrot_5.png)                        |
+| ![mandelbrot](assets/images/mandelbrot_4.png)                        | ![mandelbrot](assets/images/mandelbrot_5.png)                        |
 | Mandelbrot with $(x_c, y_c)=(-0.4781, -0.6311)$, size=2.441e-3, depth=48, colormap=zebra. | Mandelbrot with $(x_c, y_c)=(-0.4781, -0.6311)$, size=2.441e-3, depth=64, colormap=clip. |
 
 
@@ -43,12 +43,12 @@ yn = sin(ax) + d sin(ay)
 
 Then after taking an initial (x,y) coordinate, the new points are computed by repeating the formulas over and over again. The parameters a, b, c and d are chosen randomly. However, finding a combination of these parameters that result in a nice looking plot can be tricky. In many cases the combination of parameters results in a plot of only a few pixels.
 
-| ![](./assets/images/attractor08.png) | ![](./assets/images/attractor02.png) |
+| ![attractor](./assets/images/attractor08.png) | ![attractor](./assets/images/attractor02.png) |
 | ------------------------------------ | ------------------------------------ |
 
-| ![](./assets/images/attractor04.png) | ![](./assets/images/attractor05.png) | ![](./assets/images/attractor03.png) |
+| ![attractor](./assets/images/attractor04.png) | ![attractor](./assets/images/attractor05.png) | ![attractor](./assets/images/attractor03.png) |
 | ------------------------------------ | ------------------------------------ | ------------------------------------ |
-| ![](./assets/images/attractor06.png) | ![](./assets/images/attractor07.png) | ![](./assets/images/attractor01.png) |
+| ![attractor](./assets/images/attractor06.png) | ![attractor](./assets/images/attractor07.png) | ![attractor](./assets/images/attractor01.png) |
 
 
 
