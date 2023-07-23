@@ -26,9 +26,9 @@ is tested for every point within the domain. When after a finite amount of itera
 
 | ![](./assets/images/mandelbrot_1.png)                        | ![](./assets/images/mandelbrot_3.png)                        |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Mandelbrot set with $(x_c, y_c)=(-0.5, 0)$, size=2.0, depth=16, colormap=zebra. | Mandelbrot with $(xc, yc)=(-0.7792, 0.1345)$, size=7.984e-4, depth=128, colormap=clip. |
+| Mandelbrot set with $(x_c, y_c)=(-0.5, 0)$, size=2.0, depth=16, colormap=zebra. | Mandelbrot with $(x_c, y_c)=(-0.7792, 0.1345)$, size=7.984e-4, depth=128, colormap=clip. |
 | ![](./assets/images/mandelbrot_4.png)                        | ![](./assets/images/mandelbrot_5.png)                        |
-| Mandelbrot with $(xc, yc)=(-0.4781, -0.6311)$, size=2.441e-3, depth=48, colormap=zebra. | Mandelbrot with $(xc, yc)=(-0.4781, -0.6311)$, size=2.441e-3, depth=64, colormap=clip. |
+| Mandelbrot with $(x_c, y_c)=(-0.4781, -0.6311)$, size=2.441e-3, depth=48, colormap=zebra. | Mandelbrot with $(x_c, y_c)=(-0.4781, -0.6311)$, size=2.441e-3, depth=64, colormap=clip. |
 
 
 
