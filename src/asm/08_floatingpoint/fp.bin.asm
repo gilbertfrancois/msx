@@ -1,8 +1,7 @@
-ORGADR      equ $c800
+ORGADR      equ $c000
 CHGET       equ $009f
 CHPUT       equ $00A2
 CHGMOD      equ $005f
-RomSize     equ $4000
 LDIRVM      equ $005c
 SETWRT      equ $0053
 VDPData     equ $98
@@ -11,11 +10,6 @@ VDPControl  equ $99
 FRAC        equ 8
 FRACV       equ 255
 ROUNDV      equ 127
-
-RamStart    equ $C000
-heap        equ RamStart + 0
-Buf         equ heap + 64
-EndBuf      equ Buf + 5
 
 carry_flow_warning equ 0
 color_flow_warning equ 0
@@ -35,166 +29,145 @@ color_flow_warning equ 0
 
 FileStart:
 
-
-
 Main:
+    call Init
+    call LoopX
+    call NewLn
+    ret 
+
+LoopX:
+    ld a, (x)
+    ld l, a
+    ld h, 0
+    call FunctionTx
+    ld (cx), hl
+    ld a, (y)
+    ld l, a
+    ld h, 0
+    call FunctionTy
+    ld (cy), hl
+    ; call FunctionZ
+        ld hl, (Depth)
+        inc hl
+        ld (Depth), hl
+        call PrintPixel
+    ld a, (x)
+    inc a
+    ld (x), a
+    cp 32
+    jp nz, LoopX
+        ; ld hl, stry
+        ; call PrintStr
+    ld a, 0
+    ld (x), a
+    ld a, (y)
+    inc a
+    ld (y), a
+    cp 22
+    jp nz, LoopX
+    ret
+
+
     
-    ; calc Xmin, Xmax
+Init:
+    ; calc cx_min, cx_max
     ld hl, (SizeWidth)
     ld de, FP2 
     call _f16_div_hl_de
-    ld de, (Xc)
+    ld de, (cx_center)
     ex de, hl
     call _f16_sub_hl_de
-    ld (Xmin), hl
+    ld (cx_min), hl
     ld de, (SizeWidth)
     call _f16_add_hl_de
-    ld (Xmax), hl
-    ; ld hl, (Xmin)
-    ; ld ($9000), hl
-    ; ld hl, (Xmax)
-    ; ld ($9002), hl
-
-    ; calc Ymin, Ymax
+    ld (cx_max), hl
+    ; calc cy_min, cy_max
     ld hl, (SizeHeight)
     ld de, FP2 
     call _f16_div_hl_de
-    ld de, (Yc)
+    ld de, (cy_center)
     ex de, hl
     call _f16_sub_hl_de
-    ld (Ymin), hl
+    ld (cy_min), hl
     ld de, (SizeHeight)
     call _f16_add_hl_de
-    ld (Ymax), hl
-    ld hl, (Ymin)
-    ld ($9000), hl
-    ld hl, (Ymax)
-    ld ($9002), hl
-
+    ld (cy_max), hl
     ret
 
-    ; call CHGET
-
-; for ty=0 to 24
-; for tx=0 to 32
-
-; for yy=0 to 7
-; for xx=0 to 7
-
-; compute T(Xd -> Zx)
-; compute T(Yd -> Zy)
-; compute Zx -> Depth
-; compute pixel state
-; set pixel in memory
-
-; next xx
-; next yy
-
-; next tx
-; next ty
-
-    ; ld a, 2
-    ; call CHGMOD
-    ; ld b, 255
-
-    ; ; Copy Pattern0 to VRAM
-    ; ld hl, Pattern
-    ; ld de, $0000
-    ; ld bc, 8
-    ; call LDIRVM
-
-    ; ; Copy Color0 map to VRAM
-    ; ld hl, Color
-    ; ld de, $2000
-    ; ld bc, $0008
-    ; call LDIRVM
-
-    ; call CHGET
-    ; ret
-
-    ; ld hl, &4248
-    ; call _f16_int_hl
-
-    ; call _f16_from_int_dehl
-
-    ; ld hl, &0001
-    ; call _f16_from_int_dehl
-    ; ld ($9000), hl
-
-    ; ld hl, &0002
-    ; call _f16_from_int_dehl
-    ; ld ($9002), hl
-
-    ; ld hl, &0072
-    ; call _f16_from_int_dehl
-    ; ld ($9004), hl
-
-
-
 FunctionTx:
-; In:  HL: Xd
-; Out: HL: Cx
-; Cx = (255-Xd) / 255 
-    
+;  in: hl <- x (display coordinate)
+; out: hl <- cx 
+; 370 DEF FN TX(DX)=(DX/255)*SI*1.5+X0
+    call _f16_from_int_dehl
+    ld de, FP31
+    ex de, hl
+    call _f16_div_hl_de
+    ld de, (SizeWidth)
+    call _f16_mul_hl_de
+    ld de, cx_min
+    call _f16_add_hl_de
+    ret
 
+FunctionTy:
+;  in: hl <- y (display coordinate)
+; out: hl <- cy
+    call _f16_from_int_dehl
+    ld de, FP23
+    ex de, hl
+    call _f16_div_hl_de
+    ld de, (SizeHeight)
+    call _f16_mul_hl_de
+    ld de, cy_min
+    call _f16_add_hl_de
+    ret
 
 
 FunctionZ:
-; 540 X=0
-; 550 Y=0
-; 560 FOR D=0 TO DE-1
-; 570 XN=X*X-Y*Y+CX
-; 580 YN=2*X*Y+CY
-; 590 IF (XN*XN+YN*YN) > 4 THEN RETURN
-; 600 X=XN
-; 610 Y=YN
-; 620 NEXT D
-; 540 X=0
+; 650 ZX=0
     ld hl, 0
     ld (zx), hl
-; 550 Y=0
+; 660 ZY=0
     ld (zy), hl
-; 560 FOR D=0 TO DE-1
+; 670 FOR D=0 TO DE-1
     ld b, $0f
 FunctionZLoop:
     push bc
-; 570 XN=X*X-Y*Y+CX
-    ld hl, (zx)
-    call _f16_pow2_hl    ; X*X
-    ld (znx), hl          ; Xn := X*X
-    ld hl, (zy)
-    call _f16_pow2_hl    ; Y*Y 
-    ld de, (znx)
-    call _f16_sub_hl_de  ; X*X - Y*Y
-    ld de, (cx)
-    call _f16_add_hl_de  ; X*X - Y*Y + Cx
-    ld (znx), hl          ; Xn := X*X - Y*Y + Cx
-; 580 YN=2*X*Y+CY
-    ld hl, FP2           ; 2
-    ld de, (zx)           ; X
-    call _f16_mul_hl_de  ; 2*X
-    ld de, (zy)           ; Y
-    call _f16_mul_hl_de  ; 2*X*Y
-    ld de, (cy)
-    call _f16_add_hl_de  ; 2*X*Y + Cy
-    ld (zny), hl          ; Yn := 2*X*Y + Cy
-; 590 IF (XN*XN+YN*YN) > 4 THEN RETURN
-    ld hl, (znx)
-    call _f16_pow2_hl    ; XN*XN
-    ld d, h
-    ld e, l
-    ld hl, (zny)
-    call _f16_pow2_hl    ; YN*YN
-    call _f16_add_hl_de  ; XN*XN + YN*YN
-    ld de, FP4           ; 4
-    call _f16_gt_hl_de   ; (XN*XN + YN*YN) > 4 
-    ld a, l
+; 680 ZU=ZX*ZX-ZY*ZY+CX
+    ld hl, (zy)          ; hl <- zy
+    call _f16_pow2_hl    ; hl <- zy^2
+    push hl              ; st <- zy^2
+    ld hl, (zx)          ; hl <- zx
+    call _f16_pow2_hl    ; hl <- zx^2
+    pop de               ; de <- zy^2 
+    call _f16_sub_hl_de  ; hl <- zx^2 - zy^2
+    ld de, (cx)          ; de <- cx
+    call _f16_add_hl_de  ; hl <- zx^2 - zy^2 + cx
+    ld (zu), hl          ; zu <- zx^2 - zy^2 + cx
+; 690 ZV=2*ZX*ZY+CY
+    ld hl, FP2           ; hl <- 2
+    ld de, (zx)          ; de <- zx
+    call _f16_mul_hl_de  ; hl <- 2*zx
+    ld de, (zy)          ; de <- zy
+    call _f16_mul_hl_de  ; hl <- 2*zx*zy
+    ld de, (cy)          ; de <- cy
+    call _f16_add_hl_de  ; hl <- 2*zx*zy + cy
+    ld (zv), hl          ; zv <- 2*zx*zy + cy
+; 700 IF (ZU*ZU+ZV*ZV) > 4 THEN RETURN
+    ld hl, (zu)          ; hl <- zu
+    call _f16_pow2_hl    ; hl <- zu^2
+    ex de, hl            ; de <- zu^2
+    ld hl, (zv)          ; hl <- zv
+    call _f16_pow2_hl    ; hl <- zv^2
+    call _f16_add_hl_de  ; hl <- zu^2 + zv^2
+    ld de, FP4           ; de <- 4
+    call _f16_gt_hl_de   ; hl <- zu^2 + zv^2 > 4
+    ld a, l              ; if a!=0 then 
     jr nz, FunctionZEnd
 ; 600 X=XN
-    ld hl, (znx)
+    ld hl, (zu)
     ld (zx), hl
 ; 610 Y=YN
-    ld hl, (zny)
+    ld hl, (zv)
     ld (zy), hl
 ; 620 NEXT D
     ld a, (Depth)
@@ -205,69 +178,21 @@ FunctionZLoop:
 FunctionZEnd:
     ret
 
-GetPixelState:
+PrintPixel:
 ; 400 IF CM=0 THEN CP = D MOD 2 ELSE IF D>=DE THEN CP = 1 ELSE CP = 0
     ld a, (Depth)
     and 1
+    cp 0
+    jp nz, PrintPixelOdd
+    jp z, PrintPixelEven
+PrintPixelOdd:
+    ld hl, strOne
+    call PrintStr
     ret
-
-
-
-; CONSTANTS
-Xc:
-    db $00, $b8
-Yc:
-    db $0d, $b9
-SizeWidth:
-    db $00, $42
-SizeHeight:
-    db $00, $40
-Xmin: 
-    db $00, $00
-Xmax:
-    db $00, $00
-Ymin: 
-    db $00, $00
-Ymax: 
-    db $00, $00
-
-Stride:
-    db $00
-ColorMode:
-    db $00 
-
-; VARIABLES
-zx: 
-    db $00, $00
-zy:
-    db $00, $00
-znx:
-    db $00, $00
-zny:
-    db $00, $00
-cx: 
-    db $00, $3c ; 1
-cy:
-    db $00, $40 ; 2
-Depth:
-    db $00
-DepthMax:
-    db $0f
-
-Pattern:
-    db $01, $02, $03, $04, $05
-    db $10, $20, $30, $40, $50
-Color:
-    db $4f
-    db $4f
-    db $4f
-    db $4f
-    db $4f
-    db $4f
-    db $4f
-    db $4f
-      
-    include "f16_lib.asm"
+PrintPixelEven:
+    ld hl, strZero
+    call PrintStr
+    ret
 
 _f16_pow2_hl:
     push de
@@ -276,5 +201,78 @@ _f16_pow2_hl:
     call _f16_mul_hl_de
     pop de
     ret
+
+PrintStr:
+    ld a, (hl)
+    cp 0
+    ret z
+    inc hl
+    call CHPUT
+    jr PrintStr
+
+NewLn:
+    push af
+    ld a, 13
+    call CHPUT
+    ld a, 10
+    call CHPUT
+    pop af
+    ret
+
+    include "f16_lib.asm"
+
+; CONSTANTS
+cx_center:
+    db $00, $b8
+cy_center:
+    db $0d, $b9
+cx_min: 
+    db $00, $00
+cx_max:
+    db $00, $00
+cy_min: 
+    db $00, $00
+cy_max: 
+    db $00, $00
+SizeWidth:
+    db $00, $42  ; 3
+SizeHeight:
+    db $00, $40  ; 2
+
+
+; VARIABLES
+x: 
+    db $00
+y: 
+    db $00
+cx: 
+    db $00, $00
+cy:
+    db $00, $00
+zx: 
+    db $00, $00
+zy:
+    db $00, $00
+zu:
+    db $00, $00
+zv:
+    db $00, $00
+Depth:
+    db $00
+DepthMax:
+    db $0f
+
+Pattern:
+    db $01, $02, $03, $04
+    db $10, $20, $30, $40
+Color:
+    db $4f, $4f, $4f, $4f
+    db $4f, $4f, $4f, $4f
+      
+strOne:
+    db "a", 0
+strZero:
+    db "b", 0
+
 
 FileEnd:

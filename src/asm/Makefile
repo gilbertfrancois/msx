@@ -56,7 +56,7 @@ runrom:
 	/Applications/openMSX.app/Contents/MacOS/openmsx -machine Canon_V-20 -carta `pwd`/../../dist/rom/helloworld.rom
 
 runbin1:
-	/Applications/openMSX-0.17.app/Contents/MacOS/openmsx -machine Canon_V-20 -ext Philips_VY_0010 -diska `pwd`/../../dist/bin
+	/Applications/openMSX-19-aarch64.app/Contents/MacOS/openmsx -machine Canon_V-20 -ext Philips_VY_0010 -diska `pwd`/../../dist/bin
 
 runbin2:
 	/Applications/openMSX.app/Contents/MacOS/openmsx -machine Philips_VG_8235-20 -diska `pwd`/../../dist/bin

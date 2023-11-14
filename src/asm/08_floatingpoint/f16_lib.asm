@@ -51,7 +51,7 @@ _f16_add_hl_de:
 fast_add_do_add:
     ld a, $80
     and h
-    ex af, af' ; save sign in AF'
+    ex af, af'  ; push af; save sign in AF'
     res 7, d
     res 7, h
     ld a, l
