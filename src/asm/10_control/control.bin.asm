@@ -48,11 +48,10 @@ _main:
     ; disable key click
     ld a, 0
     ld (KEYCLK), a
-
     ; init player position
     ld hl, $0f0c
-    ld (_player_y), hl
-
+    ld (_player_yx), hl
+    ; draw first frame and start event loop
     call _draw_player
     call _event_loop
 _exit:
@@ -74,8 +73,8 @@ _event_loop:
 
 _start_draw:
     push af
-    ld bc, (_player_y)
-    ld (_player_y_prev), bc
+    ld bc, (_player_yx)
+    ld (_player_yx_prev), bc
     push bc
     call _blank_player
     pop bc
@@ -101,7 +100,7 @@ _if_joy_right:
     jr nz, _update_player_pos
     inc b
 _update_player_pos:
-    ld (_player_y), bc
+    ld (_player_yx), bc
     ; boundary check
     ld a, b
     cp 32
@@ -110,19 +109,19 @@ _update_player_pos:
 _player_x_ok:
     ld a, c
     cp 24
-    jr c, _player_y_ok
+    jr c, _player_yx_ok
     jr _player_reset
 _player_reset:
-    ld bc, (_player_y_prev)
-    ld (_player_y), bc
-_player_y_ok:
+    ld bc, (_player_yx_prev)
+    ld (_player_yx), bc
+_player_yx_ok:
     call _draw_player
     ld bc, 5000
-    call _delay_bc
+    call _pause
     jp _event_loop
 
 _draw_player:
-    ld bc, (_player_y)
+    ld bc, (_player_yx)
     call _get_vdp_pos
     call SETWRT
     ld a, (_player_sprite)
@@ -130,7 +129,7 @@ _draw_player:
     ret
 
 _blank_player:
-    ld bc, (_player_y_prev)
+    ld bc, (_player_yx_prev)
     call _get_vdp_pos
     call SETWRT
     ld a, $20
@@ -142,43 +141,39 @@ _get_vdp_pos:
     ;       x = 0..31, y = 0..23
     ; out:  hl = VDP write address 
     ld h, c
+    ; reset a
     xor a
-    srl h       ; 32 bytes per line, shift L left 5 times, push overflow in H
+    ; 32 bytes per line, shift L left 5 times, push overflow in H
+    srl h       
     rr a
     srl h
     rr a
     srl h
     rr a
-
-    or b        ; or in the X coordinate
+    ; or in the X coordinate
+    or b
     ld l, a
     ld a, h
-
-    or $18      ; tilemap starts at $1800
+    ; tilemap starts at $1800
+    or $18
     ld h, a
     ret
 
-_delay_bc:
+_pause:
+    ; in:   bc = pause time
 	dec bc
 	ld a,b
 	or c
-	jr nz, _delay_bc
+	jr nz, _pause
 	ret
 
 ; =[ DATA ]=====================================================================
 
-_player_y:
-    db $0c
-_player_x:
-    db $0f
-_player_y_prev:
-    db $0c
-_player_x_prev:
-    db $0f
+_player_yx:
+    db $0c, $0f
+_player_yx_prev:
+    db $0c, $0f
 _player_sprite:
     db $02
-
-
-
 
 _file_end:
