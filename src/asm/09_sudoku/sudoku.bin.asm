@@ -1,6 +1,14 @@
-ORGADR  equ $c000
-CHPUT   equ $00A2
-CHGMOD  equ $005f
+ORGADR      equ $c000
+ERAFNK      equ $00cc
+CHPUT       equ $00a2
+CHGET	    equ $009f
+CHSNS       equ $009c
+CHGMOD      equ $005f
+LDIRVM      equ $005c
+SETWRT      equ $0053
+POSIT       equ $00c6
+VDPData     equ $98
+VDPControl  equ $99
 
     ; Place header before the binary.
     org ORGADR - 7
@@ -16,6 +24,83 @@ CHGMOD  equ $005f
 _file_start:
 _main:
 
+    ; clear screen, goto screen 1
+    ld a, 1
+    call CHGMOD
+    call ERAFNK
+    ld hl, $0d0f
+    ld (_current_ij), hl
+    call _eventloop
+    ret
+
+_eventloop:
+    call CHSNS
+    jr z, _eventloop
+    call CHGET
+    cp $1c            ; right
+    jr z, _right
+    cp $1d            ; left
+    jr z, _left
+    cp $1e            ; up
+    jr z, _up
+    cp $1f            ; down
+    jr z, _down
+    jp _eventloop
+_left:
+    ld hl, (_current_ij)
+    ld a, l
+    sub 1
+    ld l, a
+    ld (_current_ij), hl
+    call _get_k
+    jp _move_cursor
+_right:
+    ld hl, (_current_ij)
+    ld a, l
+    add 2
+    ld l, a
+    ld (_current_ij), hl
+    call _get_k
+    jp _move_cursor
+_up:
+    ld hl, (_current_ij)
+    ld a, h
+    sub 2
+    ld h, a
+    ld (_current_ij), hl
+    call _get_k
+    jp _move_cursor
+_down:
+    ld hl, (_current_ij)
+    ld a, h
+    add 2
+    ld h, a
+    ld (_current_ij), hl
+    call _get_k
+    jp _move_cursor
+_move_cursor:
+    ld hl, (_current_ij)
+    call _get_k
+    ld a, (_current_k)
+    ld hl, $1800
+    ld l, a
+    ld a, $30
+    ld (_keyin), a
+    call _print_char
+    jp _eventloop
+
+
+
+_print_char:
+    call SETWRT
+    ld a, (_keyin)
+    out (VDPData), a
+    call _eventloop
+_end:
+    ret
+
+_test_has_val_in_rowcolblock:
+    ; select i, j
     ld h, 5
     ld l, 7
     ld (_current_ij), hl
@@ -34,6 +119,67 @@ _main:
 
     ret
 
+_offset_nt:
+    db $07, $00
+_offset_data:
+    db $00, $00
+
+_grid_to_vram:
+    ld b, 9
+    ld c, 9
+    ld d, 0
+    ld e, 0
+_grid_to_vram_loop:
+    ld hl, $1800
+    ld ix, (_grid_screen)
+    add hl, de
+    call SETWRT
+    ld hl, _data
+    ld de, (_offset_data)
+    add hl, de
+    ld a, (hl)
+    add $30
+    out (VDPData), a
+    ; inc offset name table
+    ld hl, (_offset_nt)
+    inc hl
+    inc hl
+    ld (_offset_nt), hl 
+    ; inc offset data
+    ld de, (_offset_data)
+    inc de
+    ld (_offset_data), de
+    djnz _grid_to_vram_loop
+    ld hl, (_offset_nt)
+    ld de, 46
+    add hl, de
+    ld (_offset_nt), hl
+    ld b, 9
+    dec c
+    jr nz, _grid_to_vram_loop
+    ret
+
+
+
+
+_print_grid:
+    ld hl, _data
+    ld c, 9
+_print_grid_outer_loop:
+    ld b, 9
+_print_grid_inner_loop:
+    ld a, (hl)
+    add $30
+    call CHPUT
+    inc hl
+    djnz _print_grid_inner_loop
+    ld a, 13
+    call CHPUT
+    ld a, 10
+    call CHPUT
+    dec c
+    jr nz, _print_grid_outer_loop
+    ret
 ; in     -
 ; out    a      true/false
 _has_val_in_block:
@@ -181,11 +327,31 @@ _get_k:
     add l         ; row*9
     add c         ; row*9+col
     ; prepare return of DE
+    ld (_current_k), a
     ld e, a
     ld d, 0
     pop bc
     ret 
  
+_k_to_screen_i:
+    ld a, (_current_k)
+    push af
+    call _div8_9
+    ld h, 0
+    ld l, a
+    ld d, 0
+    ld e, 9
+    call _mult8
+    ld ix, (_grid_screen + 4)
+    ld de, ix
+    ld d, 0
+    call _mult8
+    ld ix, (_grid_screen + 2)
+    ld de, ix
+    ld d, 0
+    add hl, de
+    ld (_grid_screen), hl
+    ret
 
 ; in    h=0, l=var1
 ;       d=0, e=var2
@@ -217,6 +383,20 @@ _div8_3_ret:
     ld a, h
     ret
 
+; in    h=0, l=var1
+; ret   a
+_div8_9:
+    ld a, l
+    ld h, 0
+_div8_9_loop:
+    sub 9
+    jr c, _div8_9_ret
+    inc h
+    jr _div8_9_loop
+_div8_9_ret:
+    ld a, h
+    ret
+
 ;in     a
 ;out    a * 3
 _mult8_3:
@@ -230,24 +410,37 @@ _mult8_3_loop:
     djnz _mult8_3_loop
     ret
 
+_grid_screen:
+    db $00,$00 ; current index
+    db $07,$02 ; offset x, offset y
+    db $02,$02 ; stride x, stride y
 
 _current_ij:
-    db &00,&00
+    db $00,$00
 _current_k:
-    db &00
+    db $00
 _current_val:
-    db &00
+    db $00
 
 _data:
-    db &00,&01,&02,&03,&04,&05,&06,&07,&08
-    db &10,&11,&12,&13,&14,&15,&16,&17,&18
-    db &20,&21,&22,&00,&00,&00,&00,&00,&00
-    db &30,&31,&32,&33,&34,&35,&36,&37,&38
-    db &40,&41,&42,&43,&44,&45,&46,&47,&48
-    db &50,&51,&52,&53,&54,&55,&56,&57,&57
-    db &60,&61,&62,&63,&64,&65,&66,&67,&68
-    db &70,&71,&72,&73,&74,&75,&76,&77,&78
-    db &80,&81,&82,&83,&84,&85,&86,&87,&88
+    db $01,$02,$03, $04,$05,$06, $07,$08,$09
+    db $04,$05,$06, $07,$08,$09, $01,$02,$03
+    db $07,$08,$09, $01,$02,$03, $04,$05,$06
 
+    db $02,$03,$04, $05,$06,$07, $08,$09,$01
+    db $05,$06,$07, $08,$09,$01, $02,$03,$04
+    db $08,$09,$01, $02,$03,$04, $05,$06,$07
+
+    db $03,$04,$05, $06,$07,$08, $09,$01,$02
+    db $06,$07,$08, $09,$01,$02, $03,$04,$05
+    db $09,$01,$02, $03,$04,$05, $06,$07,$08
+
+_offset:
+    db $01,$02
+
+_keyin:
+    db $00
 
 _file_end:
+
+
