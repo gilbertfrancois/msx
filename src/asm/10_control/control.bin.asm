@@ -137,27 +137,36 @@ _blank_player:
     ret
 
 _get_vdp_pos:
+    ; compute y * 32 + x (naive implementation)
     ; in:   bc = (x, y)
     ;       x = 0..31, y = 0..23
-    ; out:  hl = VDP write address 
-    ld h, c
-    ; reset a
+    ; out:  hl = VDP write address
+    ; 
+    ; load y coordinate in low byte
+    ld l, c
     xor a
-    ; 32 bytes per line, shift L left 5 times, push overflow in H
-    srl h       
-    rr a
-    srl h
-    rr a
-    srl h
-    rr a
-    ; or in the X coordinate
-    or b
+    ; multiply y by 32, shift L left 5 times, push overflow in H
+    sla l
+    rla
+    sla l
+    rla
+    sla l
+    rla
+    sla l
+    rla
+    sla l
+    rla
+    ld h, a
+    ; Add the x coordinate in the low byte
+    ld a, b
+    or l
     ld l, a
-    ld a, h
     ; tilemap starts at $1800
+    ld a, h
     or $18
     ld h, a
     ret
+
 
 _pause:
     ; in:   bc = pause time
@@ -175,5 +184,9 @@ _player_yx_prev:
     db $0c, $0f
 _player_sprite:
     db $02
+_vdp_offset:
+    dw $00
+_vdp_offset2:
+    dw $00
 
 _file_end:
