@@ -55,6 +55,12 @@ sudoku:
 control:
 	$(ASM) ${ASM_FLAGS} 10_$@/$@.bin.asm -L ${BIN_DIR}/$@.bin.sym -o ${BIN_DIR}/$@.bin
 
+matrix:
+	$(ASM) ${ASM_FLAGS} 11_$@/$@.bin.asm -L ${BIN_DIR}/$@.bin.sym -o ${BIN_DIR}/$@.bin
+
+mat:
+	$(ASM) ${ASM_FLAGS} 11_$@/$@.bin.asm -L ${BIN_DIR}/$@.bin.sym -o ${BIN_DIR}/$@.bin
+
 runrom:
 	/Applications/openMSX.app/Contents/MacOS/openmsx -machine Canon_V-20 -carta `pwd`/../../dist/rom/helloworld.rom
 
