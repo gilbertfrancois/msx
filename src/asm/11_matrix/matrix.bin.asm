@@ -6,6 +6,7 @@ BREAKX      equ $00b7
 VDPData     equ $98
 VDPControl  equ $99
 
+HTIMI       equ $fd9f
 JIFFY       equ $fc9e           ; 50Hz Jiffy Counter (2B/RW)
 FORCLR      equ $f3e9
 BAKCLR      equ $f3ea
@@ -35,12 +36,17 @@ N_PERM      equ 1               ; Number of permutations times 3 per screen upda
 P_RAIN      equ 8               ; Probability of rain: 1/p_rain
 N_FADEOUTS  equ 3               ; Number of chars to darken at the end of the rain
 SPEED_VAR   equ 8               ; Speed variation of the rain drops
+WAIT_CYCLES equ 25		; N wait cycles before refresh
 
 _main:
     call _setup
 _main_loop:
+    ld a, (_request_render)
+    cp 0
+    jp nz, __breakx
     call _update
-    call _draw
+    ; draw is handled by interrupt hook, after _request_render is set to 1.
+__breakx:
     call BREAKX
     jr nc, _main_loop
     call _cleanup
@@ -61,11 +67,7 @@ _setup:
     ldir
     ei
 
-
-
-
-
-    ; Placeholder for c code similarity.
+    ; Set screen mode and colors
     ld a, SCREENMODE
     call CHGMOD
     ld hl, FORCLR
@@ -98,7 +100,6 @@ _draw:
     call LDIRVM
     ret 
 
-
 _run_interrupt:
     ld hl, _interrupt_counter
     dec (hl)
@@ -109,18 +110,27 @@ _run_interrupt:
     ld (hl), WAIT_CYCLES
     ld a, (_request_render)
     cp 1
-    jp nz, __run_interrupt_ret
+    jp nz, __set_not_ready
+    ; Update was ready, render request was set. 
+    ; reset _update_not_ready and _render_request, then call draw function.
     ld a, 0
     ld (_update_not_ready), a
     ld a, 0
     ld (_request_render), a
     call _draw
-    ret
-__run_interrupt_ret:
+    jr _old_interrupt_hook
+__set_not_ready:
     ld a, 1
     ld (_update_not_ready), a
+; Interrupt jump block.
+_old_interrupt_hook:
+    db 0, 0, 0, 0, 0 
     ret
 
+_new_interrupt_hook:
+    jp _run_interrupt
+    ret
+    nop
 
 _update_rain_state:
     ; Update the rain state for a random column. The state can be 0 (no rain) or 1 (rain). 
@@ -478,13 +488,6 @@ _name_table_buffer:
     ds WIDTH*HEIGHT, $20
 _color_table_buffer:
     ds WIDTH*HEIGHT, $21
-; Interrupt jump block.
-_old_interrupt_hook:
-    ds, 5, 0
-_new_interrupt_hook:
-    jp _run_interrupt
-    ret
-    nop
 
 
 _file_end:
