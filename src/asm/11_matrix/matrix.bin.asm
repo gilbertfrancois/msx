@@ -1,19 +1,12 @@
 ORGADR      equ $c000
-ERAFNK      equ $00cc
-CHPUT       equ $00a2
-CHGET       equ $009f
-CHSNS       equ $009c
 CHGMOD      equ $005f
 CHGCLR      equ $0062
 LDIRVM      equ $005c
-SETWRT      equ $0053
-POSIT       equ $00c6
-GTSTCK      equ $00d5
+BREAKX      equ $00b7
 VDPData     equ $98
 VDPControl  equ $99
 
 JIFFY       equ $fc9e           ; 50Hz Jiffy Counter (2B/RW)
-KEYCLK      equ $f3db           ; Key Press Click Switch 0:Off 1:On (1B/RW)
 FORCLR      equ $f3e9
 BAKCLR      equ $f3ea
 BDRCLR      equ $f3eb
@@ -36,6 +29,7 @@ _app_constants:
 SCREENMODE  equ 1               ; 0 = text mode, 1 = bitmap mode
 WIDTH       equ 32              ; Screen width
 HEIGHT      equ 24              ; Screen height 
+HHEIGHT     equ HEIGHT/2        ; Half screen height
 NAME_TABLE  equ $1800           ; Address of the name table
 N_PERM      equ 12              ; Number of permutations
 P_RAIN      equ 8               ; Probability of rain: 1/p_rain
@@ -47,7 +41,9 @@ _main:
 _main_loop:
     call _update
     call _draw
-    jp _main_loop
+    call BREAKX
+    jr nc, _main_loop
+    call _cleanup
     ret
 
 _setup:
@@ -61,6 +57,11 @@ _setup:
     ld hl, BDRCLR
     ld (hl), 1
     call CHGCLR
+    ret
+
+_cleanup:
+    ld a, 0
+    call CHGMOD
     ret
 
 _update:
@@ -79,14 +80,12 @@ _draw:
 
 
 _update_rain_state:
-    ; Update the rain state for a random column. 
+    ; Update the rain state for a random column. The state can be 0 (no rain) or 1 (rain). 
     ; First, test if we activate a new rain drop with probability 1/p_rain.
-
     ld a, P_RAIN
     call _rnd8
     cp 1
     jp nz, __update_rain_state_ret
-
     ; get a random column
     ld a, WIDTH
     call _rnd8
@@ -99,10 +98,10 @@ _update_rain_state:
     ; get current drop state for col i
     ld a, (hl)
     cp 0
-    jp nz, __update_rain_state_ret
+    jp nz, __update_rain_state_ret ; if drop state is 1, skip
     ; set drop state to true for this column
     inc (hl)
-    ; set drop speed
+    ; set a random drop speed
     ld hl, _drop_speed
     add hl, de                  ; hl = &drop_speed[i]
     ld a, SPEED_VAR
@@ -110,12 +109,12 @@ _update_rain_state:
     call _rnd8
     pop hl
     ld (hl), a
-    ; set drop speed counter
+    ; set drop speed counter to 0
     ld hl, _drop_speed_counter
     add hl, de
     ld a, 0
     ld (hl), a
-    ; set drop start
+    ; set drop start to 0
     ld hl, _drop_start
     add hl, de
     ld a, 0
@@ -124,10 +123,10 @@ _update_rain_state:
     ld hl, _drop_length
     add hl, de
     push hl
-    ld a, 12
+    ld a, HHEIGHT
     call _rnd8
     pop hl
-    add a, 12
+    add a, HHEIGHT
     ld (hl), a
 __update_rain_state_ret:
     ret
@@ -236,10 +235,6 @@ __reset_all_states_for_column:
 __update_rain_column_ret:
     ret
 
-
-
-
-
 _update_rain_column_chars:
     ; Add a character at the start of the rain trail.
     ; if (start > height), skip add character.
@@ -281,18 +276,24 @@ __update_rain_column_chars_ret:
     ret
 
 _update_rnd_char:
+    ; Todo...
     ret
 
 _get_char:
+    ; Get a random character from the printable character set.
+    ; in:  none
+    ; out: a = random character
+    ; registers: af, bc, hl
     ld a, 159
     call _rnd8
     add 33
     ret
 
 _rnd8:
+    ; Get a random value in the range [1..a]
     ; in:  a = max value
-    ; out: a = random value 0-d
-    ; destroy: bc, hl
+    ; out: a = random value
+    ; registers: bc, hl
     push af
     ld a, (_rnd8_idx)
     inc a                ; the lookup table is 256 bytes long, overflow is ok.
@@ -320,7 +321,8 @@ _get_index:
     ; in:   bc = (x, y), b = col, c = row
     ;       x = 0..31, y = 0..23
     ; out:  hl = k = y * WIDTH + x
-    ; 
+    ; registers: af, bc, hl
+    ;
     ; load y coordinate in low byte
     ld l, c
     xor a
@@ -340,8 +342,6 @@ _get_index:
     ld a, b
     or l
     ld l, a
-    ; ld b, h
-    ; ld c, l
     ret
 
 
