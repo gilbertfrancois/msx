@@ -133,31 +133,26 @@ __update_rain_state_ret:
 
 _update_rain_columns:
     ld b, WIDTH
-    ld a, b
-    ld (_COL), a
+    ld h, 0
+    ld l, b
+    ld (_COL), hl
 __update_rain_columns_loop:
     push bc
-    ld a, (_COL)
-    dec a
-    ld (_COL), a
+    ld de, (_COL)
+    dec de
+    ld (_COL), de
     ld hl, _drop_state 
-    ld d, 0
-    ld e, a
-    add hl, de
-    ld a, (hl)
-    cp 0
-    jp z, __update_rain_columns_continue
-    ld a, (_COL)
-    ld d, 0
-    ld e, a
+    add hl, de                  ; hl = &drop_state[i]
+    ld a, (hl)                  ; a = drop_state[i]
+    cp 0                        ; if (drop_state[i] == 0)
+    jp z, __update_rain_columns_continue ; skip, no rain here.
     ld hl, _drop_speed
-    add hl, de
+    add hl, de                  ; hl = &drop_speed[i]
     ld a, (hl)
     ld c, a                     ; c = drop_speed[i]
     ld hl, _drop_speed_counter
-    add hl, de
-    ld a, (hl)                  ; hl = &drop_speed_counter[i]
-    ld b, a                     ; b  =  drop_speed_counter[i]
+    add hl, de                  ; hl = &drop_speed_counter[i]
+    ld a, (hl)                  ; a = drop_speed_counter[i]
     sub c                       ; a = drop_speed_counter[i] - drop_speed[i]
     jr nc, __update_rain_column_i
     inc (hl)                    ; drop_speed_counter[i]++
@@ -172,9 +167,7 @@ __update_rain_columns_continue:
 
 _update_rain_column:
     ; Advance the rain drop in column i
-    ld a, (_col)
-    ld d, 0
-    ld e, a
+    ld de, (_col)               ; de = i
     ; start = _drop_start[i]
     ld hl, _drop_start
     add hl, de
@@ -207,16 +200,12 @@ __update_rain_column_cnt1:
     call _update_rain_column_chars
     ; drop_start[i]++
     ld hl, _drop_start
-    ld a, (_col)
-    ld d, 0
-    ld e, a
+    ld de, (_col)
     add hl, de
     inc (hl)
     jp __update_rain_column_ret
 __reset_all_states_for_column:
-    ld a, (_col)
-    ld d, 0
-    ld e, a
+    ld de, (_col)
     ld hl, _drop_state
     add hl, de
     ld (hl), 0
@@ -394,7 +383,7 @@ _length:
 _end:
     db 0
 _col:
-    db 0
+    dw 0
 _index:
     dw 0
 
