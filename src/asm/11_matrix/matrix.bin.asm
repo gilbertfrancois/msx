@@ -31,7 +31,7 @@ WIDTH       equ 32              ; Screen width
 HEIGHT      equ 24              ; Screen height 
 HHEIGHT     equ HEIGHT/2        ; Half screen height
 NAME_TABLE  equ $1800           ; Address of the name table
-N_PERM      equ 12              ; Number of permutations
+N_PERM      equ 1               ; Number of permutations times 3 per screen update
 P_RAIN      equ 8               ; Probability of rain: 1/p_rain
 N_FADEOUTS  equ 3               ; Number of chars to darken at the end of the rain
 SPEED_VAR   equ 8               ; Speed variation of the rain drops
@@ -67,7 +67,7 @@ _cleanup:
 _update:
     call _update_rain_state
     call _update_rain_columns
-    ; call _update_rnd_char
+    call _update_rnd_char
     ret
 
 _draw:
@@ -187,11 +187,11 @@ _update_rain_column:
     jr c, __then_end_is_zero
 __else_end_eq_start_min_length:
     ld (_end), a
-    jr __update_rain_column_cnt1
+    jr __update_rain_column_continue
 __then_end_is_zero:
     ld a, 0
     ld (_end), a
-__update_rain_column_cnt1:
+__update_rain_column_continue:
     ; if (end > HEIGHT)
     ld a, (_end)
     sub HEIGHT + 1
@@ -265,7 +265,38 @@ __update_rain_column_chars_ret:
     ret
 
 _update_rnd_char:
-    ; Todo...
+    ld b, N_PERM
+    ld c, 3
+__update_rnd_char_outer_loop:
+    push bc
+__update_rnd_char_inner_loop:
+    ld a, $ff                   ; get a random offset in the 1/3 part of the screen
+    push bc
+    call _rnd8
+    pop bc
+    dec c
+    ld d, c                     ; d = 0..2, offset to the 1/3 part of the screen 
+    ld e, a                     ; e = 0..255, offset in the 1/3 part of the screen
+    ld hl, _name_table_buffer
+    add hl, de
+    ld a, (hl)
+    ; if (a == ' '), do nothing
+    cp $20                      
+    jp z, __update_rnd_char_inner_loop_next
+    ; else replace the character with a random character
+    push bc
+    push hl
+    call _get_char
+    pop hl
+    pop bc
+    ld (hl), a
+__update_rnd_char_inner_loop_next:
+    ld a, c
+    cp 0
+    jp nz, __update_rnd_char_inner_loop
+    pop bc
+    ld c, 2
+    djnz __update_rnd_char_outer_loop
     ret
 
 _get_char:
@@ -382,10 +413,10 @@ _length:
     db 0
 _end:
     db 0
+; reserve 2 bytes for the column index, so that we can fetch it conveniently
+; with an 8bit or 16bit register.
 _col:
-    dw 0
-_index:
-    dw 0
+    dw 0                        
 
 ; State arrays for the rain drops, one state for each column.
 _drop_state:
