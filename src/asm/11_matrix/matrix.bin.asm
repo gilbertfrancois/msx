@@ -18,9 +18,6 @@ FORCLR      equ $f3e9
 BAKCLR      equ $f3ea
 BDRCLR      equ $f3eb
 
-
-
-
     ; Place header before the binary.
     org ORGADR - 7
     ; Bin header, 7 bytes
@@ -57,6 +54,13 @@ _setup:
     ; Placeholder for c code similarity.
     ld a, SCREENMODE
     call CHGMOD
+    ld hl, FORCLR
+    ld (hl), 2
+    ld hl, BAKCLR
+    ld (hl), 1
+    ld hl, BDRCLR
+    ld (hl), 1
+    call CHGCLR
     ret
 
 _update:
@@ -336,8 +340,8 @@ _get_index:
     ld a, b
     or l
     ld l, a
-    ld b, h
-    ld c, l
+    ; ld b, h
+    ; ld c, l
     ret
 
 
@@ -391,6 +395,8 @@ _end:
     db 0
 _col:
     db 0
+_index:
+    dw 0
 
 ; State arrays for the rain drops, one state for each column.
 _drop_state:
