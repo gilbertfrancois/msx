@@ -36,7 +36,7 @@ N_PERM      equ 1               ; Number of permutations times 3 per screen upda
 P_RAIN      equ 8               ; Probability of rain: 1/p_rain
 N_FADEOUTS  equ 3               ; Number of chars to darken at the end of the rain
 SPEED_VAR   equ 8               ; Speed variation of the rain drops
-WAIT_CYCLES equ 25		; N wait cycles before refresh
+WAIT_CYCLES equ 1		; N wait cycles before refresh. 1=50fps, 2=25fps, etc
 
 _main:
     call _setup
@@ -66,7 +66,6 @@ _setup:
     ld bc, 5
     ldir
     ei
-
     ; Set screen mode and colors
     ld a, SCREENMODE
     call CHGMOD
@@ -110,18 +109,19 @@ _run_interrupt:
     ld (hl), WAIT_CYCLES
     ld a, (_request_render)
     cp 1
-    jp nz, __set_not_ready
+    jp nz, _set_is_slow
     ; Update was ready, render request was set. 
-    ; reset _update_not_ready and _render_request, then call draw function.
+    ; reset _is_slow and _render_request, then call draw function.
     ld a, 0
-    ld (_update_not_ready), a
-    ld a, 0
+    ld (_is_slow), a
     ld (_request_render), a
     call _draw
     jr _old_interrupt_hook
-__set_not_ready:
+_set_is_slow:
     ld a, 1
-    ld (_update_not_ready), a
+    ld (_is_slow), a
+    ld a, $21
+    ld (_name_table_buffer), a
 ; Interrupt jump block.
 _old_interrupt_hook:
     db 0, 0, 0, 0, 0 
@@ -459,7 +459,11 @@ _rnd8_data:
 ; request render
 _request_render:
     db 0
-_update_not_ready:
+; flag that indicates if the system needs more time than the requested 
+; refresh rate.
+_is_slow:
+    db 0
+_interrupt_counter:
     db 0
 ; variables for updating a column. 
 _start:
