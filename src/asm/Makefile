@@ -37,7 +37,7 @@ bitleveloperations:
 	$(ASM) ${ASM_FLAGS} 03_bitleveloperations/bitleveloperations.rom.asm -o ${ROM_DIR}/bitleveloperations.rom
 
 interrupts:
-	$(ASM) ${ASM_FLAGS} 04_interrupts/interrupts.bin.asm -o ${BIN_DIR}/interrupts.bin
+	$(ASM) ${ASM_FLAGS} 05_interrupts/interrupts.bin.asm -o ${BIN_DIR}/interrupts.bin
 
 
 fixedpoint:
