@@ -47,6 +47,24 @@ _main_loop:
     ret
 
 _setup:
+    ; Install interrupt hook.
+    di
+    ; Preserve old hook instructions
+    ld hl, HTIMI
+    ld de, _old_interrupt_hook
+    ld bc, 5
+    ldir
+    ; Copy new hook instructions
+    ld hl, _new_interrupt_hook
+    ld de, HTIMI
+    ld bc, 5
+    ldir
+    ei
+
+
+
+
+
     ; Placeholder for c code similarity.
     ld a, SCREENMODE
     call CHGMOD
@@ -68,6 +86,8 @@ _update:
     call _update_rain_state
     call _update_rain_columns
     call _update_rnd_char
+    ld hl, _request_render
+    ld (hl), 1
     ret
 
 _draw:
@@ -77,6 +97,29 @@ _draw:
     ld bc, WIDTH*HEIGHT
     call LDIRVM
     ret 
+
+
+_run_interrupt:
+    ld hl, _interrupt_counter
+    dec (hl)
+    ld a, (hl)
+    jp nz, _old_interrupt_hook
+    ; Run every WAIT_CYCLES times
+    ; Reset _interrupt counter and call _draw
+    ld (hl), WAIT_CYCLES
+    ld a, (_request_render)
+    cp 1
+    jp nz, __run_interrupt_ret
+    ld a, 0
+    ld (_update_not_ready), a
+    ld a, 0
+    ld (_request_render), a
+    call _draw
+    ret
+__run_interrupt_ret:
+    ld a, 1
+    ld (_update_not_ready), a
+    ret
 
 
 _update_rain_state:
@@ -365,9 +408,6 @@ _get_index:
     ret
 
 
-
-_data:
-
 _rnd8_idx:
     db $00
 _rnd8_idx_max:
@@ -406,6 +446,11 @@ _rnd8_data:
     db $2c, $40, $36, $3f, $92, $6b, $f6, $cb
     db $f8, $00, $ca, $d9, $e8, $4c, $20, $a3
 
+; request render
+_request_render:
+    db 0
+_update_not_ready:
+    db 0
 ; variables for updating a column. 
 _start:
     db 0
@@ -433,6 +478,13 @@ _name_table_buffer:
     ds WIDTH*HEIGHT, $20
 _color_table_buffer:
     ds WIDTH*HEIGHT, $21
+; Interrupt jump block.
+_old_interrupt_hook:
+    ds, 5, 0
+_new_interrupt_hook:
+    jp _run_interrupt
+    ret
+    nop
 
 
 _file_end:
