@@ -79,7 +79,6 @@ _setup:
     ld de, HTIMI
     ld bc, 5
     ldir
-    ei
     ; Set screen mode and colors
     ld a, SCREENMODE
     call CHGMOD
@@ -90,9 +89,9 @@ _setup:
     ld hl, BDRCLR
     ld (hl), 1
     call CHGCLR
-    ; Start immediately with a full screen update. 
-    ld hl, _interrupt_counter
-    ld (hl), 1
+    ld a, WAIT_CYCLES
+    ld (_interrupt_counter), a
+    ei
     ret
 
 _cleanup:
