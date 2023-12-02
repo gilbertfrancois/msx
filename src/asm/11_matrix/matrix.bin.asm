@@ -1,3 +1,17 @@
+;   Copyright 2023 Gilbert Francois Duivesteijn
+;
+;   Licensed under the Apache License, Version 2.0 (the "License");
+;   you may not use this file except in compliance with the License.
+;   You may obtain a copy of the License at
+;
+;       http://www.apache.org/licenses/LICENSE-2.0
+;
+;   Unless required by applicable law or agreed to in writing, software
+;   distributed under the License is distributed on an "AS IS" BASIS,
+;   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+;   See the License for the specific language governing permissions and
+;   limitations under the License.
+
 ORGADR      equ $c000
 CHGMOD      equ $005f
 CHGCLR      equ $0062
@@ -36,7 +50,7 @@ N_PERM      equ 1               ; Number of permutations times 3 per screen upda
 P_RAIN      equ 8               ; Probability of rain: 1/p_rain
 N_FADEOUTS  equ 3               ; Number of chars to darken at the end of the rain
 SPEED_VAR   equ 8               ; Speed variation of the rain drops
-WAIT_CYCLES equ 1		; N wait cycles before refresh. 1=50fps, 2=25fps, etc
+WAIT_CYCLES equ 1               ; N wait cycles before refresh. 1=50fps, 2=25fps, etc
 
 _main:
     call _setup
@@ -76,6 +90,9 @@ _setup:
     ld hl, BDRCLR
     ld (hl), 1
     call CHGCLR
+    ; Start immediately with a full screen update. 
+    ld hl, _interrupt_counter
+    ld (hl), 1
     ret
 
 _cleanup:
@@ -84,19 +101,29 @@ _cleanup:
     ret
 
 _update:
+    ld a, 1
+    ld (_update_in_progress), a
     call _update_rain_state
     call _update_rain_columns
     call _update_rnd_char
-    ld hl, _request_render
-    ld (hl), 1
+    ld a, 1
+    ld (_request_render), a
+    ld a, 0
+    ld (_update_in_progress), a
     ret
 
 _draw:
+    ld a, 1
+    ld (_draw_in_progress), a
     ; Copy new state to VRAM
     ld hl, _name_table_buffer
     ld de, NAME_TABLE
     ld bc, WIDTH*HEIGHT
     call LDIRVM
+    ld a, 0
+    ld (_request_render), a
+    ld a, 0
+    ld (_draw_in_progress), a
     ret 
 
 _run_interrupt:
@@ -104,24 +131,15 @@ _run_interrupt:
     dec (hl)
     ld a, (hl)
     jp nz, _old_interrupt_hook
-    ; Run every WAIT_CYCLES times
     ; Reset _interrupt counter and call _draw
     ld (hl), WAIT_CYCLES
+__run_interrupt_on_request_render:
+    ; Check if the request_render flag is set.
     ld a, (_request_render)
     cp 1
-    jp nz, _set_is_slow
+    jp nz, _old_interrupt_hook
     ; Update was ready, render request was set. 
-    ; reset _is_slow and _render_request, then call draw function.
-    ld a, 0
-    ld (_is_slow), a
-    ld (_request_render), a
     call _draw
-    jr _old_interrupt_hook
-_set_is_slow:
-    ld a, 1
-    ld (_is_slow), a
-    ld a, $21
-    ld (_name_table_buffer), a
 ; Interrupt jump block.
 _old_interrupt_hook:
     db 0, 0, 0, 0, 0 
@@ -456,12 +474,11 @@ _rnd8_data:
     db $2c, $40, $36, $3f, $92, $6b, $f6, $cb
     db $f8, $00, $ca, $d9, $e8, $4c, $20, $a3
 
-; request render
 _request_render:
     db 0
-; flag that indicates if the system needs more time than the requested 
-; refresh rate.
-_is_slow:
+_update_in_progress:
+    db 0
+_draw_in_progress:
     db 0
 _interrupt_counter:
     db 0
