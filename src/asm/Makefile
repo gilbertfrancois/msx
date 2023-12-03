@@ -28,9 +28,11 @@ helloworld:
 
 
 helloscreen2:
-	$(ASM) ${ASM_FLAGS} 02_helloscreen2/helloscreen2_easy.rom.asm -o ${ROM_DIR}/helloscreen2_easy.rom
-	$(ASM) ${ASM_FLAGS} 02_helloscreen2/helloscreen2_opt.rom.asm -o ${ROM_DIR}/helloscreen2_opt.rom
-	$(ASM) ${ASM_FLAGS} 02_helloscreen2/helloscreen2_opt.bin.asm -o ${BIN_DIR}/helloscreen2_opt.bin
+	$(ASM) ${ASM_FLAGS} 02_helloscreen2/$@_easy.rom.asm -L ${ROM_DIR}/$@_easy.rom.sym -o ${ROM_DIR}/$@_easy.rom
+	$(ASM) ${ASM_FLAGS} 02_helloscreen2/$@_opt.rom.asm -L ${ROM_DIR}/$@_opt.rom.sym -o ${ROM_DIR}/$@_opt.rom
+	$(ASM) ${ASM_FLAGS} 02_helloscreen2/$@_opt.bin.asm -L ${BIN_DIR}/$@_opt.bin.sym -o ${BIN_DIR}/hellos2.bin
+	$(ASM) ${ASM_FLAGS} 02_helloscreen2/$@_nobios.bin.asm -L ${BIN_DIR}/$@_nobios.bin.sym -o ${BIN_DIR}/hellos2n.bin
+
 
 bitleveloperations:
 	$(ASM) ${ASM_FLAGS} 03_bitleveloperations/bitleveloperations.bin.asm -o ${BIN_DIR}/bitleveloperations.bin
@@ -56,7 +58,8 @@ control:
 	$(ASM) ${ASM_FLAGS} 10_$@/$@.bin.asm -L ${BIN_DIR}/$@.bin.sym -o ${BIN_DIR}/$@.bin
 
 matrix:
-	$(ASM) ${ASM_FLAGS} 11_$@/$@.bin.asm -L ${BIN_DIR}/$@.bin.sym -o ${BIN_DIR}/$@.bin
+	$(ASM) ${ASM_FLAGS} 11_matrix/matrix.bin.asm -L ${BIN_DIR}/matrix.bin.sym -o ${BIN_DIR}/matrix.bin
+	$(ASM) ${ASM_FLAGS} 11_matrix/matrix-c.bin.asm -L ${BIN_DIR}/matrix-c.bin.sym -o ${BIN_DIR}/matrix-c.bin
 
 mat:
 	$(ASM) ${ASM_FLAGS} 11_$@/$@.bin.asm -L ${BIN_DIR}/$@.bin.sym -o ${BIN_DIR}/$@.bin
