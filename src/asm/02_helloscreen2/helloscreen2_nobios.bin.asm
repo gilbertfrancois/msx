@@ -1,5 +1,4 @@
 ORGADR      equ $c000
-BREAKX      equ $00b7
 VDPData     equ $98
 VDPControl  equ $99
 CGPTBL      equ $0000           ; pattern generator table address
@@ -46,12 +45,8 @@ _main:
     ld a, $00
     out (VDPData), a
 
-_breakx:
-    call BREAKX
-    jp nc, _breakx
-    ld a, 0
-    call CHGMOD
-    ret
+    di
+    halt
 
 _init_sc2:
     ld c, VdpControl
