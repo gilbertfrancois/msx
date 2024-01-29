@@ -28,10 +28,10 @@ is tested for every point within the domain. When after a finite amount of itera
 
 Parameters:
 
-Mandelbrot figure 1: $(x_c, y_c)=(-0.5000,  +0.0000)$, size=2.0, depth=16, colormap=zebra.
-Mandelbrot figure 2: $(x_c, y_c)=(-0.7792,  +0.1345)$, size=7.984e-4, depth=128, colormap=clip.
-Mandelbrot figure 3: $(x_c, y_c)=(-0.4781, -0.6311)$, size=2.441e-3, depth=48, colormap=zebra.
-Mandelbrot figure 4: $(x_c, y_c)=(-0.4781, -0.6311)$, size=2.441e-3, depth=64, colormap=clip.
+Mandelbrot figure 1: $(x_c, y_c)=(-0.5000,  +0.0000)$, size=2.0, depth=16, colormap=zebra.<br>
+Mandelbrot figure 2: $(x_c, y_c)=(-0.7792,  +0.1345)$, size=7.984e-4, depth=128, colormap=clip.<br>
+Mandelbrot figure 3: $(x_c, y_c)=(-0.4781, -0.6311)$, size=2.441e-3, depth=48, colormap=zebra.<br>
+Mandelbrot figure 4: $(x_c, y_c)=(-0.4781, -0.6311)$, size=2.441e-3, depth=64, colormap=clip.<br>
 
 
 
