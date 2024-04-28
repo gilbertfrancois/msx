@@ -173,7 +173,7 @@ Nowadays we are spoiled with cross compilers and fast computers. However, it is 
 
 [doom](src/asm/12_doom) Prepare to be transported back in time with this video showcasing a remarkable remake of Doom's iconic E1M1 soundtrack, composed by Robert Prince for ID Software in 1994. Curiosity sparked my imagination as I wondered how this epic composition would sound on an even older system—the MSX. This remake is crafted for the MSX1, utilizing its original 3-channel PSG sound chip, the AY-3-8910, to capture the essence of retro gaming. With Arkos Tracker 2, I composed the music and with my own developed BLiTzBLiT Digitizer software and NEON Cheese for MSX, I created the graphics. The resulting program is made in z80 assembly, assembled with vasm, and can be run on MSX-DOS 1.0 or higher.
 
-[<img src="https://img.youtube.com/vi/vNMusVCVdwA/hqdefault.jpg" width="560" height="315" 
+[<img src="https://img.youtube.com/vi/vNMusVCVdwA/hqdefault.jpg" width="640" height="360"
 />](https://www.youtube.com/embed/vNMusVCVdwA)
 
 
