@@ -169,6 +169,17 @@ Nowadays we are spoiled with cross compilers and fast computers. However, it is 
 
 [Journey into MSX Z80 Assembly programming](https://gilbertfrancois.github.io)
 
+### Doom music E1M1
+
+[doom](src/asm/12_doom) Prepare to be transported back in time with this video showcasing a remarkable remake of Doom's iconic E1M1 soundtrack, composed by Robert Prince for ID Software in 1994. Curiosity sparked my imagination as I wondered how this epic composition would sound on an even older system—the MSX. This remake is crafted for the MSX1, utilizing its original 3-channel PSG sound chip, the AY-3-8910, to capture the essence of retro gaming. With Arkos Tracker 2, I composed the music and with my own developed BLiTzBLiT Digitizer software and NEON Cheese for MSX, I created the graphics. The resulting program is made in z80 assembly, assembled with vasm, and can be run on MSX-DOS 1.0 or higher.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/vNMusVCVdwA?si=fZ-S-3lTFbosJRqY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+
+
+
+
 ### Memory Visualizers
 
 [memory.bas](src/basic/memory.bas) I made this program around 1986-1987 to get a better understanding of the used memory of my Canon V-20. The program is expected to work well on any MSX with 64kB RAM. If you have another configuration, some parameters have to be adapted. The program is not efficient in terms of speed.
@@ -189,3 +200,4 @@ This program helps you to find the right register settings for the 99x8 Video Di
 | ![vdpwiz1](assets/images/vdpwiz1.png) | ![vdpwiz2](assets/images/vdpwiz2.png) |
 | ------------------------------------- | ------------------------------------- |
 | VDP Wizard: User input                | VDP Wizard: Register settings.        |
+
