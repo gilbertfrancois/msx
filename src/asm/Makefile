@@ -69,6 +69,11 @@ doom:
 	/usr/local/bin/rasm 12_$@/rasm2universal.asm -o 12_$@/doom_e1m1_universal -s -sl -sq
 	/usr/local/bin/Disark 12_$@/doom_e1m1_universal.bin 12_$@/doom_e1m1_universal.asm --symbolFile 12_$@/doom_e1m1_universal.sym --sourceProfile vasm
 	$(ASM) ${ASM_FLAGS} 12_$@/$@.dos.asm -L ${DOS1_DIR}/$@.dos.sym -o ${DOS1_DIR}/$@.com
+	
+nyancat:
+	/usr/local/bin/rasm 13_$@/rasm2universal.asm -o 13_$@/nyancat_music_universal -s -sl -sq
+	/usr/local/bin/Disark 13_$@/nyancat_music_universal.bin 13_$@/nyancat_music_universal.asm --symbolFile 13_$@/nyancat_music_universal.sym --sourceProfile vasm
+	$(ASM) ${ASM_FLAGS} 13_$@/$@.dos.asm -L ${DOS1_DIR}/$@.dos.sym -o ${DOS1_DIR}/$@.com
 
 runrom:
 	/Applications/openMSX.app/Contents/MacOS/openmsx -machine Canon_V-20 -carta `pwd`/../../dist/rom/helloworld.rom
