@@ -130,25 +130,25 @@ _setup_music:
     ret
 
 _update_music:
-        ; Begin visual time measurement.
+        ; Begin visual time measurement in debug mode.
         ld a, $24
         call _debug_timing
     call ply_akg_play
     ld a, 0
     ld (_request_music_update), a
-        ; End visual time measurement.
+        ; End visual time measurement in debug mode.
         ld a, $21
         call _debug_timing
     ret
 
 _update_animation:
-        ; Begin visual time measurement.
+        ; Begin visual time measurement in debug mode.
         ld a, $26
         call _debug_timing
     call _update_frame
     ld a, 0
     ld (_request_animation_update), a
-        ; End visual time measurement.
+        ; End visual time measurement in debug mode.
         ld a, $21
         call _debug_timing
     ret
