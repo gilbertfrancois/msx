@@ -7,6 +7,7 @@ CAS_DIR="../../dist/cas"
 BIN_DIR="../../dist/bin"
 
 ASM_FLAGS=-Fbin -chklabels -nocase
+# ASM_FLAGS=-Fbin -chklabels -nocase -DDEBUG=1
 
 # helloworld: 01_helloworld/helloworld_bin.asm
 # 	$(ASM) -Fbin -o ${DIST_DIR}/helloworld.bin 01_helloworld/helloworld_bin.asm
@@ -74,6 +75,9 @@ nyancat:
 	/usr/local/bin/rasm 13_$@/rasm2universal.asm -o 13_$@/nyancat_music_universal -s -sl -sq
 	/usr/local/bin/Disark 13_$@/nyancat_music_universal.bin 13_$@/nyancat_music_universal.asm --symbolFile 13_$@/nyancat_music_universal.sym --sourceProfile vasm
 	$(ASM) ${ASM_FLAGS} 13_$@/$@.dos.asm -L ${DOS1_DIR}/$@.dos.sym -o ${DOS1_DIR}/$@.com
+
+slots:
+	$(ASM) ${ASM_FLAGS} 14_$@/$@.bin.asm -L ${BIN_DIR}/$@.bin.sym -o ${BIN_DIR}/$@.bin
 
 runrom:
 	/Applications/openMSX.app/Contents/MacOS/openmsx -machine Canon_V-20 -carta `pwd`/../../dist/rom/helloworld.rom
