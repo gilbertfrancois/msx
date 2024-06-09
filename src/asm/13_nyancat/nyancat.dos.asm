@@ -13,36 +13,33 @@
 ;   limitations under the License.
 
 
-ORGADR      equ $100
+ORGADR equ $100
 
-HTIMI       equ $fd9f
-EXPTBL      equ $FCC1
-SCREENMODE  equ 2               ; 0 = text mode, 1 = bitmap mode
-WIDTH       equ 32              ; Screen width
-HEIGHT      equ 24              ; Screen height 
-HHEIGHT     equ HEIGHT/2        ; Half screen height
-WAIT_ANIMATION_CYCLES equ 3               ; N wait cycles before refresh. 1=50fps, 2=25fps, etc
-WAIT_MUSIC_CYCLES equ 1               ; N wait cycles before refresh. 1=50fps, 2=25fps, etc
+HTIMI equ $fd9f
+EXPTBL equ $FCC1
+SCREENMODE equ 2
+WIDTH equ 32                ; Screen width
+HEIGHT equ 24               ; Screen height 
+HHEIGHT equ HEIGHT/2        ; Half screen height
+WAIT_ANIMATION_CYCLES equ 3 ; N wait cycles before refresh. 1=50fps, 2=25fps, etc
+WAIT_MUSIC_CYCLES equ 1     ; N wait cycles before refresh. 1=50fps, 2=25fps, etc
 
     org ORGADR
 
 _main:
     call _setup
-    ld hl, _NYANCAT_MUSIC_START
-    xor a
-    call PLY_AKG_INIT
+
 _main_loop:
+_sync_animation:
     ld a, (_request_animation_update)
     cp 1
     jp nz, _sync_music
-    call _update
+    call _update_animation
 _sync_music:
     ld a, (_request_music_update)
     cp 1
     jp nz, _main_loop
-    call PLY_AKG_PLAY
-    ld a, 0
-    ld (_request_music_update), a
+    call _update_music
     jr _main_loop
     ; It should never reach this point.
     di
@@ -54,12 +51,8 @@ _setup:
     call _setup_pattern_table
     call _setup_color_table
     call _setup_name_table
-    ; Set initial variables
-    ld hl, _frame_0_to_1_name_table_delta
-    ld (_current_mem_block), hl
-    ld a, 1
-    ld (_current_frame), a
-    ; Setup music
+    call _setup_initial_variables
+    call _setup_music
     ret
 
 _setup_interrupt_hook:
@@ -77,11 +70,6 @@ _setup_interrupt_hook:
 	ld	hl, _run_interrupt
 	ld (HTIMI+2), hl	
 
-    ; Copy new hook instructions
-    ; ld hl, _new_interrupt_hook
-    ; ld de, HTIMI
-    ; ld bc, 5
-    ; ldir
     ret
 
 _setup_screen2:
@@ -128,7 +116,32 @@ _setup_name_table:
     call _ldirvm
     ret
 
-_update:
+_setup_initial_variables:
+    ld hl, _frame_0_to_1_name_table_delta
+    ld (_current_mem_block), hl
+    ld a, 1
+    ld (_current_frame), a
+    ret
+
+_setup_music:
+    ld hl, _nyancat_music_start
+    xor a
+    call ply_akg_init
+    ret
+
+_update_music:
+        ; Begin visual time measurement.
+        ld a, $24
+        call _debug_timing
+    call ply_akg_play
+    ld a, 0
+    ld (_request_music_update), a
+        ; End visual time measurement.
+        ld a, $21
+        call _debug_timing
+    ret
+
+_update_animation:
         ; Begin visual time measurement.
         ld a, $26
         call _debug_timing
@@ -139,7 +152,6 @@ _update:
         ld a, $21
         call _debug_timing
     ret
-
 
 _update_frame:
     ld hl, (_current_mem_block)
