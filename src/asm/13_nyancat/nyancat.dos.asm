@@ -64,12 +64,11 @@ _setup_interrupt_hook:
     ldir
     ; Set new hook instructions
     ld a, $f7					; RST #30
-	ld (HTIMI), a				; In HTIMI hook
-	call _get_slot              ; Our Slot in A
-	ld (HTIMI+1), a				; Next HTIMI hook byte
-	ld	hl, _run_interrupt
-	ld (HTIMI+2), hl	
-
+    ld (HTIMI), a				; In HTIMI hook
+    call _get_slot              ; Our Slot in A
+    ld (HTIMI+1), a             ; Next HTIMI hook byte
+    ld hl, _run_interrupt
+    ld (HTIMI+2), hl
     ret
 
 _setup_screen2:
