@@ -14,18 +14,11 @@
 
 ;   Screen 2 version
 
-ORGADR      equ $c000
+ORGADR      equ $100
 
 HTIMI       equ $fd9f
+EXPTBL      equ $fcc1
 JIFFY       equ $fc9e           ; 50Hz Jiffy Counter (2B/RW)
-
-    ; Place header before the binary.
-    org ORGADR - 7
-    ; Bin header, 7 bytes
-    db $fe
-    dw _file_start
-    dw _file_end - 1
-    dw _main
 
     ; org statement after the header
     org ORGADR
@@ -57,22 +50,41 @@ _main_loop:
 
 _setup:
     ; Install interrupt hook.
-    di
-    ; Preserve old hook instructions
-    ld hl, HTIMI
-    ld de, _old_interrupt_hook
-    ld bc, 5
-    ldir
-    ; Copy new hook instructions
-    ld hl, _new_interrupt_hook
-    ld de, HTIMI
-    ld bc, 5
-    ldir
-    ei
+    call _setup_interrupt_hook
+    ; di
+    ; ; Preserve old hook instructions
+    ; ld hl, HTIMI
+    ; ld de, _old_interrupt_hook
+    ; ld bc, 5
+    ; ldir
+    ; ; Copy new hook instructions
+    ; ld hl, _new_interrupt_hook
+    ; ld de, HTIMI
+    ; ld bc, 5
+    ; ldir
+    ; ei
     call _init_sc2
     ld a, $21
     call _init_color_table
     call _rnd8_set_seed
+    ret
+
+_setup_interrupt_hook:
+    ; Install interrupt hook.
+    ; Preserve old hook instructions
+    di
+    ld hl, HTIMI
+    ld de, _old_interrupt_hook
+    ld bc, 5
+    ldir
+    ; Set new hook instructions
+    ld a, $f7                   ; RST #30
+    ld (HTIMI), a               ; In HTIMI hook
+    call _get_slot              ; Our Slot in A
+    ld (HTIMI+1), a             ; Next HTIMI hook byte
+    ld hl, _new_interrupt_hook
+    ld (HTIMI+2), hl
+    ei
     ret
 
 _update:
@@ -630,6 +642,31 @@ _get_index:
     ld a, b
     or l
     ld l, a
+    ret
+
+_get_slot:
+    in a,($A8)
+    rrca
+    rrca
+    and %00000011
+    ld c,a          ;c=slot
+    ld b,0
+    ld hl,EXPTBL
+    add hl,bc
+    ld a,(hl)
+    and #80
+    or c
+    ld c,a
+    inc hl
+    inc hl
+    inc hl
+    inc hl
+    ld a,(hl)
+    and $0c
+    or c
+    bit 7,a
+    ret nz
+    and %11
     ret
 
 

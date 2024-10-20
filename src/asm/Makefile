@@ -61,10 +61,7 @@ control:
 
 matrix:
 	$(ASM) ${ASM_FLAGS} 11_matrix/matrix.bin.asm -L ${BIN_DIR}/matrix.bin.sym -o ${BIN_DIR}/matrix.bin
-	$(ASM) ${ASM_FLAGS} 11_matrix/matrix-c.bin.asm -L ${BIN_DIR}/matrix-c.bin.sym -o ${BIN_DIR}/matrix-c.bin
-
-mat:
-	$(ASM) ${ASM_FLAGS} 11_$@/$@.bin.asm -L ${BIN_DIR}/$@.bin.sym -o ${BIN_DIR}/$@.bin
+	$(ASM) ${ASM_FLAGS} 11_matrix/matrix.dos.asm -L ${BIN_DIR}/matrix.dos.sym -o ${BIN_DIR}/matrix.com
 
 doom:
 	/usr/local/bin/rasm 12_$@/rasm2universal.asm -o 12_$@/doom_e1m1_universal -s -sl -sq
