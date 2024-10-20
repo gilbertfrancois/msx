@@ -173,15 +173,13 @@ Nowadays we are spoiled with cross compilers and fast computers. However, it is 
 
 [doom](src/asm/12_doom) Prepare to be transported back in time with this video showcasing a remarkable remake of Doom's iconic E1M1 soundtrack, composed by Robert Prince for ID Software in 1994. Curiosity sparked my imagination as I wondered how this epic composition would sound on an even older system—the MSX. This remake is crafted for the MSX1, utilizing its original 3-channel PSG sound chip, the AY-3-8910, to capture the essence of retro gaming. With Arkos Tracker 2, I composed the music and with my own developed BLiTzBLiT Digitizer software and NEON Cheese for MSX, I created the graphics. The resulting program is made in z80 assembly, assembled with vasm, and can be run on MSX-DOS 1.0 or higher.
 
-[<img src="https://img.youtube.com/vi/vNMusVCVdwA/hqdefault.jpg" width="640" height="360"
-/>](https://www.youtube.com/embed/vNMusVCVdwA)
+[<img src="https://img.youtube.com/vi/vNMusVCVdwA/hqdefault.jpg"  />](https://www.youtube.com/embed/vNMusVCVdwA)
 
 ### The Matrix
 
-[The Matrix](src/asm/11_matrix) The Matrix digital rain, made for MSX(1) in Z80 assembly code, takes advantage of screen 2 graphics mode since the MSX doesn't support color text mode. It uses a custom character set featuring Latin, Greek, Cyrillic, Katakana, and Hiragana characters, all centered in the middle of the tiles. The program includes many small, cool nerdy features, such as syncing with interrupts to ensure a constant running speed. The green rain trails are designed with three different shades of green, starting with a highlighted head and fading out smoothly at the end. The trails move at random speeds, and some characters are randomly permuted for an extra cool visual effect. I'm very pleased with the result and love pushing the possibilities of 8-bit hardware.
+[The Matrix](src/asm/11_matrix) The Matrix digital rain, made for MSX(1) in Z80 assembly code, takes advantage of screen 2 graphics mode since the MSX doesn't support color text mode. It uses a custom character set featuring Latin, Greek, Cyrillic, Katakana, and Hiragana characters, all centered in the middle of the tiles. The program includes many small, cool nerdy features, such as syncing with interrupts to ensure a constant running speed. The green rain trails are designed with three different shades of green, starting with a highlighted head and fading out smoothly at the end. The trails move at random speeds, and some characters are randomly permuted for an extra cool visual effect. I'm very pleased with the result and love pushing the possibilities of 8-bit hardware. 
 
-[<img src="https://img.youtube.com/vi/l_ICb21RWKo/hqdefault.jpg" width="640" height="360"
-/>](https://www.youtube.com/embed/l_ICb21RWKo)
+[<img src="https://img.youtube.com/vi/l_ICb21RWKo/hqdefault.jpg"/>](https://www.youtube.com/embed/l_ICb21RWKo)
 
 
 ### Memory Visualizers
