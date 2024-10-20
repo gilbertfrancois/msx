@@ -173,7 +173,7 @@ Nowadays we are spoiled with cross compilers and fast computers. However, it is 
 
 [nyan cat](src/asm/13_nyancat)  Nyan cat forever! This version is made for MSX(1). The music is composed with Arkos Tracker 2, de animation and music player are programmed in assembly. 
 
-[<img src="https://img.youtube.com/vi/rypwjPsm3xY/hqdefault.jpg"  />](https://www.youtube.com/embed/rypwjPsm3xY)
+[<img src="https://img.youtube.com/vi/JMkjkPae5TQ/hqdefault.jpg"  />](https://www.youtube.com/embed/JMkjkPae5TQ)
 
 
 ### Doom music E1M1
