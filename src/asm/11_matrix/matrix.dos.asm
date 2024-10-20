@@ -51,18 +51,6 @@ _main_loop:
 _setup:
     ; Install interrupt hook.
     call _setup_interrupt_hook
-    ; di
-    ; ; Preserve old hook instructions
-    ; ld hl, HTIMI
-    ; ld de, _old_interrupt_hook
-    ; ld bc, 5
-    ; ldir
-    ; ; Copy new hook instructions
-    ; ld hl, _new_interrupt_hook
-    ; ld de, HTIMI
-    ; ld bc, 5
-    ; ldir
-    ; ei
     call _init_sc2
     ld a, $21
     call _init_color_table
