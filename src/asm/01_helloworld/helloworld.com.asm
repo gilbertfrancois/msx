@@ -2,7 +2,7 @@ ORGADR  equ $0100
 CHPUT   equ $00a2
 CHGMOD  equ $005f
 CALSLT	equ $001c
-EXPTBL  equ $fcc0
+EXPTBL  equ $fcc1
 
     ; Place header before the binary.
     org ORGADR
