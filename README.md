@@ -169,6 +169,13 @@ Nowadays we are spoiled with cross compilers and fast computers. However, it is 
 
 [Journey into MSX Z80 Assembly programming](https://gilbertfrancois.github.io)
 
+### Nyan Cat
+
+[nyan cat](src/asm/13_nyancat)  Nyan cat forever! This version is made for MSX(1). The music is composed with Arkos Tracker 2, de animation and music player are programmed in assembly. 
+
+[<img src="https://img.youtube.com/vi/rypwjPsm3xY/hqdefault.jpg"  />](https://www.youtube.com/embed/rypwjPsm3xY)
+
+
 ### Doom music E1M1
 
 [doom](src/asm/12_doom) Prepare to be transported back in time with this video showcasing a remarkable remake of Doom's iconic E1M1 soundtrack, composed by Robert Prince for ID Software in 1994. Curiosity sparked my imagination as I wondered how this epic composition would sound on an even older system—the MSX. This remake is crafted for the MSX1, utilizing its original 3-channel PSG sound chip, the AY-3-8910, to capture the essence of retro gaming. With Arkos Tracker 2, I composed the music and with my own developed BLiTzBLiT Digitizer software and NEON Cheese for MSX, I created the graphics. The resulting program is made in z80 assembly, assembled with vasm, and can be run on MSX-DOS 1.0 or higher.
