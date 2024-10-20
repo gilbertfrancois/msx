@@ -6,9 +6,6 @@ NAMTBL      equ $1800           ; pattern name table address
 COLTBL      equ $2000           ; color table address
 ATRTBL      equ $1b00           ; sprite attribute table address
 PATTBL      equ $3800           ; sprite generator table address
-CHGMOD      equ $005f
-LDIRVM      equ $005c
-SETWRT      equ $0053
 
     ; Place header before the binary_
     org ORGADR - 7
@@ -25,21 +22,25 @@ _main:
     
     call _init_sc2
     
+    ; Create tile 0 in the pattern table
     ld hl, _pattern
     ld de, CGPTBL + 0
     ld b, 8
     call _ldirvm
 
+    ; Create colors for tile 0 in the color table
     ld hl, _color
     ld de, COLTBL + 0
     ld b, 8
     call _ldirvm
 
+    ; Place tile 0 in the name table at location (1,1)
     ld de, NAMTBL + 1 + 1*32
     call _setwrt
     ld a, $00
     out (VDPData), a
 
+    ; Place tile 0 in the name table at location (2,2)
     ld de, NAMTBL + 2 + 2*32
     call _setwrt
     ld a, $00
@@ -49,6 +50,14 @@ _main:
     halt
 
 _init_sc2:
+    ; Initialize screen 2. This replaces the BIOS call CHGMOD.
+    ; - Set the VDP to screen 2 mode.
+    ; - Fill the pattern table with 0.
+    ; - Fill the color table with FG, BG
+    ; - Fill the name table with [0..255], 3 times.
+    ; in:  none
+    ; out: none
+    ; registers: af, bc, de, hl
     ld c, VdpControl
     ld b, _screen2_end - _screen2
     ld hl, _screen2
@@ -63,10 +72,12 @@ _init_sc2_loop:
     ; Clean the VRAM, or you get garbage on the screen.
     call _init_pattern_table
     call _init_name_table
+    ld a, $F4
     call _init_color_table
     ret
 
 _init_pattern_table:
+    ; Fill pattern table with 0, empty screen.
     ld a, $00
     ld de, CGPTBL
     ld bc, $1800
@@ -74,7 +85,9 @@ _init_pattern_table:
     ret
 
 _init_color_table:
-    ld a, $F4
+    ; Fill color table with FG, BG
+    ; in: a = FG color
+    ; registers: af, bc, de
     ld de, COLTBL
     ld bc, $1800
     call _fillvrm
@@ -100,6 +113,9 @@ _fillvrm_loop:
     ret
 
 _init_name_table:
+    ; Resets the name table 3 times from 0 to 255
+    ; in:        none
+    ; registers: af, bc, de
     ld de, NAMTBL
     call _setwrt
     ld b, 3
@@ -125,10 +141,11 @@ _setwrt:
     ret
 
 _ldirvm:
-    ; Copy data to vram
+    ; Copy data to vram. The write block must be smaller than 256 bytes.
     ; in: hl = source ram address
     ;     de = destination vram address
     ;     b = number of bytes
+    ; registers: af, bc, de, hl
     call _setwrt
     ld c, VDPData
 _ldirvm_loop:
