@@ -176,7 +176,12 @@ Nowadays we are spoiled with cross compilers and fast computers. However, it is 
 [<img src="https://img.youtube.com/vi/vNMusVCVdwA/hqdefault.jpg" width="640" height="360"
 />](https://www.youtube.com/embed/vNMusVCVdwA)
 
+### The Matrix
 
+[The Matrix](src/asm/11_matrix) The Matrix digital rain, made for MSX(1) in Z80 assembly code, takes advantage of screen 2 graphics mode since the MSX doesn't support color text mode. It uses a custom character set featuring Latin, Greek, Cyrillic, Katakana, and Hiragana characters, all centered in the middle of the tiles. The program includes many small, cool nerdy features, such as syncing with interrupts to ensure a constant running speed. The green rain trails are designed with three different shades of green, starting with a highlighted head and fading out smoothly at the end. The trails move at random speeds, and some characters are randomly permuted for an extra cool visual effect. I'm very pleased with the result and love pushing the possibilities of 8-bit hardware.
+
+[<img src="https://img.youtube.com/vi/l_ICb21RWKo/hqdefault.jpg" width="640" height="360"
+/>](https://www.youtube.com/embed/l_ICb21RWKo)
 
 
 ### Memory Visualizers
