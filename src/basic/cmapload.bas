@@ -1,7 +1,8 @@
-10 ' Load character map
+10 ' Load character map and show it.
 20 ' Gilbert Francois Duivesteijn
 30 '
-40 BLOAD"cyrmap.bin"
+35 SCREEN 0
+40 BLOAD"s0_eu.bin"
 50 FOR I=0 TO 255
 60 FOR J=0 TO 7
 70 K=I*8+J
@@ -17,4 +18,3 @@
 170 NEXT J
 180 PRINT
 190 NEXT I
-
