@@ -76,34 +76,16 @@ _setup_screen2:
     ret
 
 _setup_pattern_table:
-    ; Use the same data for all 3 segments.
     ld hl, _pattern_table_data
     ld de, CGPTBL2
-    ld bc, $800
-    call _ldirvm
-    ld hl, _pattern_table_data
-    ld de, CGPTBL2 + $800
-    ld bc, $800
-    call _ldirvm
-    ld hl, _pattern_table_data
-    ld de, CGPTBL2 + $1000
-    ld bc, $800
+    ld bc, $1800
     call _ldirvm
     ret
 
 _setup_color_table:
-    ; Use the same data for all 3 segments.
     ld hl, _color_table_data
     ld de, COLTBL2
-    ld bc, $800
-    call _ldirvm
-    ld hl, _color_table_data
-    ld de, COLTBL2 + $800
-    ld bc, $800
-    call _ldirvm
-    ld hl, _color_table_data
-    ld de, COLTBL2 + $1000
-    ld bc, $800
+    ld bc, $1800
     call _ldirvm
     ret
 
@@ -220,29 +202,29 @@ _debug_timing:
     ret 
 
 _get_slot:
-	in	a,($A8)
-	rrca
-	rrca
-	and %00000011
-	ld	c,a          ;c=slot
-	ld	b,0
-	ld	hl,EXPTBL
-	add	hl,bc
-	ld	a,(hl)
-	and	#80
-	or	c
-	ld	c,a
-	inc	hl
-	inc	hl
-	inc	hl
-	inc	hl
-	ld	a,(hl)
-	and	$0c
-	or	c
-	bit	7,a
-	ret	nz
-	and	%11
-	ret
+    in a,($A8)
+    rrca
+    rrca
+    and %00000011
+    ld c,a          ;c=slot
+    ld b,0
+    ld hl,EXPTBL
+    add hl,bc
+    ld a,(hl)
+    and #80
+    or c
+    ld c,a
+    inc hl
+    inc hl
+    inc hl
+    inc hl
+    ld a,(hl)
+    and $0c
+    or c
+    bit 7,a
+    ret nz
+    and %11
+    ret
 
 _run_interrupt:
 _run_interrupt_animation:
@@ -278,7 +260,7 @@ _new_interrupt_hook:
     include "../lib/lib_vdp.asm"
     include "../lib/lib_screen2.asm"
     include "../lib/lib_char_eu.asm"
-    include "nyancat_data.asm"
+    include "nyancat_data_imp.asm"
     include "nyancat_music_universal.asm"
 
 _file_end:

@@ -72,6 +72,7 @@ nyancat:
 	/usr/local/bin/rasm 13_$@/rasm2universal.asm -o 13_$@/nyancat_music_universal -s -sl -sq
 	/usr/local/bin/Disark 13_$@/nyancat_music_universal.bin 13_$@/nyancat_music_universal.asm --symbolFile 13_$@/nyancat_music_universal.sym --sourceProfile vasm
 	$(ASM) ${ASM_FLAGS} 13_$@/$@.dos.asm -L ${DOS1_DIR}/$@.dos.sym -o ${DOS1_DIR}/$@.com
+	$(ASM) ${ASM_FLAGS} 13_$@/$@.dos.asm -L ${DOS2_DIR}/$@.dos.sym -o ${DOS2_DIR}/$@.com
 
 slots:
 	$(ASM) ${ASM_FLAGS} 14_$@/$@.bin.asm -L ${BIN_DIR}/$@.bin.sym -o ${BIN_DIR}/$@.bin
