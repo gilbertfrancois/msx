@@ -111,6 +111,23 @@ This simulation solves the system by performing first order integration in time.
 
 
 
+### Lissajous curve
+
+[lissajou.bas](src/basic/lissajou.bas) This program draws  Lissajous figures or Bowditch curves, which is the graph of a system of parametric equations:
+$$
+\begin{align}
+x &= A\sin(at + \delta)\\
+y &= B\sin(bt)\\
+\end{align}
+$$
+
+| ![lissajous](assets/images/lj02.png) | ![lissajous](assets/images/lj01.png) | ![lissajous](assets/images/lj04.png) |
+| ------------------------------------ | ------------------------------------ | ------------------------------------ |
+
+Change $a$, $b$ and $\delta$ for different curve variations.
+
+
+
 ### Sketches
 
 A collection of small sketches, made in Basic, an expression of my passion for generative art.
