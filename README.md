@@ -94,6 +94,7 @@ Then after taking an initial $(x,y)$ coordinate, the new points are computed by 
 ### Lorenz system
 
 [lorenz.bas](src/basic/lorenz.bas) The Lorenz system is a system of ordinary differential equations first studied by mathematician and meteorologist Edward Lorenz. It is notable for having chaotic solutions for certain parameter values and initial conditions. In particular, the Lorenz attractor is a set of chaotic solutions of the Lorenz system. The model is a system of three ordinary differential equations now known as the Lorenz equations:
+
 $$
 \begin{align}
 \frac{dx}{dt} &= \sigma(y-x)\\
