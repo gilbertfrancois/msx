@@ -91,9 +91,28 @@ Then after taking an initial $(x,y)$ coordinate, the new points are computed by 
 
 
 
+### Lorenz system
+
+[lorenz.bas](src/basic/lorenz.bas) The Lorenz system is a system of ordinary differential equations first studied by mathematician and meteorologist Edward Lorenz. It is notable for having chaotic solutions for certain parameter values and initial conditions. In particular, the Lorenz attractor is a set of chaotic solutions of the Lorenz system. The model is a system of three ordinary differential equations now known as the Lorenz equations:
+$$
+\begin{align}
+\frac{dx}{dt} &= \sigma(y-x)\\
+\frac{dy}{dt} &= x(\rho-z)-y\\
+\frac{dz}{dt} &= xy-\beta z
+\end{align}
+$$
+
+| ![Lorenz](assets/images/lorenz1.png) | ![Lorenz](assets/images/lorenz2.png)     |
+| ----------------------------- | ---- |
+| Solution in $xz$ projection. | Solution in $xy$ projection. |
+
+This simulation solves the system by performing first order integration in time. The screenshots above are computed with $\rho=28$, $\sigma=10$ and $\beta=\frac{8}{3}$. You can change the view plane and parameters in the program.
+
+
+
 ### Sketches
 
-A collection of small sketches, made in Basic.
+A collection of small sketches, made in Basic, an expression of my passion for generative art.
 
 | ![pascal](assets/images/squares.png)              | ![Barcodes](assets/images/barcode.png)            |
 | ------------------------------------------------- | ------------------------------------------------- |
